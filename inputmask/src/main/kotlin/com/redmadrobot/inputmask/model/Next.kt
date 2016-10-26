@@ -1,0 +1,23 @@
+package com.redmadrobot.inputmask.model
+
+/**
+ * ### Next
+ *
+ * Model object that represents a set of actions that should take place when transition from one
+ * ```State``` to another occurs.
+ *
+ * @author taflanidi
+ */
+class Next {
+    val state: State
+    val insert: Char?
+    val pass: Boolean
+    val value: Char?
+
+    constructor(state: State, insert: Char?, pass: Boolean, value: Char?) {
+        this.state = state
+        this.insert = insert
+        this.pass = pass
+        this.value = value
+    }
+}
