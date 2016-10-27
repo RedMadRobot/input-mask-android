@@ -114,9 +114,13 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 bintray {
-    user = properties.getProperty("bintray.user")
-    key = properties.getProperty("bintray.apikey")
-    def gpgPassphrase = properties.getProperty("oss.password")
+    def systemEnvUser = System.getenv("bintray.user")
+    def systemEnvKey = System.getenv("bintray.apikey")
+    def systemEnvGpgPassphrase = System.getenv("bintray.gpg")
+
+    user = systemEnvUser == null ? properties.getProperty("bintray.user") : systemEnvUser
+    key = systemEnvKey == null ? properties.getProperty("bintray.apikey") : systemEnvKey
+    def gpgPassphrase = systemEnvGpgPassphrase == null ? properties.getProperty("bintray.gpg") : systemEnvGpgPassphrase
 
     configurations = ['archives']
     pkg {
