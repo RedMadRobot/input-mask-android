@@ -2,7 +2,6 @@ package com.redmadrobot.sample;
 
 import com.redmadrobot.inputmask.helper.MaskedTextChangedListener;
 
-import org.jetbrains.annotations.NotNull;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,7 +28,7 @@ public final class MainActivity extends Activity {
             null,
             new MaskedTextChangedListener.ValueListener() {
                 @Override
-                public void onExtracted(@NotNull String value) {
+                public void onExtracted(String value) {
                     Log.d(MainActivity.class.getSimpleName(), value);
                 }
 
