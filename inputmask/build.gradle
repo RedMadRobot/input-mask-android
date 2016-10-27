@@ -57,6 +57,11 @@ install {
                         name 'Egor Taflanidi'
                         email 'et@redmadrobot.com'
                     }
+                    developer {
+                        id 'xanderblinov'
+                        name 'Alexander Blinov'
+                        email 'a.blinov@redmadrobot.com'
+                    }
                 }
                 scm {
                     connection gitUrl
@@ -73,8 +78,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:support-annotations:23.1.1'
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'org.jetbrains:annotations:13.0'
 
     compile deps.kotlinStdlib
     
