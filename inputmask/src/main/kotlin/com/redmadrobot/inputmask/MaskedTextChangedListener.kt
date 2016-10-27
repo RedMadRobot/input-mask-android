@@ -1,9 +1,10 @@
-package com.redmadrobot.inputmask.helper
+package com.redmadrobot.inputmask
 
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import com.redmadrobot.inputmask.helper.Mask
 import com.redmadrobot.inputmask.model.CaretString
 import java.lang.ref.WeakReference
 

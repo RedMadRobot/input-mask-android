@@ -1,6 +1,6 @@
 package com.redmadrobot.sample;
 
-import com.redmadrobot.inputmask.helper.MaskedTextChangedListener;
+import com.redmadrobot.inputmask.MaskedTextChangedListener;
 
 
 import android.app.Activity;
