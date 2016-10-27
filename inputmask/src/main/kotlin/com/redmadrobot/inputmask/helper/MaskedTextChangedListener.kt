@@ -5,8 +5,6 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import com.redmadrobot.inputmask.model.CaretString
-import com.redmadrobot.inputmask.model.State
-import com.redmadrobot.inputmask.model.state.*
 import java.lang.ref.WeakReference
 
 /**
