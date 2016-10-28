@@ -133,7 +133,7 @@ class MaskedTextChangedListener(
                         this.autocomplete && !isDeletion
                 )
         this.afterText = result.formattedText.string
-        this.caretPosition = result.formattedText.caretPosition
+        this.caretPosition = if (isDeletion) cursorPosition else result.formattedText.caretPosition
         this.valueListener?.onExtracted(result.extractedValue)
         this.valueListener?.onMandatoryCharactersFilled(result.extractedValue.length >= this.acceptableValueLength())
     }
