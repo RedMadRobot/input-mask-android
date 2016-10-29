@@ -69,7 +69,7 @@ The object might be instantiated via code and then wired with the corresponding 
 `MaskedTextChangedListener` has his own listener `MaskedTextChangedListener.ValueListener`, which allows capturing extracted value.
 All the `TextWatcher` calls from the client `EditText` are forwarded to the decorated `TextWatcher` object (you may provide one when initializing `MaskedTextChangedListener`).
 
-```
+``` java
 public final class MainActivity extends Activity {
 
     @Override
@@ -98,7 +98,6 @@ public final class MainActivity extends Activity {
 
         editText.addTextChangedListener(listener);
         editText.setOnFocusChangeListener(listener);
-
         editText.setHint(listener.placeholder());
     }
 
