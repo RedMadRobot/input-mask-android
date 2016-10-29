@@ -25,10 +25,16 @@ allprojects {
 
 ext {
     kotlinVersion = '1.0.4'
-}
 
-ext.deps = [
-        // Kotlin
-        kotlinStdlib           : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-        kotlinGradlePlugin     : "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-]
+    jUnitVersion = '4.12'
+
+    deps = [
+            // Kotlin
+            kotlinStdlib      : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotlinGradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    ]
+
+    testDeps = [
+        jUnit: "junit:junit:$jUnitVersion"
+    ]
+}
