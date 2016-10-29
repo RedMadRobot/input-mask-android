@@ -79,7 +79,7 @@ dependencies {
 
     compile deps.kotlinStdlib
     
-    testCompile 'junit:junit:4.12'
+    testCompile testDeps.jUnit
 }
 
 task sourcesJar(type: Jar) {
