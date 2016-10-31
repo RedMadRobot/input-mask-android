@@ -1,6 +1,6 @@
-[![Bintray](https://img.shields.io/bintray/v/rmr/maven/inputmask.svg)](https://bintray.com/rmr/maven/inputmask)
-
 # InputMask
+[![Bintray](https://img.shields.io/bintray/v/rmr/maven/inputmask.svg)](https://bintray.com/rmr/maven/inputmask) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+
 <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/direct-input.gif" alt="Direct input" width="210"/>
 <details>
 <summary>More GIFs [~3 MB]</summary>
