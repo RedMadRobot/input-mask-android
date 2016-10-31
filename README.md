@@ -1,3 +1,5 @@
+[![Bintray](https://img.shields.io/bintray/v/rmr/maven/inputmask.svg)](https://bintray.com/rmr/maven/inputmask)
+
 # InputMask
 
 ## Description
@@ -5,7 +7,7 @@ The library allows to format user input on the fly according to the provided mas
 
 To add library to your project simply add the following code to dependencies section of your build.gradle file:
 
-`compile 'com.redmadrobot:inputmask:1.0.0'`
+`compile 'com.redmadrobot:inputmask:1.0.1'`
 
 Masks consist of blocks of symbols, which may include:
 
