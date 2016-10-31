@@ -55,7 +55,7 @@ Mask format examples:
 # Installation
 ## Gradle
 
-`compile 'com.redmadrobot:inputmask:1.0.0'`
+`compile 'com.redmadrobot:inputmask:1.0.1'`
 
 # Usage
 ## Simple EditText for the phone numbers
