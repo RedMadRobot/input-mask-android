@@ -83,7 +83,7 @@ class Mask(format: String) {
                     }
                 }
             } else {
-                if (beforeCaret) {
+                if (iterator.beforeCaret()) {
                     modifiedCaretPosition -= 1
                 }
                 beforeCaret = iterator.beforeCaret()
