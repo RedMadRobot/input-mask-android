@@ -111,8 +111,7 @@ class MaskedTextChangedListener(
 
     override fun afterTextChanged(edit: Editable?) {
         this.field.get().removeTextChangedListener(this)
-        edit?.clear()
-        edit?.append(this.afterText)
+        edit?.replace(0, edit.length, this.afterText)
         this.field.get().setSelection(this.caretPosition)
         this.field.get().addTextChangedListener(this)
         this.listener?.afterTextChanged(edit)
