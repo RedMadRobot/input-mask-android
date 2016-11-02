@@ -113,6 +113,24 @@ public final class MainActivity extends Activity {
 }
 ```
 
+## String formatting without views
+
+In case you want to format a `String` somewhere in your applicaiton's code, `Mask` is the class you are looking for.
+Instantiate a `Mask` instance and feed it with your string, mocking the cursor position:
+
+```java
+final Mask mask = new Mask("+7 ([000]) [000] [00] [00]");
+final String input = "+71234567890";
+final Mask.Result result = mask.apply(
+    new CaretString(
+        input,
+        input.length()
+    ),
+    true // you may consider disabling autocompletion for your case
+);
+final String output = result.getFormattedText().getString();
+```
+
 # License
 
 The library is distributed under the MIT [LICENSE](https://opensource.org/licenses/MIT).
