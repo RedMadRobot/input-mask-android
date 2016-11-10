@@ -4,6 +4,7 @@ import com.redmadrobot.inputmask.model.CaretString
 import com.redmadrobot.inputmask.model.Next
 import com.redmadrobot.inputmask.model.State
 import com.redmadrobot.inputmask.model.state.*
+import java.util.*
 
 /**
  * ### Mask
@@ -32,6 +33,29 @@ class Mask(format: String) {
         init {
             this.formattedText = formattedText
             this.extractedValue = extractedValue
+        }
+    }
+
+    companion object Factory {
+        val cache: MutableMap<String, Mask> = HashMap()
+
+        /**
+         * Factory constructor.
+         *
+         * Operates over own ```Mask``` cache where initialized ```Mask``` objects are stored under
+         * corresponding format key:
+         * ```[format : mask]```
+         *
+         * @returns Previously cached ```Mask``` object for requested format string. If such it
+         * doesn't exist in cache, the object is constructed, cached and returned.
+         */
+        fun getOrCreate(format: String): Mask {
+            var cachedMask: Mask? = cache[format]
+            if (null == cachedMask) {
+                cachedMask = Mask(format)
+                cache[format] = cachedMask
+            }
+            return cachedMask
         }
     }
 
