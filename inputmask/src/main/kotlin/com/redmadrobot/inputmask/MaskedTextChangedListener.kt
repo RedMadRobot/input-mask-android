@@ -13,7 +13,7 @@ import java.lang.ref.WeakReference
  *
  * Created by taflanidi on 30.08.16.
  */
-class MaskedTextChangedListener(
+open class MaskedTextChangedListener(
         format: String,
         autocomplete: Boolean,
         field: EditText,
@@ -29,16 +29,16 @@ class MaskedTextChangedListener(
     var listener: TextWatcher?
     var valueListener: ValueListener?
 
-    private val mask: Mask
-    private val autocomplete: Boolean
+    val mask: Mask
+    val autocomplete: Boolean
 
-    private var afterText: String = ""
-    private var caretPosition: Int = 0
+    var afterText: String = ""
+    var caretPosition: Int = 0
 
-    private val field: WeakReference<EditText>
+    val field: WeakReference<EditText>
 
     init {
-        this.mask = Mask(format)
+        this.mask = Mask.getOrCreate(format)
         this.autocomplete = autocomplete
         this.listener = listener
         this.valueListener = valueListener
@@ -49,7 +49,7 @@ class MaskedTextChangedListener(
      * Set text and apply formatting.
      * @param text - text; might be plain, might already have some formatting.
      */
-    fun setText(text: String) {
+    open fun setText(text: String) {
         val result: Mask.Result =
                 this.mask.apply(
                         CaretString(
