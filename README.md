@@ -131,6 +131,53 @@ final Mask.Result result = mask.apply(
 final String output = result.getFormattedText().getString();
 ```
 
+## Affine masks
+
+An experimental feature. While transforming the text, `Mask` calculates `affinity` index, which is basically an `Int` that shows the absolute rate of similarity between the text and the mask pattern.
+
+This index might be used to choose the most suitable pattern between predefined, and then applied to format the text.
+
+For the implementation, look for the `PolyMaskTextChangedListener` class, which inherits logic from `MaskedTextChangedListener`. It has its primary mask pattern and corresponding list of affine formats.
+
+``` java
+public final class MainActivity extends Activity {
+
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        final EditText editText = (EditText) findViewById(R.id.edit_text);
+        final List<String> affineFormats = new ArrayList<>();
+        affineFormats.add("8 ([000]) [000] [000] [00]");
+
+        final MaskedTextChangedListener listener = new PolyMaskTextChangedListener(
+            "+7 ([000]) [000] [00] [00]",
+            affineFormats,
+            true,
+            editText,
+            null,
+            new MaskedTextChangedListener.ValueListener() {
+                @Override
+                public void onExtracted(String value) {
+                    Log.d(MainActivity.class.getSimpleName(), value);
+                }
+
+                @Override
+                public void onMandatoryCharactersFilled(boolean complete) {
+                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(complete));
+                }
+            }
+        );
+
+        editText.addTextChangedListener(listener);
+        editText.setOnFocusChangeListener(listener);
+
+        editText.setHint(listener.placeholder());
+    }
+
+}
+```
+
 # License
 
 The library is distributed under the MIT [LICENSE](https://opensource.org/licenses/MIT).
