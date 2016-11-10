@@ -26,13 +26,15 @@ class Mask(format: String) {
      *
      * The end result of mask application to the user input string.
      */
-    class Result(formattedText: CaretString, extractedValue: String) {
-        val formattedText: CaretString
+    class Result(formattedText: CaretString, extractedValue: String, affinity: Int) {
+        val formattedText:  CaretString
         val extractedValue: String
+        val affinity:       Int
 
         init {
             this.formattedText = formattedText
             this.extractedValue = extractedValue
+            this.affinity = affinity
         }
     }
 
@@ -84,6 +86,7 @@ class Mask(format: String) {
     fun apply(text: CaretString, autocomplete: Boolean): Result {
         val iterator: CaretStringIterator = CaretStringIterator(text)
 
+        var affinity:       Int    = 0
         var extractedValue: String = ""
         var modifiedString: String = ""
         var modifiedCaretPosition: Int = text.caretPosition
@@ -101,10 +104,12 @@ class Mask(format: String) {
                 if (next.pass) {
                     beforeCaret = iterator.beforeCaret()
                     character = iterator.next()
+                    affinity += 1
                 } else {
                     if (beforeCaret && null != next.insert) {
                         modifiedCaretPosition += 1
                     }
+                    affinity -= 1
                 }
             } else {
                 if (iterator.beforeCaret()) {
@@ -112,6 +117,7 @@ class Mask(format: String) {
                 }
                 beforeCaret = iterator.beforeCaret()
                 character = iterator.next()
+                affinity -= 1
             }
         }
 
@@ -131,7 +137,8 @@ class Mask(format: String) {
                         modifiedString,
                         modifiedCaretPosition
                 ),
-                extractedValue
+                extractedValue,
+                affinity
         )
     }
 
