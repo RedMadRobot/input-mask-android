@@ -178,6 +178,23 @@ public final class MainActivity extends Activity {
 }
 ```
 
+# Known issues
+## InputMask vs. `android:inputType`
+
+Be careful when specifying field's `android:inputType`. 
+The library uses native `Editable` variable received on `afterTextChange` event in order to replace text efficiently. Because of that, field's `inputType` is actually considered when the library is trying to mutate the text. 
+
+For instance, having a field with `android:inputType="numeric"`, you cannot put spaces and dashes into the mentioned `Editable` variable by default. Doing so will cause an out of range exception when the `MaskedTextChangedListener` will try to reposition the cursor.
+
+Still, you may use a workaround by putting the `android:digits` value beside your `android:inputType`; there, you should specify all the acceptable symbols:
+```java
+<EditText
+    android:inputType="number"
+    android:digits="0123456789 -."
+    ... />
+```
+— such that, you'll have the SDK satisfied.
+
 # License
 
 The library is distributed under the MIT [LICENSE](https://opensource.org/licenses/MIT).
