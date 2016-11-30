@@ -1,8 +1,10 @@
 package com.redmadrobot.inputmask
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.redmadrobot.inputmask.helper.Mask
 import com.redmadrobot.inputmask.model.CaretString
@@ -19,7 +21,7 @@ open class MaskedTextChangedListener(
         field: EditText,
         listener: TextWatcher?,
         valueListener: ValueListener?
-) : TextWatcher, View.OnFocusChangeListener {
+) : TextWatcher, View.OnFocusChangeListener, View.OnClickListener {
 
     interface ValueListener {
         fun onExtracted(value: String)
@@ -28,9 +30,11 @@ open class MaskedTextChangedListener(
 
     var listener: TextWatcher?
     var valueListener: ValueListener?
+    var inputMethodManager: InputMethodManager? = null
 
     val mask: Mask
     val autocomplete: Boolean
+    var showSoftKeyboard = true
 
     var afterText: String = ""
     var caretPosition: Int = 0
@@ -109,6 +113,17 @@ open class MaskedTextChangedListener(
         return this.mask.totalValueLength()
     }
 
+    /**
+     * enable or disable show softKeyboard when receive focus or on editText click
+     * (in case need to disable of showing default softKeyboard, for example when need to use custom keyboard)
+     */
+    fun showSoftKeyboard(show: Boolean){
+        showSoftKeyboard = show
+        if (inputMethodManager == null) {
+            inputMethodManager = field.get().context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        }
+    }
+
     override fun afterTextChanged(edit: Editable?) {
         this.field.get().removeTextChangedListener(this)
         edit?.replace(0, edit.length, this.afterText)
@@ -138,6 +153,10 @@ open class MaskedTextChangedListener(
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
+        if (hasFocus && !showSoftKeyboard){
+            hideSoftKeyboard()
+        }
+
         if (this.autocomplete && hasFocus) {
             val text: String
             if (this.field.get().text.isEmpty()) {
@@ -159,6 +178,16 @@ open class MaskedTextChangedListener(
             this.valueListener?.onExtracted(result.extractedValue)
             this.valueListener?.onMandatoryCharactersFilled(result.extractedValue.length >= this.acceptableValueLength())
         }
+    }
+
+    override fun onClick(v:View){
+        if (!showSoftKeyboard){
+            hideSoftKeyboard()
+        }
+    }
+
+    private fun hideSoftKeyboard(){
+        inputMethodManager?.hideSoftInputFromWindow(field.get().windowToken, 0)
     }
 
 }

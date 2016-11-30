@@ -1,13 +1,12 @@
 package com.redmadrobot.sample;
 
-import com.redmadrobot.inputmask.MaskedTextChangedListener;
-import com.redmadrobot.inputmask.PolyMaskTextChangedListener;
-
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+
+import com.redmadrobot.inputmask.MaskedTextChangedListener;
+import com.redmadrobot.inputmask.PolyMaskTextChangedListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,10 +45,15 @@ public final class MainActivity extends Activity {
             }
         );
 
+
         editText.addTextChangedListener(listener);
         editText.setOnFocusChangeListener(listener);
 
         editText.setHint(listener.placeholder());
+
+//        uncomment in case need to disable of showing default softKeyboard, for example when need to use custom keyboard
+//        editText.setOnClickListener(listener);
+//        listener.showSoftKeyboard(false);
     }
 
 }
