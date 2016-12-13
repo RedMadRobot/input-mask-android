@@ -22,8 +22,7 @@ open class MaskedTextChangedListener(
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
-        fun onExtracted(value: String)
-        fun onMandatoryCharactersFilled(complete: Boolean)
+        fun onTextChanged(maskFilled: Boolean, extractedValue: String)
     }
 
     var listener: TextWatcher?
@@ -60,8 +59,7 @@ open class MaskedTextChangedListener(
                 )
         this.field.get().setText(result.formattedText.string)
         this.field.get().setSelection(result.formattedText.caretPosition)
-        this.valueListener?.onExtracted(result.extractedValue)
-        this.valueListener?.onMandatoryCharactersFilled(result.extractedValue.length >= this.acceptableValueLength())
+        this.valueListener?.onTextChanged(result.extractedValue.length >= this.acceptableValueLength(), result.extractedValue)
     }
 
     /**
@@ -133,8 +131,7 @@ open class MaskedTextChangedListener(
                 )
         this.afterText = result.formattedText.string
         this.caretPosition = if (isDeletion) cursorPosition else result.formattedText.caretPosition
-        this.valueListener?.onExtracted(result.extractedValue)
-        this.valueListener?.onMandatoryCharactersFilled(result.extractedValue.length >= this.acceptableValueLength())
+        this.valueListener?.onTextChanged(result.extractedValue.length >= this.acceptableValueLength(), result.extractedValue)
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
@@ -156,8 +153,7 @@ open class MaskedTextChangedListener(
                     )
             this.field.get().setText(result.formattedText.string)
             this.field.get().setSelection(result.formattedText.caretPosition)
-            this.valueListener?.onExtracted(result.extractedValue)
-            this.valueListener?.onMandatoryCharactersFilled(result.extractedValue.length >= this.acceptableValueLength())
+            this.valueListener?.onTextChanged(result.extractedValue.length >= this.acceptableValueLength(), result.extractedValue)
         }
     }
 
