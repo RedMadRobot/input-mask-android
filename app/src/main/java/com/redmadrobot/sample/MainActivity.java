@@ -3,9 +3,9 @@ package com.redmadrobot.sample;
 import com.redmadrobot.inputmask.MaskedTextChangedListener;
 import com.redmadrobot.inputmask.PolyMaskTextChangedListener;
 
-
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.EditText;
 
@@ -34,14 +34,11 @@ public final class MainActivity extends Activity {
             editText,
             null,
             new MaskedTextChangedListener.ValueListener() {
-                @Override
-                public void onExtracted(String value) {
-                    Log.d(MainActivity.class.getSimpleName(), value);
-                }
 
                 @Override
-                public void onMandatoryCharactersFilled(boolean complete) {
-                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(complete));
+                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
+                    Log.d(MainActivity.class.getSimpleName(), extractedValue);
+                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
                 }
             }
         );

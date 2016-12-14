@@ -16,7 +16,7 @@ The library allows to format user input on the fly according to the provided mas
 To add library to your project simply add the following code to dependencies section of your build.gradle file:
 
 ```gradle
-compile 'com.redmadrobot:inputmask:1.1.0'
+compile 'com.redmadrobot:inputmask:2.0.0'
 ```
 
 Masks consist of blocks of symbols, which may include:
@@ -61,7 +61,7 @@ Mask format examples:
 ## Gradle
 
 ```gradle
-compile 'com.redmadrobot:inputmask:1.1.0'
+compile 'com.redmadrobot:inputmask:2.0.0'
 ```
 
 # Usage
@@ -94,13 +94,9 @@ public final class MainActivity extends Activity {
             null,
             new MaskedTextChangedListener.ValueListener() {
                 @Override
-                public void onExtracted(@NotNull String value) {
-                    Log.d(MainActivity.class.getSimpleName(), value);
-                }
-
-                @Override
-                public void onMandatoryCharactersFilled(boolean complete) {
-                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(complete));
+                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
+                    Log.d(MainActivity.class.getSimpleName(), extractedValue);
+                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
                 }
             }
         );
@@ -158,13 +154,9 @@ public final class MainActivity extends Activity {
             null,
             new MaskedTextChangedListener.ValueListener() {
                 @Override
-                public void onExtracted(String value) {
-                    Log.d(MainActivity.class.getSimpleName(), value);
-                }
-
-                @Override
-                public void onMandatoryCharactersFilled(boolean complete) {
-                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(complete));
+                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
+                    Log.d(MainActivity.class.getSimpleName(), extractedValue);
+                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
                 }
             }
         );
@@ -194,6 +186,12 @@ Still, you may use a workaround by putting the `android:digits` value beside you
     ... />
 ```
 — such that, you'll have the SDK satisfied.
+
+# Compatibility with 1.1.0 and above
+
+In 2.0.0 version separate callbacks *onExtracted(String value)* *onMandatoryCharactersFilled(boolean complete)* have merged at single callback *onTextChanged(boolean maskFilled, @NonNull final String extractedValue)*
+
+Be careful while migration process!
 
 # License
 
