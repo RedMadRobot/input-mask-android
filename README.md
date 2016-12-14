@@ -61,7 +61,7 @@ Mask format examples:
 ## Gradle
 
 ```gradle
-compile 'com.redmadrobot:inputmask:1.1.0'
+compile 'com.redmadrobot:inputmask:2.0.0'
 ```
 
 # Usage
