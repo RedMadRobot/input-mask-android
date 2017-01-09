@@ -42,7 +42,7 @@ class PolyMaskTextChangedListener(
             )
         this.field.get().setText(result.formattedText.string)
         this.field.get().setSelection(result.formattedText.caretPosition)
-        this.valueListener?.onTextChanged(result.extractedValue.length >= this.acceptableValueLength(), result.extractedValue)
+        this.valueListener?.onTextChanged(result.complete, result.extractedValue)
     }
 
     override fun onTextChanged(text: CharSequence, cursorPosition: Int, before: Int, count: Int) {
@@ -61,7 +61,7 @@ class PolyMaskTextChangedListener(
             )
         this.afterText = result.formattedText.string
         this.caretPosition = if (isDeletion) cursorPosition else result.formattedText.caretPosition
-        this.valueListener?.onTextChanged(result.extractedValue.length >= this.acceptableValueLength(), result.extractedValue)
+        this.valueListener?.onTextChanged(result.complete, result.extractedValue)
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
@@ -87,7 +87,7 @@ class PolyMaskTextChangedListener(
                 )
             this.field.get().setText(result.formattedText.string)
             this.field.get().setSelection(result.formattedText.caretPosition)
-            this.valueListener?.onTextChanged(result.extractedValue.length >= this.acceptableValueLength(), result.extractedValue)
+            this.valueListener?.onTextChanged(result.complete, result.extractedValue)
         }
     }
 
