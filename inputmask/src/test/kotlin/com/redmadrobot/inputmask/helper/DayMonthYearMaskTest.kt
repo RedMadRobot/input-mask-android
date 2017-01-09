@@ -94,6 +94,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -113,6 +115,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -132,6 +136,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -151,6 +157,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -170,6 +178,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -189,6 +199,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -205,6 +217,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -221,6 +235,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -237,6 +253,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -253,6 +271,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -269,6 +289,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
@@ -285,6 +307,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -301,6 +325,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -317,6 +343,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -333,6 +361,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -349,6 +379,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -365,6 +397,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -381,6 +415,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -397,6 +433,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -413,6 +451,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -429,6 +469,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -445,6 +487,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -461,6 +505,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -477,6 +523,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -493,6 +541,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
@@ -509,6 +559,8 @@ class DayMonthYearMaskTest : MaskTest() {
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
+
+        Assert.assertEquals(true, result.complete)
     }
 
 }

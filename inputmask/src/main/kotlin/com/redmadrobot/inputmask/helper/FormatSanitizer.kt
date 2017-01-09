@@ -124,6 +124,10 @@ class FormatSanitizer {
             }
         }
 
+        if (!currentBlock.isEmpty()) {
+            blocks.add(currentBlock)
+        }
+
         return blocks
     }
 

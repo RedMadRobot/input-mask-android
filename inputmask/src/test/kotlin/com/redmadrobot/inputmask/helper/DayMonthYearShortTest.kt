@@ -93,6 +93,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(1, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -111,6 +112,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(2, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -129,6 +131,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(2, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -147,6 +150,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(3, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -165,6 +169,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(4, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -183,6 +188,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(4, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -201,6 +207,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(5, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -219,6 +226,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(7, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -237,6 +245,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(8, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -255,6 +264,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(5, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -273,6 +283,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(6, result.affinity)
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
@@ -291,6 +302,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(3, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -309,6 +321,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(3, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -327,6 +340,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(0, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -345,6 +359,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(-4, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -363,6 +378,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(-7, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -381,6 +397,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(-1, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -399,6 +416,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(0, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -417,6 +435,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(1, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -435,6 +454,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(2, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -453,6 +473,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(2, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -471,6 +492,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(3, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -489,6 +511,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(3, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -507,6 +530,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(4, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -525,6 +549,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(5, result.affinity)
+        Assert.assertEquals(false, result.complete)
     }
 
     @Test
@@ -543,6 +568,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(6, result.affinity)
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
@@ -561,6 +587,7 @@ class DayMonthYearShortTest : MaskTest() {
         Assert.assertEquals(expectedValue, result.extractedValue)
 
         Assert.assertEquals(5, result.affinity)
+        Assert.assertEquals(true, result.complete)
     }
 
 }

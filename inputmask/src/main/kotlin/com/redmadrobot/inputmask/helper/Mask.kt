@@ -26,15 +26,38 @@ class Mask(format: String) {
      *
      * The end result of mask application to the user input string.
      */
-    class Result(formattedText: CaretString, extractedValue: String, affinity: Int) {
-        val formattedText:  CaretString
+    class Result(
+        formattedText: CaretString,
+        extractedValue: String,
+        affinity: Int,
+        complete: Boolean
+    ) {
+
+        /**
+         * Formatted text with updated caret position.
+         */
+        val formattedText: CaretString
+
+        /**
+         * Value, extracted from formatted text according to mask format.
+         */
         val extractedValue: String
-        val affinity:       Int
+
+        /**
+         * Calculated absolute affinity value between the mask format and input text.
+         */
+        val affinity: Int
+
+        /**
+         * User input is complete.
+         */
+        val complete: Boolean
 
         init {
             this.formattedText = formattedText
             this.extractedValue = extractedValue
             this.affinity = affinity
+            this.complete = complete
         }
     }
 
@@ -133,12 +156,13 @@ class Mask(format: String) {
         }
 
         return Result(
-                CaretString(
-                        modifiedString,
-                        modifiedCaretPosition
-                ),
-                extractedValue,
-                affinity
+            CaretString(
+                modifiedString,
+                modifiedCaretPosition
+            ),
+            extractedValue,
+            affinity,
+            state is EOLState
         )
     }
 
