@@ -20,4 +20,13 @@ class FormatSanitizerTest {
 
         assertEquals(expectedString, actualString)
     }
+
+    @Test
+    fun sanitize_DivideMixedSymbolsIntoOwnGroups() {
+        val expectedString = "[09][Aa][_-]"
+        val actualString = FormatSanitizer().sanitize("[09Aa_-]")
+
+        assertEquals(expectedString, actualString)
+    }
+
 }
