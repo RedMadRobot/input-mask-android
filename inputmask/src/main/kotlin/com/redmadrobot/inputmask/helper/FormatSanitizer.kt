@@ -11,8 +11,10 @@ import java.util.*
  * ```n = formatString.characters.count```
  *
  * @requires Format string to contain only flat groups of symbols in ```[]``` and ```{}``` brackets
- * without nested brackets, like ```[[000]99]```. Square bracket ```[]``` groups cannot contain
- * mixed types of symbols ("0" and "9" with "A" and "a" or "_" and "-").
+ * without nested brackets, like ```[[000]99]```. Square bracket ```[]``` groups may contain mixed
+ * types of symbols ("0" and "9" with "A" and "a" or "_" and "-"), which sanitizer will divide into
+ * separate groups. Such that, ```[0000Aa]``` group will be divided in two groups: ```[0000]```
+ * and ```[Aa]```.
  *
  * ```FormatSanitizer``` is used by ```Compiler``` before format string compilation.
  *
@@ -40,8 +42,10 @@ class FormatSanitizer {
  * ```n = formatString.characters.count```
  *
  * @requires Format string to contain only flat groups of symbols in ```[]``` and ```{}``` brackets
- * without nested brackets, like ```[[000]99]```. Square bracket ```[]``` groups cannot contain
- * mixed types of symbols ("0" and "9" with "A" and "a" or "_" and "-").
+ * without nested brackets, like ```[[000]99]```. Square bracket ```[]``` groups may contain mixed
+ * types of symbols ("0" and "9" with "A" and "a" or "_" and "-"), which sanitizer will divide into
+ * separate groups. Such that, ```[0000Aa]``` group will be divided in two groups: ```[0000]```
+ * and ```[Aa]```.
  *
  * @param formatString: mask format string.
  *
@@ -53,10 +57,102 @@ class FormatSanitizer {
     fun sanitize(formatString: String): String {
         this.checkOpenBraces(formatString)
 
-        val blocks: List<String> = this.getFormatBlocks(formatString)
-        this.checkFormatBlocks(blocks)
+        val blocks: List<String> =
+            this.divideBlocksWithMixedCharacters(this.getFormatBlocks(formatString))
 
         return this.sortFormatBlocks(blocks).joinToString("")
+    }
+
+    private fun getFormatBlocks(formatString: String): List<String> {
+        val blocks: MutableList<String> = ArrayList()
+        var currentBlock: String = ""
+
+        for (char in formatString.toCharArray()) {
+            if ('[' == char || '{' == char) {
+                if (currentBlock.isNotEmpty()) {
+                    blocks.add(currentBlock)
+                }
+                currentBlock = ""
+            }
+
+            currentBlock += char
+
+            if (']' == char || '}' == char) {
+                blocks.add(currentBlock)
+                currentBlock = ""
+            }
+        }
+
+        if (!currentBlock.isEmpty()) {
+            blocks.add(currentBlock)
+        }
+
+        return blocks
+    }
+
+    private fun divideBlocksWithMixedCharacters(blocks: List<String>): List<String> {
+        val resultingBlocks: MutableList<String> = ArrayList()
+
+        for (block in blocks) {
+            if (block.startsWith("[")) {
+                var blockBuffer: String = ""
+                for (blockCharacter in block) {
+                    if (blockCharacter == '[') {
+                        blockBuffer += blockCharacter
+                        continue
+                    }
+
+                    if (blockCharacter == ']') {
+                        blockBuffer += blockCharacter
+                        resultingBlocks.add(blockBuffer)
+                        break
+                    }
+
+                    if (blockCharacter == '0' || blockCharacter == '9') {
+                        if (blockBuffer.contains("A")
+                         || blockBuffer.contains("a")
+                         || blockBuffer.contains("-")
+                         || blockBuffer.contains("_")) {
+                            blockBuffer += "]"
+                            resultingBlocks.add(blockBuffer)
+                            blockBuffer = "[" + blockCharacter
+                            continue
+                        }
+                    }
+
+                    if (blockCharacter == 'A' || blockCharacter == 'a') {
+                        if (blockBuffer.contains("0")
+                         || blockBuffer.contains("9")
+                         || blockBuffer.contains("-")
+                         || blockBuffer.contains("_")) {
+                            blockBuffer += "]"
+                            resultingBlocks.add(blockBuffer)
+                            blockBuffer = "[" + blockCharacter
+                            continue
+                        }
+                    }
+
+                    if (blockCharacter == '-' || blockCharacter == '_') {
+                        if (blockBuffer.contains("0")
+                         || blockBuffer.contains("9")
+                         || blockBuffer.contains("A")
+                         || blockBuffer.contains("a")) {
+                            blockBuffer += "]"
+                            resultingBlocks.add(blockBuffer)
+                            blockBuffer = "[" + blockCharacter
+                            continue
+                        }
+                    }
+
+                    blockBuffer += blockCharacter
+                }
+            } else {
+                resultingBlocks.add(block)
+            }
+
+        }
+
+        return resultingBlocks
     }
 
     private fun sortFormatBlocks(blocks: List<String>): List<String> {
@@ -81,54 +177,6 @@ class FormatSanitizer {
         }
 
         return sortedBlocks
-    }
-
-    private fun checkFormatBlocks(blocks: List<String>) {
-        for (block in blocks) {
-            if (block.startsWith("[")) {
-                if (block.contains("0") || block.contains("9")) {
-                    if (block.contains("A") || block.contains("a")) throw Compiler.FormatError()
-                    if (block.contains("-") || block.contains("_")) throw Compiler.FormatError()
-                }
-
-                if (block.contains("a") || block.contains("A")) {
-                    if (block.contains("0") || block.contains("9")) throw Compiler.FormatError()
-                    if (block.contains("-") || block.contains("_")) throw Compiler.FormatError()
-                }
-
-                if (block.contains("-") || block.contains("_")) {
-                    if (block.contains("0") || block.contains("9")) throw Compiler.FormatError()
-                    if (block.contains("A") || block.contains("a")) throw Compiler.FormatError()
-                }
-            }
-        }
-    }
-
-    private fun getFormatBlocks(formatString: String): List<String> {
-        var blocks: MutableList<String> = ArrayList()
-        var currentBlock: String = ""
-
-        for (char in formatString.toCharArray()) {
-            if ('[' == char || '{' == char) {
-                if (0 < currentBlock.length) {
-                    blocks.add(currentBlock)
-                }
-                currentBlock = ""
-            }
-
-            currentBlock += char
-
-            if (']' == char || '}' == char) {
-                blocks.add(currentBlock)
-                currentBlock = ""
-            }
-        }
-
-        if (!currentBlock.isEmpty()) {
-            blocks.add(currentBlock)
-        }
-
-        return blocks
     }
 
     private fun checkOpenBraces(string: String) {
