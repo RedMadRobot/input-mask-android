@@ -181,13 +181,29 @@ The library uses native `Editable` variable received on `afterTextChange` event 
 For instance, having a field with `android:inputType="numeric"`, you cannot put spaces and dashes into the mentioned `Editable` variable by default. Doing so will cause an out of range exception when the `MaskedTextChangedListener` will try to reposition the cursor.
 
 Still, you may use a workaround by putting the `android:digits` value beside your `android:inputType`; there, you should specify all the acceptable symbols:
-```java
+```xml
 <EditText
     android:inputType="number"
     android:digits="0123456789 -."
     ... />
 ```
 — such that, you'll have the SDK satisfied.
+
+## InputMask vs. autocorrection & prediction
+
+Symptoms: 
+– You've got a wildcard template like `[________]`, allowing user to write any kind of symbols;
+– Cursor jumpes to the beggining of the line or to some random position while user input.
+
+In this case text autocorrection & prediction might be a root cause of your problem, as it behaves somewhat weirdly in case when field listener tries to change the text during user input.
+
+If so, consider disabling text suggestions by using corresponding input type:
+```xml
+<EditText
+    ...
+    android:inputType="textNoSuggestions" />
+```
+Additionally be aware that some of the third-party keyboards ignore `textNoSuggestions` setting; the recommendation is to use an extra workaround by setting the `inputType` to `textVisiblePassword`.
 
 # Compatibility with 1.1.0 and above
 
