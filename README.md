@@ -192,8 +192,8 @@ Still, you may use a workaround by putting the `android:digits` value beside you
 ## InputMask vs. autocorrection & prediction
 
 Symptoms: 
-– You've got a wildcard template like `[________]`, allowing user to write any kind of symbols;
-– Cursor jumpes to the beggining of the line or to some random position while user input.
+* You've got a wildcard template like `[________]`, allowing user to write any kind of symbols;
+* Cursor jumpes to the beggining of the line or to some random position while user input.
 
 In this case text autocorrection & prediction might be a root cause of your problem, as it behaves somewhat weirdly in case when field listener tries to change the text during user input.
 
