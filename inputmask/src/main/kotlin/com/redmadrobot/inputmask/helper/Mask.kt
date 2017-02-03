@@ -162,7 +162,7 @@ class Mask(format: String) {
             ),
             extractedValue,
             affinity,
-            state is EOLState
+            this.noMandatoryCharactersLeftAfterState(state)
         )
     }
 
@@ -301,5 +301,17 @@ class Mask(format: String) {
         }
 
         return placeholder
+    }
+
+    private fun noMandatoryCharactersLeftAfterState(state: State): Boolean {
+        if (state is EOLState) {
+            return true
+        } else if (state is FixedState
+                || state is FreeState
+                || state is ValueState) {
+            return false
+        } else {
+            return this.noMandatoryCharactersLeftAfterState(state.nextState())
+        }
     }
 }
