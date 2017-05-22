@@ -17,7 +17,7 @@ The library allows to format user input on the fly according to the provided mas
 To add library to your project simply add the following code to dependencies section of your build.gradle file:
 
 ```gradle
-compile 'com.redmadrobot:inputmask:2.2.1'
+compile 'com.redmadrobot:inputmask:2.3.0'
 ```
 
 Masks consist of blocks of symbols, which may include:
@@ -64,7 +64,7 @@ Mask format examples:
 ## Gradle
 
 ```gradle
-compile 'com.redmadrobot:inputmask:2.2.1'
+compile 'com.redmadrobot:inputmask:2.3.0'
 ```
 
 # Usage
