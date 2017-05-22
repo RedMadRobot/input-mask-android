@@ -10,6 +10,7 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/complete.gif" alt="Direct input" width="210"/>
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
+
 ## Description
 The library allows to format user input on the fly according to the provided mask and to extract valueable characters.  
 
