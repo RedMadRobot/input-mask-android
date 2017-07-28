@@ -190,6 +190,12 @@ Still, you may use a workaround by putting the `android:digits` value beside you
 ```
 — such that, you'll have the SDK satisfied.
 
+Alternatively, if you are using a programmatic approach without XML files, you may consider configuring a `KeyListener` like this:
+```java
+editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+editText.setKeyListener(DigitsKeyListener.getInstance("0123456789 -.")); // modify character set for your case, e.g. add "+()"
+```
+
 ## InputMask vs. autocorrection & prediction
 
 Symptoms: 
