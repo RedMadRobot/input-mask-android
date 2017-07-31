@@ -14,12 +14,6 @@
 ## Description
 The library allows to format user input on the fly according to the provided mask and to extract valueable characters.  
 
-To add library to your project simply add the following code to dependencies section of your build.gradle file:
-
-```gradle
-compile 'com.redmadrobot:inputmask:2.3.0'
-```
-
 Masks consist of blocks of symbols, which may include:
 
 * `[]` — a block for valueable symbols written by user. 
@@ -64,7 +58,13 @@ Mask format examples:
 ## Gradle
 
 ```gradle
-compile 'com.redmadrobot:inputmask:2.3.0'
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.redmadrobot:inputmask:2.3.0'
+}
 ```
 
 # Usage
