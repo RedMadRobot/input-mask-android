@@ -59,7 +59,7 @@ Mask format examples:
 
 ```gradle
 repositories {
-    maven { url "http://dl.bintray.com/rmr/maven" }
+    jcenter()
 }
 
 dependencies {
