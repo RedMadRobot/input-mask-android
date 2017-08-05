@@ -1,5 +1,7 @@
 # InputMask
-[![Bintray](https://img.shields.io/bintray/v/rmr/maven/inputmask.svg)](https://bintray.com/rmr/maven/inputmask) [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![Bintray](https://img.shields.io/bintray/v/rmr/maven/inputmask.svg)](https://bintray.com/rmr/maven/inputmask)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![Platform](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/platform.svg)]()[![Android](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/android.svg)](https://github.com/RedMadRobot/input-mask-android)[![iOS](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/ios.svg)](https://github.com/RedMadRobot/input-mask-ios)
 
 <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/direct-input.gif" alt="Direct input" width="210"/>
 <details>
