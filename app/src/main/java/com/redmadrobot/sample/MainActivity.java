@@ -1,7 +1,7 @@
 package com.redmadrobot.sample;
 
 import com.redmadrobot.inputmask.MaskedTextChangedListener;
-import com.redmadrobot.inputmask.MultiMaskedTextChangedListener;
+import com.redmadrobot.inputmask.MultiPhoneMaskedTextChangedListener;
 import com.redmadrobot.inputmask.PolyMaskTextChangedListener;
 
 import android.app.Activity;
@@ -56,11 +56,9 @@ public final class MainActivity extends Activity {
         formats.put(7, "+7 ([000]) [000]-[00]-[00]");
         formats.put(375, "+3[00] ([00]) [000]-[00]-[00]");
 
-        final MaskedTextChangedListener multilistener = new MultiMaskedTextChangedListener(
-                multiText,
-                null,
-                formats
-        );
+        final MaskedTextChangedListener multilistener = new MultiPhoneMaskedTextChangedListener(
+                formats, multiText,
+                null);
 
         multiText.addTextChangedListener(multilistener);
 

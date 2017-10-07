@@ -13,12 +13,12 @@ import java.lang.ref.WeakReference
  *
  * Created by taflanidi on 30.08.16.
  */
-open class MaskedTextChangedListener(
+open class MaskedTextChangedListener @JvmOverloads constructor(
         format: String,
-        autocomplete: Boolean,
+        autocomplete: Boolean = true,
         field: EditText,
-        listener: TextWatcher?,
-        valueListener: ValueListener?
+        listener: TextWatcher? = null,
+        valueListener: ValueListener? = null
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
