@@ -26,6 +26,25 @@ public final class MainActivity extends Activity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupPolymask();
+        setupMultimask();
+
+    }
+
+    private void setupMultimask() {
+        final EditText multiText = (EditText) findViewById(R.id.multimasked_et);
+        final Map<Integer, String> formats = new HashMap<>();
+        formats.put(7, "+7 ([000]) [000]-[00]-[00]");
+        formats.put(375, "+3[00] ([00]) [000]-[00]-[00]");
+
+        final MaskedTextChangedListener multilistener = new MultiPhoneMaskedTextChangedListener(
+                formats, multiText,
+                null);
+
+        multiText.addTextChangedListener(multilistener);
+    }
+
+    private void setupPolymask() {
         final EditText editText = (EditText) findViewById(R.id.polymasked_et);
         final List<String> affineFormats = new ArrayList<>();
         affineFormats.add("8 ([000]) [000] [000] [00]");
@@ -50,18 +69,6 @@ public final class MainActivity extends Activity {
         editText.setOnFocusChangeListener(listener);
 
         editText.setHint(listener.placeholder());
-
-        final EditText multiText = (EditText) findViewById(R.id.multimasked_et);
-        final Map<Integer, String> formats = new HashMap<>();
-        formats.put(7, "+7 ([000]) [000]-[00]-[00]");
-        formats.put(375, "+3[00] ([00]) [000]-[00]-[00]");
-
-        final MaskedTextChangedListener multilistener = new MultiPhoneMaskedTextChangedListener(
-                formats, multiText,
-                null);
-
-        multiText.addTextChangedListener(multilistener);
-
     }
 
 }
