@@ -14,38 +14,6 @@ class DayMonthYearShortTest : MaskTest() {
         return "[90]{.}[90]{.}[0000]"
     }
 
-    @Test
-    fun init_correctFormat_maskInitialized() {
-        Assert.assertNotNull(this.mask())
-    }
-
-    @Test
-    fun init_correctFormat_measureTime() {
-        val startTime = System.nanoTime()
-
-        var masks: MutableList<Mask> = ArrayList()
-        for (i in 1..1000) {
-            masks.add(Mask(this.format()))
-        }
-        val endTime = System.nanoTime()
-        val duration = (endTime - startTime) / 1000000
-
-        print("Took $duration milliseconds")
-    }
-
-    @Test
-    fun getOrCreate_correctFormat_measureTime() {
-        val startTime = System.nanoTime()
-
-        var masks: MutableList<Mask> = ArrayList()
-        for (i in 1..1000) {
-            masks.add(Mask.getOrCreate(this.format()))
-        }
-        val endTime = System.nanoTime()
-        val duration = (endTime - startTime) / 1000000
-
-        print("Took $duration milliseconds")
-    }
 
     @Test
     fun getPlaceholder_allSet_returnsCorrectPlaceholder() {
