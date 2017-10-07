@@ -28,7 +28,7 @@ open class MaskedTextChangedListener(
     var listener: TextWatcher?
     var valueListener: ValueListener?
 
-    val mask: Mask
+    var mask: Mask
     val autocomplete: Boolean
 
     var afterText: String = ""
