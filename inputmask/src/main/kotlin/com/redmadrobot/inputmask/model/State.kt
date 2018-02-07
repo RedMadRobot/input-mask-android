@@ -11,6 +11,12 @@ package com.redmadrobot.inputmask.model
 abstract class State(child: State?) {
     val child: State?
 
+    enum class StateType {
+        Numeric,
+        Literal,
+        AlphaNumeric
+    }
+
     /**
      * Constructor.
      *

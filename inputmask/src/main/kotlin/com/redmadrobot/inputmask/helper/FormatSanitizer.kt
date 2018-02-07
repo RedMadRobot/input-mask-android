@@ -22,43 +22,43 @@ import java.util.*
  */
 class FormatSanitizer {
 
-/**
- * Sanitize ```formatString``` before compilation.
- *
- * In order to do so, sanitizer splits the string into groups of regular symbols, symbols in square
- * brackets [] and symbols in curly brackets {}. Then, characters in square brackets are sorted in
- * a way that mandatory symbols go before optional symbols. For instance,
- *
- * ```
- * a ([0909]) b
- * ```
- *
- * mask format is rearranged to
- *
- * ```
- * a ([0099]) b
- * ```
- * @complexity ```O(2*floor(log(n)))```, and switches to ```O(n^2)``` for ```n < 20``` where
- * ```n = formatString.characters.count```
- *
- * @requires Format string to contain only flat groups of symbols in ```[]``` and ```{}``` brackets
- * without nested brackets, like ```[[000]99]```. Square bracket ```[]``` groups may contain mixed
- * types of symbols ("0" and "9" with "A" and "a" or "_" and "-"), which sanitizer will divide into
- * separate groups. Such that, ```[0000Aa]``` group will be divided in two groups: ```[0000]```
- * and ```[Aa]```.
- *
- * @param formatString: mask format string.
- *
- * @returns Sanitized format string.
- *
- * @throws ```FormatError``` if ```formatString``` does not conform to the method requirements.
- */
+    /**
+     * Sanitize ```formatString``` before compilation.
+     *
+     * In order to do so, sanitizer splits the string into groups of regular symbols, symbols in square
+     * brackets [] and symbols in curly brackets {}. Then, characters in square brackets are sorted in
+     * a way that mandatory symbols go before optional symbols. For instance,
+     *
+     * ```
+     * a ([0909]) b
+     * ```
+     *
+     * mask format is rearranged to
+     *
+     * ```
+     * a ([0099]) b
+     * ```
+     * @complexity ```O(2*floor(log(n)))```, and switches to ```O(n^2)``` for ```n < 20``` where
+     * ```n = formatString.characters.count```
+     *
+     * @requires Format string to contain only flat groups of symbols in ```[]``` and ```{}``` brackets
+     * without nested brackets, like ```[[000]99]```. Square bracket ```[]``` groups may contain mixed
+     * types of symbols ("0" and "9" with "A" and "a" or "_" and "-"), which sanitizer will divide into
+     * separate groups. Such that, ```[0000Aa]``` group will be divided in two groups: ```[0000]```
+     * and ```[Aa]```.
+     *
+     * @param formatString: mask format string.
+     *
+     * @returns Sanitized format string.
+     *
+     * @throws ```FormatError``` if ```formatString``` does not conform to the method requirements.
+     */
     @Throws(Compiler.FormatError::class)
     fun sanitize(formatString: String): String {
         this.checkOpenBraces(formatString)
 
         val blocks: List<String> =
-            this.divideBlocksWithMixedCharacters(this.getFormatBlocks(formatString))
+                this.divideBlocksWithMixedCharacters(this.getFormatBlocks(formatString))
 
         return this.sortFormatBlocks(blocks).joinToString("")
     }
@@ -67,20 +67,20 @@ class FormatSanitizer {
         val blocks: MutableList<String> = ArrayList()
         var currentBlock: String = ""
 
-        for (char in formatString.toCharArray()) {
-            if ('[' == char || '{' == char) {
-                if (currentBlock.isNotEmpty()) {
-                    blocks.add(currentBlock)
+        formatString.toCharArray().forEach {
+            when (it) {
+                '[','{' -> {
+                    if (currentBlock.isNotEmpty()) {
+                        blocks.add(currentBlock)
+                    }
+                    currentBlock = ""
                 }
-                currentBlock = ""
+                ']','}' -> {
+                    blocks.add(currentBlock)
+                    currentBlock = ""
+                }
             }
-
-            currentBlock += char
-
-            if (']' == char || '}' == char) {
-                blocks.add(currentBlock)
-                currentBlock = ""
-            }
+            currentBlock += it
         }
 
         if (!currentBlock.isEmpty()) {
@@ -93,63 +93,63 @@ class FormatSanitizer {
     private fun divideBlocksWithMixedCharacters(blocks: List<String>): List<String> {
         val resultingBlocks: MutableList<String> = ArrayList()
 
-        for (block in blocks) {
-            if (block.startsWith("[")) {
-                var blockBuffer: String = ""
-                for (blockCharacter in block) {
-                    if (blockCharacter == '[') {
+        blocks.forEach {
+            when (it.first()) {
+                '[' -> {
+                    var blockBuffer = ""
+                    for (blockCharacter in it) {
+                        if (blockCharacter == '[') {
+                            blockBuffer += blockCharacter
+                            continue
+                        }
+
+                        if (blockCharacter == ']') {
+                            blockBuffer += blockCharacter
+                            resultingBlocks.add(blockBuffer)
+                            break
+                        }
+
+                        if (blockCharacter == '0' || blockCharacter == '9') {
+                            if (blockBuffer.contains("A")
+                                    || blockBuffer.contains("a")
+                                    || blockBuffer.contains("-")
+                                    || blockBuffer.contains("_")) {
+                                blockBuffer += "]"
+                                resultingBlocks.add(blockBuffer)
+                                blockBuffer = "[" + blockCharacter
+                                continue
+                            }
+                        }
+
+                        if (blockCharacter == 'A' || blockCharacter == 'a') {
+                            if (blockBuffer.contains("0")
+                                    || blockBuffer.contains("9")
+                                    || blockBuffer.contains("-")
+                                    || blockBuffer.contains("_")) {
+                                blockBuffer += "]"
+                                resultingBlocks.add(blockBuffer)
+                                blockBuffer = "[" + blockCharacter
+                                continue
+                            }
+                        }
+
+                        if (blockCharacter == '-' || blockCharacter == '_') {
+                            if (blockBuffer.contains("0")
+                                    || blockBuffer.contains("9")
+                                    || blockBuffer.contains("A")
+                                    || blockBuffer.contains("a")) {
+                                blockBuffer += "]"
+                                resultingBlocks.add(blockBuffer)
+                                blockBuffer = "[" + blockCharacter
+                                continue
+                            }
+                        }
+
                         blockBuffer += blockCharacter
-                        continue
                     }
-
-                    if (blockCharacter == ']') {
-                        blockBuffer += blockCharacter
-                        resultingBlocks.add(blockBuffer)
-                        break
-                    }
-
-                    if (blockCharacter == '0' || blockCharacter == '9') {
-                        if (blockBuffer.contains("A")
-                         || blockBuffer.contains("a")
-                         || blockBuffer.contains("-")
-                         || blockBuffer.contains("_")) {
-                            blockBuffer += "]"
-                            resultingBlocks.add(blockBuffer)
-                            blockBuffer = "[" + blockCharacter
-                            continue
-                        }
-                    }
-
-                    if (blockCharacter == 'A' || blockCharacter == 'a') {
-                        if (blockBuffer.contains("0")
-                         || blockBuffer.contains("9")
-                         || blockBuffer.contains("-")
-                         || blockBuffer.contains("_")) {
-                            blockBuffer += "]"
-                            resultingBlocks.add(blockBuffer)
-                            blockBuffer = "[" + blockCharacter
-                            continue
-                        }
-                    }
-
-                    if (blockCharacter == '-' || blockCharacter == '_') {
-                        if (blockBuffer.contains("0")
-                         || blockBuffer.contains("9")
-                         || blockBuffer.contains("A")
-                         || blockBuffer.contains("a")) {
-                            blockBuffer += "]"
-                            resultingBlocks.add(blockBuffer)
-                            blockBuffer = "[" + blockCharacter
-                            continue
-                        }
-                    }
-
-                    blockBuffer += blockCharacter
                 }
-            } else {
-                resultingBlocks.add(block)
+                else -> resultingBlocks.add(it)
             }
-
         }
 
         return resultingBlocks
@@ -184,28 +184,22 @@ class FormatSanitizer {
         var curlyBraceOpen: Boolean = false
 
         for (char in string.toCharArray()) {
-            if ('[' == char) {
-                if (squareBraceOpen) {
-                    throw Compiler.FormatError()
+            when (char) {
+                '[' -> {
+                    if (squareBraceOpen) {
+                        throw Compiler.FormatError()
+                    }
+                    squareBraceOpen = true
                 }
-                squareBraceOpen = true
-            }
-
-            if (']' == char) {
-                squareBraceOpen = false
-            }
-
-            if ('{' == char) {
-                if (curlyBraceOpen) {
-                    throw Compiler.FormatError()
+                ']' -> squareBraceOpen = false
+                '{' -> {
+                    if (curlyBraceOpen) {
+                        throw Compiler.FormatError()
+                    }
+                    curlyBraceOpen = true
                 }
-                curlyBraceOpen = true
-            }
-
-            if ('}' == char) {
-                curlyBraceOpen = false
+                '}' -> curlyBraceOpen = false
             }
         }
     }
-
 }

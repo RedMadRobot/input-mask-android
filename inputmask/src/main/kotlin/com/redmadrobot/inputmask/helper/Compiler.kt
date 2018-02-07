@@ -90,112 +90,83 @@ class Compiler {
     }
 
     private fun compile(formatString: String, valueable: Boolean, fixed: Boolean): State {
-        if (0 >= formatString.length) {
+        if (formatString.isEmpty()) {
             return EOLState()
         }
 
         val char: Char = formatString.first()
 
-        if ('[' == char) {
-            return this.compile(
+        when (formatString.first()) {
+            '[' -> return this.compile(
                     formatString.drop(1),
                     true,
                     false
-            )
-        }
-
-        if ('{' == char) {
-            return this.compile(
+                    )
+            '{' -> return this.compile(
                     formatString.drop(1),
                     false,
                     true
-            )
-        }
-
-        if (']' == char) {
-            return this.compile(
+                    )
+            ']','}' -> return this.compile(
                     formatString.drop(1),
                     false,
                     false
-            )
-        }
-
-        if ('}' == char) {
-            return this.compile(
-                    formatString.drop(1),
-                    false,
-                    false
-            )
+                    )
         }
 
         if (valueable) {
-            if ('0' == char) {
-                return ValueState(
+            return when (formatString.first()) {
+                '0' -> ValueState(
                         this.compile(
-                                formatString.drop(1),
-                                true,
-                                false
+                            formatString.drop(1),
+                            true,
+                            false
                         ),
-                        ValueState.StateType.Numeric
+                        State.StateType.Numeric
                 )
+                'A' -> ValueState(
+                        this.compile(
+                            formatString.drop(1),
+                            true,
+                            false
+                        ),
+                        State.StateType.Literal
+                )
+                '_' -> ValueState(
+                        this.compile(
+                            formatString.drop(1),
+                            true,
+                            false
+                        ),
+                        State.StateType.AlphaNumeric
+                )
+                '9' -> OptionalValueState(
+                        this.compile(
+                            formatString.drop(1),
+                            true,
+                            false
+                        ),
+                        State.StateType.Numeric
+                )
+                'a' -> OptionalValueState(
+                        this.compile(
+                            formatString.drop(1),
+                            true,
+                            false
+                        ),
+                        State.StateType.Literal
+                )
+                '-' -> OptionalValueState(
+                        this.compile(
+                            formatString.drop(1),
+                            true,
+                            false
+                        ),
+                        State.StateType.AlphaNumeric
+                )
+                else -> throw FormatError()
             }
 
-            if ('A' == char) {
-                return ValueState(
-                        this.compile(
-                                formatString.drop(1),
-                                true,
-                                false
-                        ),
-                        ValueState.StateType.Literal
-                )
-            }
-
-            if ('_' == char) {
-                return ValueState(
-                        this.compile(
-                                formatString.drop(1),
-                                true,
-                                false
-                        ),
-                        ValueState.StateType.AlphaNumeric
-                )
-            }
-
-            if ('9' == char) {
-                return OptionalValueState(
-                        this.compile(
-                                formatString.drop(1),
-                                true,
-                                false
-                        ),
-                        OptionalValueState.StateType.Numeric
-                )
-            }
-
-            if ('a' == char) {
-                return OptionalValueState(
-                        this.compile(
-                                formatString.drop(1),
-                                true,
-                                false
-                        ),
-                        OptionalValueState.StateType.Literal
-                )
-            }
-
-            if ('-' == char) {
-                return OptionalValueState(
-                        this.compile(
-                                formatString.drop(1),
-                                true,
-                                false
-                        ),
-                        OptionalValueState.StateType.AlphaNumeric
-                )
-            }
-
-            throw FormatError()
         }
 
         if (fixed) {
@@ -219,3 +190,4 @@ class Compiler {
         )
     }
 }
+
