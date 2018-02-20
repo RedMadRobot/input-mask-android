@@ -1,6 +1,6 @@
 # InputMask
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
-[![Bintray](https://img.shields.io/bintray/v/rmr/maven/inputmask.svg)](https://bintray.com/rmr/maven/inputmask)
+[![Bintray](https://api.bintray.com/packages/rmr/maven/inputmask/images/download.svg)](https://bintray.com/rmr/maven/inputmask/_latestVersion)
 [![codebeat badge](https://codebeat.co/badges/e87a117d-3be1-407b-ad4c-973f90d88cd2)](https://codebeat.co/projects/github-com-redmadrobot-input-mask-android-master)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 [![Platform](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/platform.svg)]()[![Android](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/android.svg)](https://github.com/RedMadRobot/input-mask-android)[![iOS](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/ios.svg)](https://github.com/RedMadRobot/input-mask-ios)
