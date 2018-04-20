@@ -67,7 +67,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.redmadrobot:inputmask:2.3.0'
+    implementation 'com.redmadrobot:inputmask:2.3.1'
 }
 ```
 
@@ -201,6 +201,7 @@ editText.setKeyListener(DigitsKeyListener.getInstance("0123456789 -.")); // modi
 ```
 
 ## InputMask vs. autocorrection & prediction
+> (presumably fixed by [PR50](https://github.com/RedMadRobot/input-mask-android/pull/50))
 
 Symptoms: 
 * You've got a wildcard template like `[________]`, allowing user to write any kind of symbols;

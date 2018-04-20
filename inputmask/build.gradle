@@ -4,7 +4,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-android'
 
 // This is the library version used when deploying the artifact
-version = "2.3.0"
+version = "2.3.1"
 
 
 android {
@@ -127,7 +127,7 @@ bintray {
     pkg {
         repo = "maven"
         name = "inputmask"
-        desc = 'Android library that handles asynchronous tasks in a proper way'
+        desc = 'Android library that helps masking and formatting user input'
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["MIT"]
