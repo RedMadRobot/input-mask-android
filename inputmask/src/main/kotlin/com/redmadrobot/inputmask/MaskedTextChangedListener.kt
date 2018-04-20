@@ -120,7 +120,7 @@ open class MaskedTextChangedListener(
     }
 
     override fun onTextChanged(text: CharSequence, cursorPosition: Int, before: Int, count: Int) {
-        val isDeletion: Boolean = before > 0
+        val isDeletion: Boolean = before > 0 && count == 0
         val result: Mask.Result =
                 this.mask.apply(
                         CaretString(
