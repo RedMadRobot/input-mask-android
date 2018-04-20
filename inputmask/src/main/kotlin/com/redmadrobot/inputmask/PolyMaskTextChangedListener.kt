@@ -117,23 +117,10 @@ class PolyMaskTextChangedListener(
             masks.add(Pair(mask, affinity))
         }
 
+        masks.add(Pair(this.mask, primaryAffinity))
+
         masks.sortBy { item ->
             item.second
-        }
-
-        var insertIndex: Int = -1
-
-        for ((index, maskAffinity) in masks.withIndex()) {
-            if (primaryAffinity >= maskAffinity.second) {
-                insertIndex = index
-                break
-            }
-        }
-
-        if (insertIndex >= 0) {
-            masks.add(insertIndex, Pair(this.mask, primaryAffinity))
-        } else {
-            masks.add(Pair(this.mask, primaryAffinity))
         }
 
         return masks.last().first
