@@ -46,7 +46,7 @@ class PolyMaskTextChangedListener(
     }
 
     override fun onTextChanged(text: CharSequence, cursorPosition: Int, before: Int, count: Int) {
-        val isDeletion: Boolean = before > 0
+        val isDeletion: Boolean = before > 0 && count == 0
         val result: Mask.Result =
             this.pickMask(
                 text.toString(),
@@ -103,7 +103,7 @@ class PolyMaskTextChangedListener(
             autocomplete
         )
 
-        var masks: MutableList<Pair<Mask, Int>> = ArrayList()
+        val masks: MutableList<Pair<Mask, Int>> = ArrayList()
         for (format in this.affineFormats) {
             val mask: Mask = Mask.getOrCreate(format)
 
@@ -136,7 +136,7 @@ class PolyMaskTextChangedListener(
             masks.add(Pair(this.mask, primaryAffinity))
         }
 
-        return masks.last().first
+        return masks.first().first
     }
 
     private fun calculateAffinity(
