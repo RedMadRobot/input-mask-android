@@ -27,10 +27,10 @@ class Mask(format: String) {
      * The end result of mask application to the user input string.
      */
     class Result(
-        formattedText: CaretString,
-        extractedValue: String,
-        affinity: Int,
-        complete: Boolean
+            formattedText: CaretString,
+            extractedValue: String,
+            affinity: Int,
+            complete: Boolean
     ) {
 
         /**
@@ -109,7 +109,7 @@ class Mask(format: String) {
     fun apply(text: CaretString, autocomplete: Boolean): Result {
         val iterator: CaretStringIterator = CaretStringIterator(text)
 
-        var affinity:       Int    = 0
+        var affinity: Int = 0
         var extractedValue: String = ""
         var modifiedString: String = ""
         var modifiedCaretPosition: Int = text.caretPosition
@@ -148,21 +148,21 @@ class Mask(format: String) {
             val next: Next? = state.autocomplete()
             if (null == next) break
             state = next.state
-            modifiedString += if (null != next.insert) next.insert else ""
-            extractedValue += if (null != next.value) next.value else ""
+            modifiedString += next.insert ?: ""
+            extractedValue += next.value ?: ""
             if (null != next.insert) {
                 modifiedCaretPosition += 1
             }
         }
 
         return Result(
-            CaretString(
-                modifiedString,
-                modifiedCaretPosition
-            ),
-            extractedValue,
-            affinity,
-            this.noMandatoryCharactersLeftAfterState(state)
+                CaretString(
+                        modifiedString,
+                        modifiedCaretPosition
+                ),
+                extractedValue,
+                affinity,
+                this.noMandatoryCharactersLeftAfterState(state)
         )
     }
 
@@ -269,33 +269,17 @@ class Mask(format: String) {
         }
 
         if (state is OptionalValueState) {
-            when (state.type) {
-                OptionalValueState.StateType.AlphaNumeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "-")
+            return when (state.type) {
+                State.StateType.AlphaNumeric -> {
+                    this.appendPlaceholder(state.child, placeholder + "-")
                 }
 
-                OptionalValueState.StateType.Literal -> {
-                    return this.appendPlaceholder(state.child, placeholder + "a")
+                State.StateType.Literal -> {
+                    this.appendPlaceholder(state.child, placeholder + "a")
                 }
 
-                OptionalValueState.StateType.Numeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "0")
-                }
-            }
-        }
-
-        if (state is ValueState) {
-            when (state.type) {
-                ValueState.StateType.AlphaNumeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "-")
-                }
-
-                ValueState.StateType.Literal -> {
-                    return this.appendPlaceholder(state.child, placeholder + "a")
-                }
-
-                ValueState.StateType.Numeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "0")
+                State.StateType.Numeric -> {
+                    this.appendPlaceholder(state.child, placeholder + "0")
                 }
             }
         }
