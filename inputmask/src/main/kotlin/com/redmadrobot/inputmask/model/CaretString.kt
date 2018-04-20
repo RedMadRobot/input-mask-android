@@ -7,12 +7,4 @@ package com.redmadrobot.inputmask.model
  *
  * @author taflanidi
  */
-class CaretString {
-    val string: String
-    val caretPosition: Int
-
-    constructor(string: String, caretPosition: Int) {
-        this.string = string
-        this.caretPosition = caretPosition
-    }
-}
+class CaretString(val string: String, val caretPosition: Int)

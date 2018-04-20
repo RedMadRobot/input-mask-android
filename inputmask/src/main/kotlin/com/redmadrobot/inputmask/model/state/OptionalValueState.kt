@@ -17,9 +17,7 @@ import com.redmadrobot.inputmask.model.State
  *
  * @author taflanidi
  */
-class OptionalValueState(child: State, type: StateType) : State(child) {
-
-    val type: StateType
+class OptionalValueState(child: State, val type: StateType) : State(child) {
 
     enum class StateType {
         Numeric,
@@ -27,41 +25,37 @@ class OptionalValueState(child: State, type: StateType) : State(child) {
         AlphaNumeric
     }
 
-    init {
-        this.type = type
-    }
-
     private fun accepts(character: Char): Boolean {
-        when (this.type) {
-            StateType.Numeric -> return character.isDigit()
-            StateType.Literal -> return character.isLetter()
-            StateType.AlphaNumeric -> return character.isLetterOrDigit()
+        return when (this.type) {
+            StateType.Numeric -> character.isDigit()
+            StateType.Literal -> character.isLetter()
+            StateType.AlphaNumeric -> character.isLetterOrDigit()
         }
     }
 
     override fun accept(character: Char): Next? {
-        if (this.accepts(character)) {
-            return Next(
-                    this.nextState(),
-                    character,
-                    true,
-                    character
+        return if (this.accepts(character)) {
+            Next(
+                this.nextState(),
+                character,
+                true,
+                character
             )
         } else {
-            return Next(
-                    this.nextState(),
-                    null,
-                    false,
-                    null
+            Next(
+                this.nextState(),
+                null,
+                false,
+                null
             )
         }
     }
 
     override fun toString(): String {
-        when (this.type) {
-            StateType.Literal -> return "[a] -> " + if (null == this.child) "null" else child.toString()
-            StateType.Numeric -> return "[9] -> " + if (null == this.child) "null" else child.toString()
-            StateType.AlphaNumeric -> return "[-] -> " + if (null == this.child) "null" else child.toString()
+        return when (this.type) {
+            StateType.Literal -> "[a] -> " + if (null == this.child) "null" else child.toString()
+            StateType.Numeric -> "[9] -> " + if (null == this.child) "null" else child.toString()
+            StateType.AlphaNumeric -> "[-] -> " + if (null == this.child) "null" else child.toString()
         }
     }
 }

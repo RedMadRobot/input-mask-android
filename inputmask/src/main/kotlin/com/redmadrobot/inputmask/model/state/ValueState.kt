@@ -17,9 +17,7 @@ import com.redmadrobot.inputmask.model.State
  *
  * @author taflanidi
  */
-class ValueState(child: State, type: StateType) : State(child) {
-
-    val type: StateType
+class ValueState(child: State, val type: StateType) : State(child) {
 
     enum class StateType {
         Numeric,
@@ -27,35 +25,30 @@ class ValueState(child: State, type: StateType) : State(child) {
         AlphaNumeric
     }
 
-    init {
-        this.type = type
-    }
-
     private fun accepts(character: Char): Boolean {
-        when (this.type) {
-            StateType.Numeric -> return character.isDigit()
-            StateType.Literal -> return character.isLetter()
-            StateType.AlphaNumeric -> return character.isLetterOrDigit()
+        return when (this.type) {
+            StateType.Numeric -> character.isDigit()
+            StateType.Literal -> character.isLetter()
+            StateType.AlphaNumeric -> character.isLetterOrDigit()
         }
     }
 
     override fun accept(character: Char): Next? {
-        if (!this.accepts(character))
-            return null
+        if (!this.accepts(character)) return null
 
         return Next(
-                this.nextState(),
-                character,
-                true,
-                character
+            this.nextState(),
+            character,
+            true,
+            character
         )
     }
 
     override fun toString(): String {
-        when (this.type) {
-            StateType.Literal -> return "[A] -> " + if (null == this.child) "null" else child.toString()
-            StateType.Numeric -> return "[0] -> " + if (null == this.child) "null" else child.toString()
-            StateType.AlphaNumeric -> return "[_] -> " + if (null == this.child) "null" else child.toString()
+        return when (this.type) {
+            StateType.Literal -> "[A] -> " + if (null == this.child) "null" else child.toString()
+            StateType.Numeric -> "[0] -> " + if (null == this.child) "null" else child.toString()
+            StateType.AlphaNumeric -> "[_] -> " + if (null == this.child) "null" else child.toString()
         }
     }
 

@@ -8,16 +8,4 @@ package com.redmadrobot.inputmask.model
  *
  * @author taflanidi
  */
-class Next {
-    val state: State
-    val insert: Char?
-    val pass: Boolean
-    val value: Char?
-
-    constructor(state: State, insert: Char?, pass: Boolean, value: Char?) {
-        this.state = state
-        this.insert = insert
-        this.pass = pass
-        this.value = value
-    }
-}
+class Next(val state: State, val insert: Char?, val pass: Boolean, val value: Char?)

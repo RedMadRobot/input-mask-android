@@ -8,19 +8,7 @@ package com.redmadrobot.inputmask.model
  *
  * @author taflanidi
  */
-abstract class State(child: State?) {
-    val child: State?
-
-    /**
-     * Constructor.
-     *
-     * @param child next state.
-     *
-     * @returns Initialized state.
-     */
-    init {
-        this.child = child
-    }
+abstract class State(val child: State?) {
 
     /**
      * Abstract method.

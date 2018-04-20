@@ -16,37 +16,32 @@ import com.redmadrobot.inputmask.model.State
  *
  * @author taflanidi
  */
-class FreeState(child: State, ownCharacter: Char) : State(child) {
-    val ownCharacter: Char
-
-    init {
-        this.ownCharacter = ownCharacter
-    }
+class FreeState(child: State, val ownCharacter: Char) : State(child) {
 
     override fun accept(character: Char): Next? {
-        if (this.ownCharacter == character) {
-            return Next(
-                    this.nextState(),
-                    character,
-                    true,
-                    null
+        return if (this.ownCharacter == character) {
+            Next(
+                this.nextState(),
+                character,
+                true,
+                null
             )
         } else {
-            return Next(
-                    this.nextState(),
-                    this.ownCharacter,
-                    false,
-                    null
+            Next(
+                this.nextState(),
+                this.ownCharacter,
+                false,
+                null
             )
         }
     }
 
     override fun autocomplete(): Next? {
         return Next(
-                this.nextState(),
-                this.ownCharacter,
-                false,
-                null
+            this.nextState(),
+            this.ownCharacter,
+            false,
+            null
         )
     }
 

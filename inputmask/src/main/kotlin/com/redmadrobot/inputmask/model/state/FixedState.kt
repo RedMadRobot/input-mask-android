@@ -15,37 +15,32 @@ import com.redmadrobot.inputmask.model.State
  * Always returns self as an extracted value.
  * @author taflanidi
  */
-class FixedState(child: State?, ownCharacter: Char) : State(child) {
-    val ownCharacter: Char
-
-    init {
-        this.ownCharacter = ownCharacter
-    }
+class FixedState(child: State?, val ownCharacter: Char) : State(child) {
 
     override fun accept(character: Char): Next? {
-        if (this.ownCharacter == character) {
-            return Next(
-                    this.nextState(),
-                    character,
-                    true,
-                    character
+        return if (this.ownCharacter == character) {
+            Next(
+                this.nextState(),
+                character,
+                true,
+                character
             )
         } else {
-            return Next(
-                    this.nextState(),
-                    this.ownCharacter,
-                    false,
-                    this.ownCharacter
+            Next(
+                this.nextState(),
+                this.ownCharacter,
+                false,
+                this.ownCharacter
             )
         }
     }
 
     override fun autocomplete(): Next? {
         return Next(
-                this.nextState(),
-                this.ownCharacter,
-                false,
-                this.ownCharacter
+            this.nextState(),
+            this.ownCharacter,
+            false,
+            this.ownCharacter
         )
     }
 

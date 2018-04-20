@@ -27,42 +27,26 @@ class Mask(format: String) {
      * The end result of mask application to the user input string.
      */
     class Result(
-        formattedText: CaretString,
-        extractedValue: String,
-        affinity: Int,
-        complete: Boolean
-    ) {
-
         /**
          * Formatted text with updated caret position.
          */
-        val formattedText: CaretString
-
+        val formattedText: CaretString,
         /**
          * Value, extracted from formatted text according to mask format.
          */
-        val extractedValue: String
-
+        val extractedValue: String,
         /**
          * Calculated absolute affinity value between the mask format and input text.
          */
-        val affinity: Int
-
+        val affinity: Int,
         /**
          * User input is complete.
          */
         val complete: Boolean
-
-        init {
-            this.formattedText = formattedText
-            this.extractedValue = extractedValue
-            this.affinity = affinity
-            this.complete = complete
-        }
-    }
+    )
 
     companion object Factory {
-        val cache: MutableMap<String, Mask> = HashMap()
+        private val cache: MutableMap<String, Mask> = HashMap()
 
         /**
          * Factory constructor.
@@ -84,20 +68,7 @@ class Mask(format: String) {
         }
     }
 
-    private val initialState: State
-
-    /**
-     * Constructor.
-     *
-     * @param format mask format.
-     *
-     * @returns Initialized ```Mask``` instance.
-     *
-     * @throws ```FormatError``` if format string is incorrect.
-     */
-    init {
-        this.initialState = Compiler().compile(format)
-    }
+    private val initialState: State = Compiler().compile(format)
 
     /**
      * Apply mask to the user input string.
@@ -107,11 +78,11 @@ class Mask(format: String) {
      * @returns Formatted text with extracted value an adjusted cursor position.
      */
     fun apply(text: CaretString, autocomplete: Boolean): Result {
-        val iterator: CaretStringIterator = CaretStringIterator(text)
+        val iterator = CaretStringIterator(text)
 
-        var affinity:       Int    = 0
-        var extractedValue: String = ""
-        var modifiedString: String = ""
+        var affinity = 0
+        var extractedValue = ""
+        var modifiedString = ""
         var modifiedCaretPosition: Int = text.caretPosition
 
         var state: State = this.initialState
@@ -145,8 +116,7 @@ class Mask(format: String) {
         }
 
         while (autocomplete && beforeCaret) {
-            val next: Next? = state.autocomplete()
-            if (null == next) break
+            val next: Next = state.autocomplete() ?: break
             state = next.state
             modifiedString += if (null != next.insert) next.insert else ""
             extractedValue += if (null != next.value) next.value else ""
@@ -171,9 +141,7 @@ class Mask(format: String) {
      *
      * @return Placeholder string.
      */
-    fun placeholder(): String {
-        return this.appendPlaceholder(this.initialState, "")
-    }
+    fun placeholder(): String = this.appendPlaceholder(this.initialState, "")
 
     /**
      * Minimal length of the text inside the field to fill all mandatory characters in the mask.
@@ -182,7 +150,7 @@ class Mask(format: String) {
      */
     fun acceptableTextLength(): Int {
         var state: State? = this.initialState
-        var length: Int = 0
+        var length = 0
 
         while (null != state && !(state is EOLState)) {
             if (state is FixedState || state is FreeState || state is ValueState) {
@@ -201,7 +169,7 @@ class Mask(format: String) {
      */
     fun totalTextLength(): Int {
         var state: State? = this.initialState
-        var length: Int = 0
+        var length = 0
 
         while (null != state && !(state is EOLState)) {
             if (state is FixedState || state is FreeState || state is ValueState || state is OptionalValueState) {
@@ -220,7 +188,7 @@ class Mask(format: String) {
      */
     fun acceptableValueLength(): Int {
         var state: State? = this.initialState
-        var length: Int = 0
+        var length = 0
 
         while (null != state && !(state is EOLState)) {
             if (state is FixedState || state is ValueState) {
@@ -239,7 +207,7 @@ class Mask(format: String) {
      */
     fun totalValueLength(): Int {
         var state: State? = this.initialState
-        var length: Int = 0
+        var length = 0
 
         while (null != state && !(state is EOLState)) {
             if (state is FixedState || state is ValueState || state is OptionalValueState) {
@@ -269,33 +237,33 @@ class Mask(format: String) {
         }
 
         if (state is OptionalValueState) {
-            when (state.type) {
+            return when (state.type) {
                 OptionalValueState.StateType.AlphaNumeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "-")
+                    this.appendPlaceholder(state.child, placeholder + "-")
                 }
 
                 OptionalValueState.StateType.Literal -> {
-                    return this.appendPlaceholder(state.child, placeholder + "a")
+                    this.appendPlaceholder(state.child, placeholder + "a")
                 }
 
                 OptionalValueState.StateType.Numeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "0")
+                    this.appendPlaceholder(state.child, placeholder + "0")
                 }
             }
         }
 
         if (state is ValueState) {
-            when (state.type) {
+            return when (state.type) {
                 ValueState.StateType.AlphaNumeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "-")
+                    this.appendPlaceholder(state.child, placeholder + "-")
                 }
 
                 ValueState.StateType.Literal -> {
-                    return this.appendPlaceholder(state.child, placeholder + "a")
+                    this.appendPlaceholder(state.child, placeholder + "a")
                 }
 
                 ValueState.StateType.Numeric -> {
-                    return this.appendPlaceholder(state.child, placeholder + "0")
+                    this.appendPlaceholder(state.child, placeholder + "0")
                 }
             }
         }
@@ -304,14 +272,12 @@ class Mask(format: String) {
     }
 
     private fun noMandatoryCharactersLeftAfterState(state: State): Boolean {
-        if (state is EOLState) {
-            return true
-        } else if (state is FixedState
-                || state is FreeState
-                || state is ValueState) {
-            return false
+        return if (state is EOLState) {
+            true
+        } else if (state is FixedState || state is FreeState || state is ValueState) {
+            false
         } else {
-            return this.noMandatoryCharactersLeftAfterState(state.nextState())
+            this.noMandatoryCharactersLeftAfterState(state.nextState())
         }
     }
 }

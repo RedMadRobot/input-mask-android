@@ -13,23 +13,10 @@ import com.redmadrobot.inputmask.model.CaretString
  *
  * @author taflanidi
  */
-class CaretStringIterator(caretString: CaretString) {
-
-    private val caretString: CaretString
-    private var currentIndex: Int
-
-    /**
-     * Constructor.
-     *
-     * @param caretString ```CaretString``` object, over which the iterator is going to iterate.
-     *
-     * @returns Initialized ```CaretStringIterator``` pointing at the beginning of provided
-     * ```CaretString.string```
-     */
-    init {
-        this.caretString = caretString
-        this.currentIndex = 0
-    }
+class CaretStringIterator(
+    private val caretString: CaretString,
+    private var currentIndex: Int = 0
+) {
 
     /**
      * Inspect, whether ```CaretStringIterator``` has reached ```CaretString.caretPosition``` or

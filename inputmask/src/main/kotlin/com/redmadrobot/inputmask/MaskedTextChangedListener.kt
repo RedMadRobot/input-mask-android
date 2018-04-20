@@ -14,11 +14,11 @@ import java.lang.ref.WeakReference
  * Created by taflanidi on 30.08.16.
  */
 open class MaskedTextChangedListener(
-        format: String,
-        autocomplete: Boolean,
-        field: EditText,
-        listener: TextWatcher?,
-        valueListener: ValueListener?
+    format: String,
+    autocomplete: Boolean,
+    field: EditText,
+    listener: TextWatcher?,
+    valueListener: ValueListener?
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
@@ -50,13 +50,13 @@ open class MaskedTextChangedListener(
      */
     open fun setText(text: String) {
         val result: Mask.Result =
-                this.mask.apply(
-                        CaretString(
-                                text,
-                                text.length
-                        ),
-                        this.autocomplete
-                )
+            this.mask.apply(
+                CaretString(
+                    text,
+                    text.length
+                ),
+                this.autocomplete
+            )
         this.field.get()?.setText(result.formattedText.string)
         this.field.get()?.setSelection(result.formattedText.caretPosition)
         this.valueListener?.onTextChanged(result.complete, result.extractedValue)
@@ -122,13 +122,13 @@ open class MaskedTextChangedListener(
     override fun onTextChanged(text: CharSequence, cursorPosition: Int, before: Int, count: Int) {
         val isDeletion: Boolean = before > 0 && count == 0
         val result: Mask.Result =
-                this.mask.apply(
-                        CaretString(
-                                text.toString(),
-                                if (isDeletion) cursorPosition else cursorPosition + count
-                        ),
-                        this.autocomplete && !isDeletion
-                )
+            this.mask.apply(
+                CaretString(
+                    text.toString(),
+                    if (isDeletion) cursorPosition else cursorPosition + count
+                ),
+                this.autocomplete && !isDeletion
+            )
         this.afterText = result.formattedText.string
         this.caretPosition = if (isDeletion) cursorPosition else result.formattedText.caretPosition
         this.valueListener?.onTextChanged(result.complete, result.extractedValue)
@@ -144,13 +144,13 @@ open class MaskedTextChangedListener(
             }
 
             val result: Mask.Result =
-                    this.mask.apply(
-                            CaretString(
-                                    text,
-                                    text.length
-                            ),
-                            this.autocomplete
-                    )
+                this.mask.apply(
+                    CaretString(
+                        text,
+                        text.length
+                    ),
+                    this.autocomplete
+                )
             this.field.get()?.setText(result.formattedText.string)
             this.field.get()?.setSelection(result.formattedText.caretPosition)
             this.valueListener?.onTextChanged(result.complete, result.extractedValue)
