@@ -38,6 +38,9 @@ class FormatSanitizer {
      * ```
      * a ([0099]) b
      * ```
+     *
+     * Also, ellipsis in square brackets [] is always placed at the end.
+     *
      * @complexity ```O(2*floor(log(n)))```, and switches to ```O(n^2)``` for ```n < 20``` where
      * ```n = formatString.characters.count```
      *

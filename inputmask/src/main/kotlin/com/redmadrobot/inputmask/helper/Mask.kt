@@ -254,17 +254,19 @@ class Mask(format: String) {
 
         if (state is ValueState) {
             return when (state.type) {
-                ValueState.StateType.AlphaNumeric -> {
+                is ValueState.StateType.AlphaNumeric -> {
                     this.appendPlaceholder(state.child, placeholder + "-")
                 }
 
-                ValueState.StateType.Literal -> {
+                is ValueState.StateType.Literal -> {
                     this.appendPlaceholder(state.child, placeholder + "a")
                 }
 
-                ValueState.StateType.Numeric -> {
+                is ValueState.StateType.Numeric -> {
                     this.appendPlaceholder(state.child, placeholder + "0")
                 }
+
+                is ValueState.StateType.Ellipsis -> placeholder
             }
         }
 
@@ -274,7 +276,9 @@ class Mask(format: String) {
     private fun noMandatoryCharactersLeftAfterState(state: State): Boolean {
         return if (state is EOLState) {
             true
-        } else if (state is FixedState || state is FreeState || state is ValueState) {
+        } else if (state is ValueState) {
+            return state.isElliptical
+        } else if (state is FixedState || state is FreeState) {
             false
         } else {
             this.noMandatoryCharactersLeftAfterState(state.nextState())

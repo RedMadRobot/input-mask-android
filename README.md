@@ -32,6 +32,7 @@ Square brackets block may contain any number of special symbols:
 4. `а` — optional letter. `[АААааа]` mask will allow to enter from three to six letters.
 5. `_` — mandatory symbol (digit or letter).
 6. `-` — optional symbol (digit or letter).
+7. `…` — ellipsis. Allows to enter endless count of symbols. For details and rules see [Elliptical sasks](#elliptical).
 
 Other symbols inside square brackets will cause a mask initialization error.
 
@@ -178,6 +179,25 @@ public final class MainActivity extends Activity {
 
 }
 ```
+
+<a name="elliptical" />
+
+## Elliptical masks
+
+An experimental feature. Allows to enter endless line of symbols of specific type. Ellipsis "inherits" its symbol type from the 
+previous character in format string. Masks like `[A…]` or `[a…]` will allow to enter letters, `[0…]` or `[9…]` — numbers, etc.
+
+Be aware that ellipsis doesn't count as a required character. Also, ellipsis works as a string terminator, such that mask `[0…][AAA]`
+filled with a single digit `5` acts as full, and returns `true` in `Result.complete`. Format after ellipsis is compiled into the mask yet 
+never used; characters `[AAA]` in `[0…][AAA]` mask are pretty much useless.
+
+Elliptical format examples: 
+
+1. `[…]` is a wildcard mask, allowing to enter letters and digits. Always acts as `complete`.
+2. `[00…]` is a numeric mask, allowing to enter digits. Requires at least two digits to be `complete`.
+3. `[9…]` is a numeric mask, allowing to enter digits. Always acts as `complete`.
+4. `[_…]` is a wildcard mask with a single mandatory character. Allows to enter letters and digits. Requires a single character.
+5. `[-…]` same as `[…]`.
 
 # Known issues
 ## InputMask vs. `android:inputType`

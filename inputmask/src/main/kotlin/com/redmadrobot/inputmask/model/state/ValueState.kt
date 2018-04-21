@@ -17,19 +17,48 @@ import com.redmadrobot.inputmask.model.State
  *
  * @author taflanidi
  */
-class ValueState(child: State, val type: StateType) : State(child) {
+class ValueState : State {
 
-    enum class StateType {
-        Numeric,
-        Literal,
-        AlphaNumeric
+    /**
+     * ### StateType
+     *
+     * ```Numeric``` stands for [9] characters
+     * ```Literal``` stands for [a] characters
+     * ```AlphaNumeric``` stands for [-] characters
+     * ```Ellipsis``` stands for […] characters
+     */
+    sealed class StateType {
+        class Numeric : StateType()
+        class Literal : StateType()
+        class AlphaNumeric : StateType()
+        class Ellipsis(val inheritedType: StateType) : StateType()
+    }
+
+    val type: StateType
+
+    /**
+     * Constructor for elliptical ```ValueState```
+     */
+    constructor(inheritedType: StateType): super(null) {
+        this.type = StateType.Ellipsis(inheritedType)
+    }
+
+    constructor(child: State?, type: StateType) : super(child) {
+        this.type = type
     }
 
     private fun accepts(character: Char): Boolean {
-        return when (this.type) {
-            StateType.Numeric -> character.isDigit()
-            StateType.Literal -> character.isLetter()
-            StateType.AlphaNumeric -> character.isLetterOrDigit()
+        val type = this.type
+        return when (type) {
+            is StateType.Numeric -> character.isDigit()
+            is StateType.Literal -> character.isLetter()
+            is StateType.AlphaNumeric -> character.isLetterOrDigit()
+            is StateType.Ellipsis -> when (type.inheritedType) {
+                is StateType.Numeric -> character.isDigit()
+                is StateType.Literal -> character.isLetter()
+                is StateType.AlphaNumeric -> character.isLetterOrDigit()
+                else -> false
+            }
         }
     }
 
@@ -44,11 +73,23 @@ class ValueState(child: State, val type: StateType) : State(child) {
         )
     }
 
+    val isElliptical: Boolean
+        get() = when (this.type) {
+            is StateType.Ellipsis -> true
+            else -> false
+        }
+
+    override fun nextState(): State = when (this.type) {
+        is StateType.Ellipsis -> this
+        else -> super.nextState()
+    }
+
     override fun toString(): String {
         return when (this.type) {
-            StateType.Literal -> "[A] -> " + if (null == this.child) "null" else child.toString()
-            StateType.Numeric -> "[0] -> " + if (null == this.child) "null" else child.toString()
-            StateType.AlphaNumeric -> "[_] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.Literal -> "[A] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.Numeric -> "[0] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.AlphaNumeric -> "[_] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.Ellipsis -> "[…] -> " + if (null == this.child) "null" else child.toString()
         }
     }
 

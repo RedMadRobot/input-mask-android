@@ -43,7 +43,7 @@ abstract class State(val child: State?) {
      *
      * @returns ```State``` object.
      */
-    fun nextState(): State {
+    open fun nextState(): State {
         return this.child!!
     }
 
