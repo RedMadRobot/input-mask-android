@@ -16,18 +16,12 @@ import java.util.*
  */
 class PolyMaskTextChangedListener(
     format: String,
-    affineFormats: List<String>,
+    var affineFormats: List<String>,
     autocomplete: Boolean,
     field: EditText,
     listener: TextWatcher?,
     valueListener: MaskedTextChangedListener.ValueListener?
 ) : MaskedTextChangedListener(format, autocomplete, field, listener, valueListener) {
-
-    var affineFormats: List<String>
-
-    init {
-        this.affineFormats = affineFormats
-    }
 
     override fun setText(text: String) {
         val result: Mask.Result =
@@ -66,11 +60,10 @@ class PolyMaskTextChangedListener(
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
         if (this.autocomplete && hasFocus) {
-            val text: String
-            if (this.field.get()?.text!!.isEmpty()) {
-                text = ""
+            val text: String = if (this.field.get()?.text!!.isEmpty()) {
+                ""
             } else {
-                text = this.field.get()?.text.toString()
+                this.field.get()?.text.toString()
             }
 
             val result: Mask.Result =

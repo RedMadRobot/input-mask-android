@@ -99,39 +99,58 @@ class Compiler {
 
         when (char) {
             '[' -> {
-                return this.compile(
-                    formatString.drop(1),
-                    true,
-                    false,
-                    char
-                )
+                if ('\\' != lastCharacter) {
+                    return this.compile(
+                        formatString.drop(1),
+                        true,
+                        false,
+                        char
+                    )
+                }
             }
 
             '{' -> {
-                return this.compile(
-                    formatString.drop(1),
-                    false,
-                    true,
-                    char
-                )
+                if ('\\' != lastCharacter) {
+                    return this.compile(
+                        formatString.drop(1),
+                        false,
+                        true,
+                        char
+                    )
+                }
             }
 
             ']' -> {
-                return this.compile(
-                    formatString.drop(1),
-                    false,
-                    false,
-                    char
-                )
+                if ('\\' != lastCharacter) {
+                    return this.compile(
+                        formatString.drop(1),
+                        false,
+                        false,
+                        char
+                    )
+                }
             }
 
             '}' -> {
-                return this.compile(
-                    formatString.drop(1),
-                    false,
-                    false,
-                    char
-                )
+                if ('\\' != lastCharacter) {
+                    return this.compile(
+                        formatString.drop(1),
+                        false,
+                        false,
+                        char
+                    )
+                }
+            }
+
+            '\\' -> {
+                if ('\\' != lastCharacter) {
+                    return this.compile(
+                        formatString.drop(1),
+                        valueable,
+                        fixed,
+                        char
+                    )
+                }
             }
         }
 

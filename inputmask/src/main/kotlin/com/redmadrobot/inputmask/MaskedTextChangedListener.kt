@@ -15,34 +15,22 @@ import java.lang.ref.WeakReference
  */
 open class MaskedTextChangedListener(
     format: String,
-    autocomplete: Boolean,
+    val autocomplete: Boolean,
     field: EditText,
-    listener: TextWatcher?,
-    valueListener: ValueListener?
+    var listener: TextWatcher?,
+    var valueListener: ValueListener?
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
         fun onTextChanged(maskFilled: Boolean, extractedValue: String)
     }
 
-    var listener: TextWatcher?
-    var valueListener: ValueListener?
-
-    val mask: Mask
-    val autocomplete: Boolean
+    val mask: Mask = Mask.getOrCreate(format)
 
     var afterText: String = ""
     var caretPosition: Int = 0
 
-    val field: WeakReference<EditText>
-
-    init {
-        this.mask = Mask.getOrCreate(format)
-        this.autocomplete = autocomplete
-        this.listener = listener
-        this.valueListener = valueListener
-        this.field = WeakReference(field)
-    }
+    val field: WeakReference<EditText> = WeakReference(field)
 
     /**
      * Set text and apply formatting.
@@ -136,11 +124,10 @@ open class MaskedTextChangedListener(
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
         if (this.autocomplete && hasFocus) {
-            val text: String
-            if (this.field.get()?.text!!.isEmpty()) {
-                text = ""
+            val text: String = if (this.field.get()?.text!!.isEmpty()) {
+                ""
             } else {
-                text = this.field.get()?.text.toString()
+                this.field.get()?.text.toString()
             }
 
             val result: Mask.Result =

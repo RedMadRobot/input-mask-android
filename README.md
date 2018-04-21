@@ -61,6 +61,21 @@ Mask format examples:
 9. [0000]{-}[00]
 10. +1 ([000]) [000] [00] [00]
 
+### Character escaping
+
+Mask format supports backslash escapes when you need square or curly brackets in the output.
+
+For instance, `\[[00]\]` mask will allow user to enter `[12]`. Extracted value will be equal to `12`.
+
+Note that you've got to escape backslashes in the actual code:
+
+```swift
+let format: String = "\\[[00]\\]"
+```
+
+Escaped square or curly brackets might be included in the extracted value. For instance, `\[[00]{\]}` mask will allow user 
+to enter the same `[12]`, yet the extracted value will contain the latter square bracket: `12]`.
+
 # Installation
 ## Gradle
 

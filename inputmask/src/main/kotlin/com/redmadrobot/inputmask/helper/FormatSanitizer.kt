@@ -69,9 +69,18 @@ class FormatSanitizer {
     private fun getFormatBlocks(formatString: String): List<String> {
         val blocks: MutableList<String> = ArrayList()
         var currentBlock = ""
+        var escape = false
 
         for (char in formatString.toCharArray()) {
-            if ('[' == char || '{' == char) {
+            if ('\\' == char) {
+                if (!escape) {
+                    escape = true
+                    currentBlock += char
+                    continue
+                }
+            }
+
+            if (('[' == char || '{' == char) && !escape) {
                 if (currentBlock.isNotEmpty()) {
                     blocks.add(currentBlock)
                 }
@@ -80,10 +89,12 @@ class FormatSanitizer {
 
             currentBlock += char
 
-            if (']' == char || '}' == char) {
+            if ((']' == char || '}' == char) && !escape) {
                 blocks.add(currentBlock)
                 currentBlock = ""
             }
+
+            escape = false
         }
 
         if (!currentBlock.isEmpty()) {
@@ -183,18 +194,24 @@ class FormatSanitizer {
     }
 
     private fun checkOpenBraces(string: String) {
+        var escape = false
         var squareBraceOpen = false
         var curlyBraceOpen = false
 
         for (char in string.toCharArray()) {
+            if ('\\' == char) {
+                escape = !escape
+                continue
+            }
+
             if ('[' == char) {
                 if (squareBraceOpen) {
                     throw Compiler.FormatError()
                 }
-                squareBraceOpen = true
+                squareBraceOpen = true && !escape
             }
 
-            if (']' == char) {
+            if (']' == char && !escape) {
                 squareBraceOpen = false
             }
 
@@ -202,12 +219,14 @@ class FormatSanitizer {
                 if (curlyBraceOpen) {
                     throw Compiler.FormatError()
                 }
-                curlyBraceOpen = true
+                curlyBraceOpen = true && !escape
             }
 
-            if ('}' == char) {
+            if ('}' == char && !escape) {
                 curlyBraceOpen = false
             }
+
+            escape = false
         }
     }
 
