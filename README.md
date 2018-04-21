@@ -85,7 +85,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:inputmask:2.3.1'
+    implementation 'com.redmadrobot:inputmask:3.2.0'
 }
 ```
 
