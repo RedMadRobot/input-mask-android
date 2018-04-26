@@ -19,17 +19,19 @@ import com.redmadrobot.inputmask.model.State
  */
 class OptionalValueState(child: State, val type: StateType) : State(child) {
 
-    enum class StateType {
-        Numeric,
-        Literal,
-        AlphaNumeric
+    sealed class StateType {
+        class Numeric : StateType()
+        class Literal : StateType()
+        class AlphaNumeric : StateType()
+        class Custom(val character: Char, val characterSet: String) : StateType()
     }
 
     private fun accepts(character: Char): Boolean {
         return when (this.type) {
-            StateType.Numeric -> character.isDigit()
-            StateType.Literal -> character.isLetter()
-            StateType.AlphaNumeric -> character.isLetterOrDigit()
+            is StateType.Numeric -> character.isDigit()
+            is StateType.Literal -> character.isLetter()
+            is StateType.AlphaNumeric -> character.isLetterOrDigit()
+            is StateType.Custom -> this.type.characterSet.contains(character)
         }
     }
 
@@ -53,9 +55,10 @@ class OptionalValueState(child: State, val type: StateType) : State(child) {
 
     override fun toString(): String {
         return when (this.type) {
-            StateType.Literal -> "[a] -> " + if (null == this.child) "null" else child.toString()
-            StateType.Numeric -> "[9] -> " + if (null == this.child) "null" else child.toString()
-            StateType.AlphaNumeric -> "[-] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.Literal -> "[a] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.Numeric -> "[9] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.AlphaNumeric -> "[-] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.Custom -> "[" + this.type.character + "] -> " + if (null == this.child) "null" else child.toString()
         }
     }
 }

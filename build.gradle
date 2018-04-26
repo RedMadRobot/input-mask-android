@@ -26,7 +26,7 @@ allprojects {
 }
 
 ext {
-    kotlinVersion = '1.1.2-3'
+    kotlinVersion = '1.2.30'
 
     jUnitVersion = '4.12'
 

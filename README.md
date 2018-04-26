@@ -34,9 +34,9 @@ Square brackets block may contain any number of special symbols:
 6. `-` — optional symbol (digit or letter).
 7. `…` — ellipsis. Allows to enter endless count of symbols. For details and rules see [Elliptical masks](#elliptical).
 
-Other symbols inside square brackets will cause a mask initialization error.
+Other symbols inside square brackets will cause a mask initialization error, unless you have used [custom notations](#custom_notation).
 
-Blocks may contain mixed types of symbols; such that, `[000AA]` will end up being divided in two groups: `[000][AA]` (this happens automatically).
+Blocks may contain mixed types of symbols; such that, `[000AA]` will end up being divided in two groups: `[000][AA]` (this happens automatically). Though, it's highly recommended not to mix default symbols with symbols from [custom notations](#custom_notation).
 
 Blocks must not contain nested brackets. `[[00]000]` format will cause a mask initialization error.
 
@@ -213,6 +213,123 @@ Elliptical format examples:
 3. `[9…]` is a numeric mask, allowing to enter digits. Always returns `true` in `Result.complete`.
 4. `[_…]` is a wildcard mask with a single mandatory character. Allows to enter letters and digits. Requires a single character (digit or letter).
 5. `[-…]` acts same as `[…]`.
+
+<a name="custom_notation" />
+
+## Custom notations
+
+An advanced experimental feature. Use with caution.
+
+Internal `Mask` compiler supports a series of symbols which represent letters and numbers in user input. Each symbol stands for its own character set; for instance, `0` and `9` stand for numeric character set. This means user can type any digit instead of `0` or `9`, or any letter instead of `A` or `a`. 
+
+The difference between `0` and `9` is that `0` stands for a **mandatory** digit, while `9` stands for **optional**. This means with the mask like `[099][A]` user may enter `1b`, `12c` or `123d`, while with the mask `[000][A]` user won't be able to enter the last letter unless he has entered three digits: `1` or `12` or `123` or `123e`.
+
+Summarizing, each symbol supported by the compiler has its own **character set** associated with it, and also has an option to be **mandatory** or not.
+
+This said, you may configure your own symbols in addition to the default ones through the `Notation` objects:
+
+```kotlin
+Mask("[999][.][99]", listOf(Notation('.', ".,", true)))
+```
+
+or 
+
+```kotlin
+Mask.getOrCreate("[999][.][99]", listOf(Notation('.', ".,", true)))
+```
+
+For your convinience, `MaskedTextChangedListener` and its children now contains a `customNotations` constructor parameter to pass your custom notations to the `Mask` instance inside.
+
+Please note, that you won't have autocompletion for any of your custom symbols. For more examples, see below.
+
+### A floating point number with two decimal places
+
+Mask: `[999999999][.][99]`
+
+<details>
+<summary>Custom notations:</summary>
+
+```kotlin
+Notation('.', ".", true)
+```
+</details>
+
+<details>
+<summary>Results</summary>
+
+```
+1
+123
+1234.
+1234.5
+1234.56
+```
+
+</details>
+
+### An email (please use regular expressions instead)
+
+With optional and mantatory "**d**ots" and "at" symbol.
+
+Mask: `[aaaaaaaaaa][d][aaaaaaaaaa][@][aaaaaaaaaa][d][aaaaaaaaaa][D][aaaaaaaaaa]`
+
+<details>
+<summary>Custom notations:</summary>
+
+
+```kotlin
+Notation('D', ".", false),
+Notation('d', ".", true),
+Notation('@', "@", false)
+```
+
+</details>
+
+<details>
+<summary>Results</summary>
+
+```
+d
+derh
+derh.
+derh.a
+derh.asd
+derh.asd@
+derh.asd@h
+derh.asd@hello.
+derh.asd@hello.c
+derh.asd@hello.com.
+derh.asd@hello.com.u
+derh.asd@hello.com.uk
+```
+
+</details>
+
+### An optional currency symbol
+
+Mask: `[s][9999]`
+
+<details>
+<summary>Custom notations:</summary>
+
+```swift
+Notation('s', "$€", true)
+```
+</details>
+
+<details>
+<summary>Results</summary>
+
+```
+12
+$12
+918
+€918
+1000
+$1000
+```
+
+</details>
 
 # Known issues
 ## InputMask vs. `android:inputType`

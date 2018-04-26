@@ -1,5 +1,6 @@
 package com.redmadrobot.inputmask.helper
 
+import com.redmadrobot.inputmask.model.Notation
 import com.redmadrobot.inputmask.model.State
 import com.redmadrobot.inputmask.model.state.*
 
@@ -23,7 +24,14 @@ import com.redmadrobot.inputmask.model.state.*
  *
  * @author taflanidi
  */
-class Compiler {
+class Compiler(
+    /**
+     * A list of custom rules to compile square bracket ```[]``` groups of format symbols.
+     *
+     * @see ```Notation``` class.
+     */
+    private val customNotations: List<Notation>
+) {
 
     /**
      * ### FormatError
@@ -204,7 +212,7 @@ class Compiler {
                             false,
                             char
                         ),
-                        OptionalValueState.StateType.Numeric
+                        OptionalValueState.StateType.Numeric()
                     )
                 }
 
@@ -216,7 +224,7 @@ class Compiler {
                             false,
                             char
                         ),
-                        OptionalValueState.StateType.Literal
+                        OptionalValueState.StateType.Literal()
                     )
                 }
 
@@ -228,11 +236,11 @@ class Compiler {
                             false,
                             char
                         ),
-                        OptionalValueState.StateType.AlphaNumeric
+                        OptionalValueState.StateType.AlphaNumeric()
                     )
                 }
 
-                else -> throw FormatError()
+                else -> compileWithCustomNotations(char, formatString)
             }
         }
 
@@ -268,5 +276,34 @@ class Compiler {
             '[' -> ValueState.StateType.AlphaNumeric()
             else -> throw FormatError()
         }
+    }
+
+    private fun compileWithCustomNotations(char: Char, string: String): State {
+        for (customNotation in this.customNotations) {
+            if (customNotation.character == char) {
+                return if (customNotation.isOptional) {
+                    OptionalValueState(
+                        this.compile(
+                            string.drop(1),
+                            true,
+                            false,
+                            char
+                        ),
+                        OptionalValueState.StateType.Custom(char, customNotation.characterSet)
+                    )
+                } else {
+                    ValueState(
+                        this.compile(
+                            string.drop(1),
+                            true,
+                            false,
+                            char
+                        ),
+                        ValueState.StateType.Custom(char, customNotation.characterSet)
+                    )
+                }
+            }
+        }
+        throw FormatError()
     }
 }

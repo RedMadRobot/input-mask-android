@@ -116,7 +116,7 @@ class FormatSanitizer {
                         continue
                     }
 
-                    if (blockCharacter == ']') {
+                    if (blockCharacter == ']' && !blockBuffer.endsWith("\\")) {
                         blockBuffer += blockCharacter
                         resultingBlocks.add(blockBuffer)
                         break

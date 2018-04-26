@@ -32,6 +32,7 @@ class ValueState : State {
         class Literal : StateType()
         class AlphaNumeric : StateType()
         class Ellipsis(val inheritedType: StateType) : StateType()
+        class Custom(val character: Char, val characterSet: String) : StateType()
     }
 
     val type: StateType
@@ -59,6 +60,7 @@ class ValueState : State {
                 is StateType.AlphaNumeric -> character.isLetterOrDigit()
                 else -> false
             }
+            is StateType.Custom -> type.characterSet.contains(character)
         }
     }
 
@@ -90,6 +92,7 @@ class ValueState : State {
             is StateType.Numeric -> "[0] -> " + if (null == this.child) "null" else child.toString()
             is StateType.AlphaNumeric -> "[_] -> " + if (null == this.child) "null" else child.toString()
             is StateType.Ellipsis -> "[…] -> " + if (null == this.child) "null" else child.toString()
+            is StateType.Custom -> "[" + this.type.character + "] -> " + if (null == this.child) "null" else child.toString()
         }
     }
 

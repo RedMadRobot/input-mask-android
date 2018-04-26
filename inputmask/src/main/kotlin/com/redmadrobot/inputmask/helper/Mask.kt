@@ -2,6 +2,7 @@ package com.redmadrobot.inputmask.helper
 
 import com.redmadrobot.inputmask.model.CaretString
 import com.redmadrobot.inputmask.model.Next
+import com.redmadrobot.inputmask.model.Notation
 import com.redmadrobot.inputmask.model.State
 import com.redmadrobot.inputmask.model.state.*
 import java.util.*
@@ -19,7 +20,7 @@ import java.util.*
  *
  * @author taflanidi
  */
-class Mask(format: String) {
+class Mask(format: String, private val customNotations: List<Notation>) {
 
     /**
      * ### Result
@@ -58,17 +59,17 @@ class Mask(format: String) {
          * @returns Previously cached ```Mask``` object for requested format string. If such it
          * doesn't exist in cache, the object is constructed, cached and returned.
          */
-        fun getOrCreate(format: String): Mask {
+        fun getOrCreate(format: String, customNotations: List<Notation>): Mask {
             var cachedMask: Mask? = cache[format]
             if (null == cachedMask) {
-                cachedMask = Mask(format)
+                cachedMask = Mask(format, customNotations)
                 cache[format] = cachedMask
             }
             return cachedMask
         }
     }
 
-    private val initialState: State = Compiler().compile(format)
+    private val initialState: State = Compiler(this.customNotations).compile(format)
 
     /**
      * Apply mask to the user input string.
@@ -238,16 +239,20 @@ class Mask(format: String) {
 
         if (state is OptionalValueState) {
             return when (state.type) {
-                OptionalValueState.StateType.AlphaNumeric -> {
+                is OptionalValueState.StateType.AlphaNumeric -> {
                     this.appendPlaceholder(state.child, placeholder + "-")
                 }
 
-                OptionalValueState.StateType.Literal -> {
+                is OptionalValueState.StateType.Literal -> {
                     this.appendPlaceholder(state.child, placeholder + "a")
                 }
 
-                OptionalValueState.StateType.Numeric -> {
+                is OptionalValueState.StateType.Numeric -> {
                     this.appendPlaceholder(state.child, placeholder + "0")
+                }
+
+                is OptionalValueState.StateType.Custom -> {
+                    this.appendPlaceholder(state.child, placeholder + state.type.character)
                 }
             }
         }
@@ -267,6 +272,10 @@ class Mask(format: String) {
                 }
 
                 is ValueState.StateType.Ellipsis -> placeholder
+
+                is ValueState.StateType.Custom -> {
+                    this.appendPlaceholder(state.child, placeholder + state.type.character)
+                }
             }
         }
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.EditText
 import com.redmadrobot.inputmask.helper.Mask
 import com.redmadrobot.inputmask.model.CaretString
+import com.redmadrobot.inputmask.model.Notation
 import java.lang.ref.WeakReference
 
 /**
@@ -15,17 +16,18 @@ import java.lang.ref.WeakReference
  */
 open class MaskedTextChangedListener(
     format: String,
-    val autocomplete: Boolean,
+    customNotations: List<Notation> = emptyList(),
+    val autocomplete: Boolean = true,
     field: EditText,
-    var listener: TextWatcher?,
-    var valueListener: ValueListener?
+    var listener: TextWatcher? = null,
+    var valueListener: ValueListener? = null
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
         fun onTextChanged(maskFilled: Boolean, extractedValue: String)
     }
 
-    val mask: Mask = Mask.getOrCreate(format)
+    val mask: Mask = Mask.getOrCreate(format, customNotations)
 
     var afterText: String = ""
     var caretPosition: Int = 0

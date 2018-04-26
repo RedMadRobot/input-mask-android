@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.EditText
 import com.redmadrobot.inputmask.helper.Mask
 import com.redmadrobot.inputmask.model.CaretString
+import com.redmadrobot.inputmask.model.Notation
 import java.util.*
 
 /**
@@ -16,12 +17,13 @@ import java.util.*
  */
 class PolyMaskTextChangedListener(
     format: String,
-    var affineFormats: List<String>,
-    autocomplete: Boolean,
+    val customNotations: List<Notation> = emptyList(),
+    var affineFormats: List<String> = emptyList(),
+    autocomplete: Boolean = true,
     field: EditText,
-    listener: TextWatcher?,
-    valueListener: MaskedTextChangedListener.ValueListener?
-) : MaskedTextChangedListener(format, autocomplete, field, listener, valueListener) {
+    listener: TextWatcher? = null,
+    valueListener: ValueListener? = null
+) : MaskedTextChangedListener(format, customNotations, autocomplete, field, listener, valueListener) {
 
     override fun setText(text: String) {
         val result: Mask.Result =
@@ -98,7 +100,7 @@ class PolyMaskTextChangedListener(
 
         val masks: MutableList<Pair<Mask, Int>> = ArrayList()
         for (format in this.affineFormats) {
-            val mask: Mask = Mask.getOrCreate(format)
+            val mask: Mask = Mask.getOrCreate(format, this.customNotations)
 
             val affinity: Int = this.calculateAffinity(
                 mask,

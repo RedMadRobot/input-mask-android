@@ -13,12 +13,12 @@ class CompilerTest {
 
     @Test(expected = Compiler.FormatError::class)
     fun compile_BadMask_ThrowFormatError() {
-        Compiler().compile("[00[9]9]")
+        Compiler(emptyList()).compile("[00[9]9]")
     }
 
     @Test
     fun compile_ReturnsCorrectState() {
-        val initialState = Compiler().compile("[09]{.}[09]{.}19[00]")
+        val initialState = Compiler(emptyList()).compile("[09]{.}[09]{.}19[00]")
 
         var state: State? = initialState
         val stateList = ArrayList<State>(10)
