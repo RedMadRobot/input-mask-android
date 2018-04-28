@@ -35,6 +35,24 @@ open class MaskedTextChangedListener(
     val field: WeakReference<EditText> = WeakReference(field)
 
     /**
+     * Convenience constructor.
+     */
+    constructor(format: String, field: EditText, valueListener: ValueListener?) :
+        this(format, field, null, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(format: String, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
+        this(format, true, field, listener, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(format: String, autocomplete: Boolean, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
+        this(format, emptyList(), autocomplete, field, listener, valueListener)
+
+    /**
      * Set text and apply formatting.
      * @param text - text; might be plain, might already have some formatting.
      */

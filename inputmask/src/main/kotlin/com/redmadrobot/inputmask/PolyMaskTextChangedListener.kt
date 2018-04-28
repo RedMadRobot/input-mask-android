@@ -17,13 +17,31 @@ import java.util.*
  */
 class PolyMaskTextChangedListener(
     format: String,
-    val customNotations: List<Notation> = emptyList(),
-    var affineFormats: List<String> = emptyList(),
+    private var affineFormats: List<String> = emptyList(),
+    private val customNotations: List<Notation> = emptyList(),
     autocomplete: Boolean = true,
     field: EditText,
     listener: TextWatcher? = null,
     valueListener: ValueListener? = null
 ) : MaskedTextChangedListener(format, customNotations, autocomplete, field, listener, valueListener) {
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(format: String, affineFormats: List<String>, field: EditText, valueListener: ValueListener?) :
+        this(format, affineFormats, field, null, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(format: String, affineFormats: List<String>, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
+        this(format, affineFormats, true, field, listener, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(format: String, affineFormats: List<String>, autocomplete: Boolean, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
+        this(format, affineFormats, emptyList(), autocomplete, field, listener, valueListener)
 
     override fun setText(text: String) {
         val result: Mask.Result =

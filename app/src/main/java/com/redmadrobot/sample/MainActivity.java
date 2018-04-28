@@ -30,11 +30,8 @@ public final class MainActivity extends Activity {
 
         final MaskedTextChangedListener listener = new PolyMaskTextChangedListener(
             "+7 ([000]) [000] [00] [00]",
-            new ArrayList<Notation>(),
             affineFormats,
-            true,
             editText,
-            null,
             new MaskedTextChangedListener.ValueListener() {
                 @Override
                 public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
