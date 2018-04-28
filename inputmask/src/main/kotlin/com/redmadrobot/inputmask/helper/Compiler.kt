@@ -240,7 +240,7 @@ class Compiler(
                     )
                 }
 
-                else -> compileWithCustomNotations(char, formatString)
+                else -> return compileWithCustomNotations(char, formatString)
             }
         }
 
