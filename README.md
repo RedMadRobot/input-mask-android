@@ -1,6 +1,7 @@
 <img src="https://raw.githubusercontent.com/RedMadRobot/input-mask-ios/assets/Assets/input-mask-cursor.gif" alt="Input Mask" height="40" />
 
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Input%20Mask-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/4642)
 [![Bintray](https://api.bintray.com/packages/rmr/maven/inputmask/images/download.svg)](https://bintray.com/rmr/maven/inputmask/_latestVersion)
 [![codebeat badge](https://codebeat.co/badges/e87a117d-3be1-407b-ad4c-973f90d88cd2)](https://codebeat.co/projects/github-com-redmadrobot-input-mask-android-master)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
@@ -85,7 +86,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:inputmask:3.4.0'
+    implementation 'com.redmadrobot:inputmask:3.4.1'
 }
 ```
 
@@ -210,6 +211,8 @@ Elliptical format examples:
 4. `[_…]` is a wildcard mask with a single mandatory character. Allows to enter letters and digits. Requires a single character (digit or letter).
 5. `[-…]` acts same as `[…]`.
 
+Elliptical masks support custom notations, too.
+
 <a name="custom_notation" />
 
 ## Custom notations
@@ -234,7 +237,7 @@ or
 Mask.getOrCreate("[999][.][99]", listOf(Notation('.', ".,", true)))
 ```
 
-For your convinience, `MaskedTextChangedListener` and its children now contains a `customNotations` constructor parameter to pass your custom notations to the `Mask` instance inside.
+For your convenience, `MaskedTextChangedListener` and its children now contains a `customNotations` constructor parameter to pass your custom notations to the `Mask` instance inside.
 
 Please note, that you won't have autocompletion for any of your custom symbols. For more examples, see below.
 
@@ -366,12 +369,6 @@ If so, consider disabling text suggestions by using corresponding input type:
     android:inputType="textNoSuggestions" />
 ```
 Additionally be aware that some of the third-party keyboards ignore `textNoSuggestions` setting; the recommendation is to use an extra workaround by setting the `inputType` to `textVisiblePassword`.
-
-# Compatibility with 1.1.0 and above
-
-In 2.0.0 version separate callbacks *onExtracted(String value)* *onMandatoryCharactersFilled(boolean complete)* have been merged into the single callback *onTextChanged(boolean maskFilled, @NonNull final String extractedValue)*
-
-Be careful while updating dependencies!
 
 # License
 

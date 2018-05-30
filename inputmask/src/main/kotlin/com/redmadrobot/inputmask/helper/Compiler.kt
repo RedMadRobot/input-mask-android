@@ -274,7 +274,7 @@ class Compiler(
             '_', '-' -> ValueState.StateType.AlphaNumeric()
             '…' -> ValueState.StateType.AlphaNumeric()
             '[' -> ValueState.StateType.AlphaNumeric()
-            else -> throw FormatError()
+            else -> determineTypeWithCustomNotations(lastCharacter)
         }
     }
 
@@ -306,4 +306,12 @@ class Compiler(
         }
         throw FormatError()
     }
+
+    private fun determineTypeWithCustomNotations(lastCharacter: Char?): ValueState.StateType {
+        customNotations.forEach { notation: Notation ->
+            if (notation.character == lastCharacter) return ValueState.StateType.Custom(lastCharacter, notation.characterSet)
+        }
+        throw FormatError()
+    }
+    
 }

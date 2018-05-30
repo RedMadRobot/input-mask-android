@@ -4,7 +4,7 @@ apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-android'
 
 // This is the library version used when deploying the artifact
-version = "3.4.0"
+version = "3.4.1"
 
 
 android {
@@ -78,7 +78,7 @@ install {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation deps.kotlinStdlib
+    api deps.kotlinStdlib
     
     testImplementation testDeps.jUnit
 }
