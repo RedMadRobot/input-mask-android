@@ -86,7 +86,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:inputmask:3.4.1'
+    implementation 'com.redmadrobot:inputmask:3.4.2'
 }
 ```
 
@@ -331,6 +331,17 @@ $1000
 </details>
 
 # Known issues
+## InputMask vs. `NoClassDefFoundError`
+
+```
+java.lang.NoClassDefFoundError: Failed resolution of: Lkotlin/jvm/internal/Intrinsics;
+```
+Receiving this error might mean you haven't configured Kotlin for your Java only project. Consider explicitly adding the following to the list of your project dependencies:
+```
+implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
+```
+— where `latest_version` is the current version of `kotlin-stdlib`.
+
 ## InputMask vs. `android:inputType`
 
 Be careful when specifying field's `android:inputType`. 
