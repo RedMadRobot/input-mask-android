@@ -23,6 +23,11 @@ import java.util.*
 class Mask(format: String, private val customNotations: List<Notation>) {
 
     /**
+     * Convenience constructor.
+     */
+    constructor(format: String): this(format, emptyList())
+
+    /**
      * ### Result
      *
      * The end result of mask application to the user input string.
