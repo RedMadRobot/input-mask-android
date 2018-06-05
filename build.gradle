@@ -32,7 +32,7 @@ ext {
 
     deps = [
             // Kotlin
-            kotlinStdlib      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version",
+            kotlinStdlib      : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
             kotlinGradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     ]
 
