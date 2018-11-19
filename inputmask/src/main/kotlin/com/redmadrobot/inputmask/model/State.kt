@@ -21,7 +21,7 @@ abstract class State(val child: State?) {
      * @returns ```Next``` object instance with a set of actions that should take place when the user
      * input character is accepted.
      *
-     * @throws Fatal error, if the method is not implemeted.
+     * @throws Fatal error, if the method is not implemented.
      */
     abstract fun accept(character: Char): Next?
 

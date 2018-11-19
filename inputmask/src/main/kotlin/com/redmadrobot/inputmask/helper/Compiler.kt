@@ -98,7 +98,7 @@ class Compiler(
         )
     }
 
-    private fun compile(formatString: String, valueable: Boolean, fixed: Boolean, lastCharacter: Char?): State {
+    private fun compile(formatString: String, valuable: Boolean, fixed: Boolean, lastCharacter: Char?): State {
         if (formatString.isEmpty()) {
             return EOLState()
         }
@@ -154,7 +154,7 @@ class Compiler(
                 if ('\\' != lastCharacter) {
                     return this.compile(
                         formatString.drop(1),
-                        valueable,
+                        valuable,
                         fixed,
                         char
                     )
@@ -162,7 +162,7 @@ class Compiler(
             }
         }
 
-        if (valueable) {
+        if (valuable) {
             when (char) {
                 '0' -> {
                     return ValueState(

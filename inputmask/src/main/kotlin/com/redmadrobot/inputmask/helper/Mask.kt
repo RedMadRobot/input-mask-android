@@ -124,8 +124,8 @@ class Mask(format: String, private val customNotations: List<Notation>) {
         while (autocomplete && beforeCaret) {
             val next: Next = state.autocomplete() ?: break
             state = next.state
-            modifiedString += if (null != next.insert) next.insert else ""
-            extractedValue += if (null != next.value) next.value else ""
+            modifiedString += next.insert ?: ""
+            extractedValue += next.value ?: ""
             if (null != next.insert) {
                 modifiedCaretPosition += 1
             }
@@ -158,7 +158,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
         var state: State? = this.initialState
         var length = 0
 
-        while (null != state && !(state is EOLState)) {
+        while (null != state && state !is EOLState) {
             if (state is FixedState || state is FreeState || state is ValueState) {
                 length += 1
             }
@@ -177,7 +177,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
         var state: State? = this.initialState
         var length = 0
 
-        while (null != state && !(state is EOLState)) {
+        while (null != state && state !is EOLState) {
             if (state is FixedState || state is FreeState || state is ValueState || state is OptionalValueState) {
                 length += 1
             }
@@ -196,7 +196,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
         var state: State? = this.initialState
         var length = 0
 
-        while (null != state && !(state is EOLState)) {
+        while (null != state && state !is EOLState) {
             if (state is FixedState || state is ValueState) {
                 length += 1
             }
@@ -215,7 +215,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
         var state: State? = this.initialState
         var length = 0
 
-        while (null != state && !(state is EOLState)) {
+        while (null != state && state !is EOLState) {
             if (state is FixedState || state is ValueState || state is OptionalValueState) {
                 length += 1
             }
