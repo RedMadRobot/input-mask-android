@@ -18,12 +18,43 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
 
+## Changelog and v.4 migration guide
+Since we've updated the library to its new major version `4.0.0`, you may face a couple of compatibility issues here and there.
+
+Most of these issues are addressed in this paragraph; if you have never used this library and if you are completely new to its internals — please, refer to the [Description](#description) below.
+
+Later on, this section is going to be converted to changelog. 
+
+**`PolyMaskTextChangedListener` is gone**
+
+This class has been merged with its parent `MaskedTextChangedListener` without functionality loss. From now on please use `MaskedTextChangedListener` instances instead.
+
+Should you notice any lost accessibility modifiers preventing you from successfully subclassing `MaskedTextChangedListener`, please file an issue.
+
+**`ReversedMaskTextChangedListener` is gone**
+
+I'm working on a completely new implementation of an alphanumeric masking algorithm, which will simplify right-to-left masks introduction. This will allow numeric and monetary formats, digit grouping, etc.
+
+Please stick to the previous version of the library in case your project uses `ReversedMaskTextChangedListener` until this new algorithm is out.
+
+**New `AffinityCalculationStrategy`**
+
+Much like the [iOS version](https://github.com/RedMadRobot/input-mask-ios#affine-masks), this strategy allows to choose between «prefix» and «whole string» (default one) affinity calculation configurations. 
+
+Both configurations are illustrated by the updated sample app.
+
+**New `installOn(edittext)` methods**
+
+`MaskedTextChangedListener` instantiating and subscribing have been made more atomic. Please, refer to the sample app for guidance. 
+
+<a name="description" />
+
 ## Description
-The library allows to format user input on the fly according to the provided mask and to extract valueable characters.  
+The library allows to format user input on the fly according to the provided mask and to extract valuable characters.  
 
 Masks consist of blocks of symbols, which may include:
 
-* `[]` — a block for valueable symbols written by user. 
+* `[]` — a block for valuable symbols written by user. 
 
 Square brackets block may contain any number of special symbols:
 
@@ -43,9 +74,9 @@ Blocks must not contain nested brackets. `[[00]000]` format will cause a mask in
 
 Symbols outside the square brackets will take a place in the output. For instance, `+7 ([000]) [000]-[0000]` mask will format the input field to the form of `+7 (123) 456-7890`. 
 
-* `{}` — a block for valueable yet fixed symbols, which could not be altered by the user.
+* `{}` — a block for valuable yet fixed symbols, which could not be altered by the user.
 
-Symbols within the square and curly brackets form an extracted value (valueable characters).
+Symbols within the square and curly brackets form an extracted value (valuable characters).
 In other words, `[00]-[00]` and `[00]{-}[00]` will format the input to the same form of `12-34`, 
 but in the first case the value, extracted by the library, will be equal to `1234`, and in the second case it will result in `12-34`. 
 
@@ -86,56 +117,117 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:inputmask:3.4.4'
+    implementation 'com.redmadrobot:inputmask:4.0.0'
 }
 ```
 
 # Usage
 ## Simple EditText for the phone numbers
 
-Listening to the text change events of `EditText` and simultaneously altering the entered text could be a bit tricky as
-long as you need to add, remove and replace symbols intelligently preserving the cursor position.
+Let's say, you've got an `EditText` in your XML layout. 
 
-Thus, the library provides corresponding `MaskedTextChangedListener` class.
+First of all, make sure its `digits` contains the full set of expected characters for this particular case:
 
-`MaskedTextChangedListener` conforms to `TextWatcher` and `OnFocusChangeListener` interfaces and encaspulates logic to process text edit events.
-The object might be instantiated via code and then wired with the corresponding `EditText`.
+```xml
+<EditText
+    android:id="@+id/edit_text"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:digits="1234567890+-() " 
+    android:inputType="number" />
+```
 
-`MaskedTextChangedListener` has his own listener `MaskedTextChangedListener.ValueListener`, which allows capturing extracted value.
-All the `TextWatcher` calls from the client `EditText` are forwarded to the decorated `TextWatcher` object (you may provide one when initializing `MaskedTextChangedListener`).
+Here's a programmatic equivalent using Java:
 
-``` java
-public final class MainActivity extends Activity {
+```java
+editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+editText.setKeyListener(DigitsKeyListener.getInstance("1234567890+-() "));
+```
 
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final EditText editText = (EditText) findViewById(R.id.edit_text);
+<details>
+<summary>I wanna know why</summary>
+  <a href="https://github.com/RedMadRobot/input-mask-android/blob/master/inputmask/src/main/kotlin/com/redmadrobot/inputmask/MaskedTextChangedListener.kt#L165">Here</a>, our
+  library uses an <b>Editable</b> variable, which accepts only pre-registered characters from the corresponding input type. Specifying the input type is pretty much the only way to 
+  set the onscreen keyboard type. Numeric keyboard doesn't allow special characters like "(" or space. Thus, you'll end up with an <b>IndexOutOfBoundsException</b> crash. 
+</details>
 
-        final MaskedTextChangedListener listener = new MaskedTextChangedListener(
-            "+7 ([000]) [000] [00] [00]",
-            editText,
-            new MaskedTextChangedListener.ValueListener() {
-                @Override
-                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
-                    Log.d(MainActivity.class.getSimpleName(), extractedValue);
-                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
-                }
-            }
-        );
+Okay, now you've got to instantiate an `MaskedTextChangedListener` instance, which is a `TextWatcher` and an `OnFocusChangeListener`.
 
-        editText.addTextChangedListener(listener);
-        editText.setOnFocusChangeListener(listener);
-        editText.setHint(listener.placeholder());
+Then wire it up with the corresponding `EditText` like this:
+
+```java
+final EditText editText = findViewById(R.id.prefix_edit_text);
+
+final MaskedTextChangedListener listener = MaskedTextChangedListener.Companion.installOn(
+    editText,
+    "+7 ([000]) [000]-[00]-[00]",
+    new MaskedTextChangedListener.ValueListener() {
+        @Override
+        public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
+            Log.d("TAG", extractedValue);
+            Log.d("TAG", String.valueOf(maskFilled));
+        }
     }
+);
 
-}
+editText.setHint(listener.placeholder());
+```
+
+Alternatively, you may manually subscribe an `MaskedTextChangedListener`:
+
+```kotlin
+val editText = findViewById(R.id.edit_text) // echo "Hello Kotlin Extensions" 
+val listener = MaskedTextChangedListener("+7 ([000]) [000]-[00]-[00]", editText)
+
+editText.addTextChangedListener(listener)
+editText.onFocusChangeListener = listener
+```
+
+`MaskedTextChangedListener` has his own listener `MaskedTextChangedListener.ValueListener`, which allows capturing extracted values. Also, all the `TextWatcher` calls are forwarded to the decorated `TextWatcher` object you may provide when initializing `MaskedTextChangedListener`.
+
+## Affine masks
+
+You may want to switch between mask formats depending on the user input. Say, most of your phone numbers have **primary format** like this:
+
+`+7 ([000]) [000] [00] [00]`
+
+But some of them may have an operator code:
+
+`+7 ([000]) [000] [00] [00]#[900]`
+
+You put your additional mask formats into the `affineFormats` property:
+
+```kotlin
+val editText = ... 
+val listener = MaskedTextChangedListener("+7 ([000]) [000]-[00]-[00]", editText)
+listener.affineFormats = listOf("+7 ([000]) [000] [00] [00]#[900]") 
+```
+
+Or:
+
+```java
+final EditText editText = findViewById(R.id.prefix_edit_text);
+final List<String> affineFormats = new ArrayList<>();
+affineFormats.add("+7 ([000]) [000] [00] [00]#[900]");
+
+final MaskedTextChangedListener listener = new MaskedTextChangedListener(
+    "+7 ([000]) [000]-[00]-[00]", 
+    affineFormats,
+    AffinityCalculationStrategy.PREFIX,
+    true,
+    editText,
+    null,
+    null
+);
+
+editText.addTextChangedListener(listener);
+editText.setOnFocusChangeListener(listener);
+editText.setHint(listener.placeholder());
 ```
 
 ## String formatting without views
 
-In case you want to format a `String` somewhere in your applicaiton's code, `Mask` is the class you are looking for.
+In case you want to format a `String` somewhere in your application's code, `Mask` is the class you are looking for.
 Instantiate a `Mask` instance and feed it with your string, mocking the cursor position:
 
 ```java
@@ -151,47 +243,6 @@ final Mask.Result result = mask.apply(
 final String output = result.getFormattedText().getString();
 ```
 
-## Affine masks
-
-An experimental feature. While transforming the text, `Mask` calculates `affinity` index, which is basically an `Int` that shows the absolute rate of similarity between the text and the mask pattern.
-
-This index might be used to choose the most suitable pattern between predefined, and then applied to format the text.
-
-For the implementation, look for the `PolyMaskTextChangedListener` class, which inherits logic from `MaskedTextChangedListener`. It has its primary mask pattern and corresponding list of affine formats.
-
-``` java
-public final class MainActivity extends Activity {
-
-    @Override
-    protected void onCreate(final Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        final EditText editText = (EditText) findViewById(R.id.edit_text);
-        final List<String> affineFormats = new ArrayList<>();
-        affineFormats.add("8 ([000]) [000] [000] [00]");
-
-        final MaskedTextChangedListener listener = new PolyMaskTextChangedListener(
-            "+7 ([000]) [000] [00] [00]",
-            affineFormats,
-            editText,
-            new MaskedTextChangedListener.ValueListener() {
-                @Override
-                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
-                    Log.d(MainActivity.class.getSimpleName(), extractedValue);
-                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
-                }
-            }
-        );
-
-        editText.addTextChangedListener(listener);
-        editText.setOnFocusChangeListener(listener);
-
-        editText.setHint(listener.placeholder());
-    }
-
-}
-```
-
 <a name="elliptical" />
 
 ## Elliptical masks
@@ -200,8 +251,8 @@ An experimental feature. Allows to enter endless line of symbols of specific typ
 previous character in format string. Masks like `[A…]` or `[a…]` will allow to enter letters, `[0…]` or `[9…]` — numbers, etc.
 
 Be aware that ellipsis doesn't count as a required character. Also, ellipsis works as a string terminator, such that mask `[0…][AAA]`
-filled with a single digit `5` returns `true` in `Result.complete`, yet continues to accept **digits** (not letters!). Format after ellipsis is compiled into the mask but 
-never actually used; characters `[AAA]` in the `[0…][AAA]` mask are pretty much useless.
+filled with a single digit returns `true` in `Result.complete`, yet continues to accept **digits** (not letters!). Format after ellipsis is compiled into the mask but 
+never actually used; `[AAA]` part of the `[0…][AAA]` mask is pretty much useless.
 
 Elliptical format examples: 
 
@@ -268,7 +319,7 @@ Notation('.', ".", true)
 
 ### An email (please use regular expressions instead)
 
-With optional and mantatory "**d**ots" and "at" symbol.
+With optional and mandatory "**d**ots" and "at" symbol.
 
 Mask: `[aaaaaaaaaa][d][aaaaaaaaaa][@][aaaaaaaaaa][d][aaaaaaaaaa][D][aaaaaaaaaa]`
 
@@ -342,7 +393,7 @@ implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 ```
 — where `latest_version` is the current version of `kotlin-stdlib`.
 
-## InputMask vs. `android:inputType`
+## InputMask vs. `android:inputType` and `IndexOutOfBoundsException`
 
 Be careful when specifying field's `android:inputType`. 
 The library uses native `Editable` variable received on `afterTextChange` event in order to replace text efficiently. Because of that, field's `inputType` is actually considered when the library is trying to mutate the text. 
@@ -369,7 +420,7 @@ editText.setKeyListener(DigitsKeyListener.getInstance("0123456789 -.")); // modi
 
 Symptoms: 
 * You've got a wildcard template like `[________]`, allowing user to write any kind of symbols;
-* Cursor jumpes to the beggining of the line or to some random position while user input.
+* Cursor jumps to the beginning of the line or to some random position while user input.
 
 In this case text autocorrection & prediction might be a root cause of your problem, as it behaves somewhat weirdly in case when field listener tries to change the text during user input.
 

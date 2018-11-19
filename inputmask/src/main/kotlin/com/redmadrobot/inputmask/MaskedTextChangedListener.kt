@@ -4,20 +4,26 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
+import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
 import com.redmadrobot.inputmask.helper.Mask
 import com.redmadrobot.inputmask.model.CaretString
 import com.redmadrobot.inputmask.model.Notation
 import java.lang.ref.WeakReference
+import java.util.ArrayList
 
 /**
  * TextWatcher implementation.
  *
- * Created by taflanidi on 30.08.16.
+ * TextWatcher implementation, which applies masking to the user input, picking the most suitable mask for the text.
+ *
+ * Might be used as a decorator, which forwards TextWatcher calls to its own listener.
  */
 open class MaskedTextChangedListener(
-    format: String,
-    customNotations: List<Notation> = emptyList(),
-    val autocomplete: Boolean = true,
+    var primaryFormat: String,
+    var affineFormats: List<String> = emptyList(),
+    var customNotations: List<Notation> = emptyList(),
+    var affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
+    var autocomplete: Boolean = true,
     field: EditText,
     var listener: TextWatcher? = null,
     var valueListener: ValueListener? = null
@@ -27,12 +33,19 @@ open class MaskedTextChangedListener(
         fun onTextChanged(maskFilled: Boolean, extractedValue: String)
     }
 
-    val mask: Mask = Mask.getOrCreate(format, customNotations)
+    private val primaryMask: Mask
+        get() = Mask.getOrCreate(primaryFormat, customNotations)
 
-    var afterText: String = ""
-    var caretPosition: Int = 0
+    private var afterText: String = ""
+    private var caretPosition: Int = 0
 
-    val field: WeakReference<EditText> = WeakReference(field)
+    private val field: WeakReference<EditText> = WeakReference(field)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(format: String, field: EditText) :
+        this(format, field, null)
 
     /**
      * Convenience constructor.
@@ -50,24 +63,64 @@ open class MaskedTextChangedListener(
      * Convenience constructor.
      */
     constructor(format: String, autocomplete: Boolean, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
-        this(format, emptyList(), autocomplete, field, listener, valueListener)
+        this(format, emptyList(), emptyList(), AffinityCalculationStrategy.WHOLE_STRING, autocomplete, field, listener, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(primaryFormat: String, affineFormats: List<String>, field: EditText) :
+        this(primaryFormat, affineFormats, field, null)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(primaryFormat: String, affineFormats: List<String>, field: EditText, valueListener: ValueListener?) :
+        this(primaryFormat, affineFormats, field, null, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(primaryFormat: String, affineFormats: List<String>, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
+        this(primaryFormat, affineFormats, true, field, listener, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(primaryFormat: String, affineFormats: List<String>, autocomplete: Boolean, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
+        this(primaryFormat, affineFormats, AffinityCalculationStrategy.WHOLE_STRING, autocomplete, field, listener, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(primaryFormat: String, affineFormats: List<String>, affinityCalculationStrategy: AffinityCalculationStrategy, autocomplete: Boolean, field: EditText, listener: TextWatcher?, valueListener: ValueListener?) :
+        this(primaryFormat, affineFormats, emptyList(), affinityCalculationStrategy, autocomplete, field, listener, valueListener)
 
     /**
      * Set text and apply formatting.
      * @param text - text; might be plain, might already have some formatting.
      */
-    open fun setText(text: String) {
+    open fun setText(text: String): Mask.Result? {
+        return this.field.get()?.let {
+            val result = setText(text, it)
+            this.valueListener?.onTextChanged(result.complete, result.extractedValue)
+            return result
+        }
+    }
+
+    /**
+     * Set text and apply formatting.
+     * @param text - text; might be plain, might already have some formatting;
+     * @param field - a field where to put formatted text.
+     */
+    open fun setText(text: String, field: EditText): Mask.Result {
         val result: Mask.Result =
-            this.mask.apply(
-                CaretString(
-                    text,
-                    text.length
-                ),
+            this.pickMask(text, text.length, this.autocomplete).apply(
+                CaretString(text, text.length),
                 this.autocomplete
             )
-        this.field.get()?.setText(result.formattedText.string)
-        this.field.get()?.setSelection(result.formattedText.caretPosition)
-        this.valueListener?.onTextChanged(result.complete, result.extractedValue)
+        field.setText(result.formattedText.string)
+        field.setSelection(result.formattedText.caretPosition)
+        return result
     }
 
     /**
@@ -76,7 +129,7 @@ open class MaskedTextChangedListener(
      * @return Placeholder string.
      */
     fun placeholder(): String {
-        return this.mask.placeholder()
+        return this.primaryMask.placeholder()
     }
 
     /**
@@ -85,7 +138,7 @@ open class MaskedTextChangedListener(
      * @return Minimal satisfying count of characters inside the text field.
      */
     fun acceptableTextLength(): Int {
-        return this.mask.acceptableTextLength()
+        return this.primaryMask.acceptableTextLength()
     }
 
     /**
@@ -94,7 +147,7 @@ open class MaskedTextChangedListener(
      *  @return Total available count of mandatory and optional characters inside the text field.
      */
     fun totalTextLength(): Int {
-        return this.mask.totalTextLength()
+        return this.primaryMask.totalTextLength()
     }
 
     /**
@@ -103,7 +156,7 @@ open class MaskedTextChangedListener(
      * @return Minimal satisfying count of characters in extracted value.
      */
     fun acceptableValueLength(): Int {
-        return this.mask.acceptableValueLength()
+        return this.primaryMask.acceptableValueLength()
     }
 
     /**
@@ -112,7 +165,7 @@ open class MaskedTextChangedListener(
      * @return Total available count of mandatory and optional characters for extracted value.
      */
     fun totalValueLength(): Int {
-        return this.mask.totalValueLength()
+        return this.primaryMask.totalValueLength()
     }
 
     override fun afterTextChanged(edit: Editable?) {
@@ -129,12 +182,10 @@ open class MaskedTextChangedListener(
 
     override fun onTextChanged(text: CharSequence, cursorPosition: Int, before: Int, count: Int) {
         val isDeletion: Boolean = before > 0 && count == 0
+        val caretPosition = if (isDeletion) cursorPosition else cursorPosition + count
         val result: Mask.Result =
-            this.mask.apply(
-                CaretString(
-                    text.toString(),
-                    if (isDeletion) cursorPosition else cursorPosition + count
-                ),
+            this.pickMask(text.toString(), caretPosition, this.autocomplete && !isDeletion).apply(
+                CaretString(text.toString(), caretPosition),
                 this.autocomplete && !isDeletion
             )
         this.afterText = result.formattedText.string
@@ -151,16 +202,131 @@ open class MaskedTextChangedListener(
             }
 
             val result: Mask.Result =
-                this.mask.apply(
-                    CaretString(
-                        text,
-                        text.length
-                    ),
+                this.pickMask(text, text.length, this.autocomplete).apply(
+                    CaretString(text, text.length),
                     this.autocomplete
                 )
             this.field.get()?.setText(result.formattedText.string)
             this.field.get()?.setSelection(result.formattedText.caretPosition)
             this.valueListener?.onTextChanged(result.complete, result.extractedValue)
+        }
+    }
+
+    private fun pickMask(
+        text: String,
+        caretPosition: Int,
+        autocomplete: Boolean
+    ): Mask {
+        if (this.affineFormats.isEmpty()) return this.primaryMask
+
+        data class MaskAffinity(val mask: Mask, val affinity: Int)
+        val primaryAffinity: Int = this.calculateAffinity(this.primaryMask, text, caretPosition, autocomplete)
+
+        val masksAndAffinities: MutableList<MaskAffinity> = ArrayList()
+        for (format in this.affineFormats) {
+            val mask: Mask = Mask.getOrCreate(format, this.customNotations)
+            val affinity: Int = this.calculateAffinity(mask, text, caretPosition, autocomplete)
+            masksAndAffinities.add(MaskAffinity(mask, affinity))
+        }
+
+        masksAndAffinities.sortByDescending { it.affinity }
+
+        var insertIndex: Int = -1
+
+        for ((index, maskAffinity) in masksAndAffinities.withIndex()) {
+            if (primaryAffinity >= maskAffinity.affinity) {
+                insertIndex = index
+                break
+            }
+        }
+
+        if (insertIndex >= 0) {
+            masksAndAffinities.add(insertIndex, MaskAffinity(this.primaryMask, primaryAffinity))
+        } else {
+            masksAndAffinities.add(MaskAffinity(this.primaryMask, primaryAffinity))
+        }
+
+        return masksAndAffinities.first().mask
+    }
+
+    private fun calculateAffinity(
+        mask: Mask,
+        text: String,
+        caretPosition: Int,
+        autocomplete: Boolean
+    ): Int {
+        return this.affinityCalculationStrategy.calculateAffinityOfMask(
+            mask,
+            CaretString(text, caretPosition),
+            autocomplete
+        )
+    }
+
+    companion object {
+        /**
+         * Create a `MaskedTextChangedListener` instance and assign it as a field's
+         * `TextWatcher` and `onFocusChangeListener`.
+         */
+        fun installOn(
+            editText: EditText,
+            primaryFormat: String,
+            valueListener: ValueListener? = null
+        ): MaskedTextChangedListener = installOn(
+            editText,
+            primaryFormat,
+            emptyList(),
+            AffinityCalculationStrategy.WHOLE_STRING,
+            valueListener
+        )
+
+        /**
+         * Create a `MaskedTextChangedListener` instance and assign it as a field's
+         * `TextWatcher` and `onFocusChangeListener`.
+         */
+        fun installOn(
+            editText: EditText,
+            primaryFormat: String,
+            affineFormats: List<String> = emptyList(),
+            affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
+            valueListener: ValueListener? = null
+        ): MaskedTextChangedListener = installOn(
+            editText,
+            primaryFormat,
+            affineFormats,
+            emptyList(),
+            affinityCalculationStrategy,
+            true,
+            null,
+            valueListener
+        )
+
+        /**
+         * Create a `MaskedTextChangedListener` instance and assign it as a field's
+         * `TextWatcher` and `onFocusChangeListener`.
+         */
+        fun installOn(
+            editText: EditText,
+            primaryFormat: String,
+            affineFormats: List<String> = emptyList(),
+            customNotations: List<Notation> = emptyList(),
+            affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
+            autocomplete: Boolean = true,
+            listener: TextWatcher? = null,
+            valueListener: ValueListener? = null
+        ): MaskedTextChangedListener {
+            val maskedListener = MaskedTextChangedListener(
+                primaryFormat,
+                affineFormats,
+                customNotations,
+                affinityCalculationStrategy,
+                autocomplete,
+                editText,
+                listener,
+                valueListener
+            )
+            editText.addTextChangedListener(maskedListener)
+            editText.onFocusChangeListener = maskedListener
+            return maskedListener
         }
     }
 
