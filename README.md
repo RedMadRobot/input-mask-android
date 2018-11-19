@@ -146,12 +146,12 @@ editText.setKeyListener(DigitsKeyListener.getInstance("1234567890+-() "));
 
 <details>
 <summary>I wanna know why</summary>
-  <a href="https://github.com/RedMadRobot/input-mask-android/blob/master/inputmask/src/main/kotlin/com/redmadrobot/inputmask/MaskedTextChangedListener.kt#L165">Here</a>, our
+  <a href="https://github.com/RedMadRobot/input-mask-android/blob/master/inputmask/src/main/kotlin/com/redmadrobot/inputmask/MaskedTextChangedListener.kt#L171">Here</a>, our
   library uses an <b>Editable</b> variable, which accepts only pre-registered characters from the corresponding input type. Specifying the input type is pretty much the only way to 
   set the onscreen keyboard type. Numeric keyboard doesn't allow special characters like "(" or space. Thus, you'll end up with an <b>IndexOutOfBoundsException</b> crash. 
 </details>
 
-Okay, now you've got to instantiate an `MaskedTextChangedListener` instance, which is a `TextWatcher` and an `OnFocusChangeListener`.
+<br />Okay, now you've got to instantiate an `MaskedTextChangedListener` instance, which is a `TextWatcher` and an `OnFocusChangeListener`.
 
 Then wire it up with the corresponding `EditText` like this:
 
@@ -199,7 +199,7 @@ You put your additional mask formats into the `affineFormats` property:
 
 ```kotlin
 val editText = ... 
-val listener = MaskedTextChangedListener("+7 ([000]) [000]-[00]-[00]", editText)
+val listener = MaskedTextChangedListener("+7 ([000]) [000] [00] [00]", editText)
 listener.affineFormats = listOf("+7 ([000]) [000] [00] [00]#[900]") 
 ```
 
@@ -211,7 +211,7 @@ final List<String> affineFormats = new ArrayList<>();
 affineFormats.add("+7 ([000]) [000] [00] [00]#[900]");
 
 final MaskedTextChangedListener listener = new MaskedTextChangedListener(
-    "+7 ([000]) [000]-[00]-[00]", 
+    "+7 ([000]) [000] [00] [00]", 
     affineFormats,
     AffinityCalculationStrategy.PREFIX,
     true,
