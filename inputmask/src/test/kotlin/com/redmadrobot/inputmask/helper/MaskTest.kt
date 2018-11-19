@@ -6,7 +6,7 @@ package com.redmadrobot.inputmask.helper
 abstract class MaskTest {
 
     fun mask(): Mask {
-        return Mask(format())
+        return Mask(format(), emptyList())
     }
 
     abstract fun format(): String

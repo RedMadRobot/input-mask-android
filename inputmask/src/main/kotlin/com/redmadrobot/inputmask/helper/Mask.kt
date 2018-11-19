@@ -79,7 +79,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
     /**
      * Apply mask to the user input string.
      *
-     * @param toText user input string with current cursor position
+     * @param text user input string with current cursor position
      *
      * @returns Formatted text with extracted value an adjusted cursor position.
      */

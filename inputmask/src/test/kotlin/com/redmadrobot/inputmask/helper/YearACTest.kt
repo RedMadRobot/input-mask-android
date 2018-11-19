@@ -23,7 +23,7 @@ class YearACTest : MaskTest() {
     fun init_correctFormat_measureTime() {
         val startTime = System.nanoTime()
 
-        var masks: MutableList<Mask> = ArrayList()
+        val masks: MutableList<Mask> = ArrayList()
         for (i in 1..1000) {
             masks.add(Mask(this.format()))
         }
@@ -37,9 +37,9 @@ class YearACTest : MaskTest() {
     fun getOrCreate_correctFormat_measureTime() {
         val startTime = System.nanoTime()
 
-        var masks: MutableList<Mask> = ArrayList()
+        val masks: MutableList<Mask> = ArrayList()
         for (i in 1..1000) {
-            masks.add(Mask.getOrCreate(this.format()))
+            masks.add(Mask.getOrCreate(this.format(), emptyList()))
         }
         val endTime = System.nanoTime()
         val duration = (endTime - startTime) / 1000000
@@ -48,43 +48,43 @@ class YearACTest : MaskTest() {
     }
 
     @Test
-    fun GetPlaceholder_allSet_returnsCorrectPlaceholder() {
+    fun getPlaceholder_allSet_returnsCorrectPlaceholder() {
         val placeholder: String = this.mask().placeholder()
         Assert.assertEquals(placeholder, "0000 AC")
     }
 
     @Test
-    fun AcceptableTextLength_allSet_returnsCorrectCount() {
+    fun acceptableTextLength_allSet_returnsCorrectCount() {
         val acceptableTextLength: Int = this.mask().acceptableTextLength()
         Assert.assertEquals(acceptableTextLength, 4)
     }
 
     @Test
-    fun TotalTextLength_allSet_returnsCorrectCount() {
+    fun totalTextLength_allSet_returnsCorrectCount() {
         val totalTextLength: Int = this.mask().totalTextLength()
         Assert.assertEquals(totalTextLength, 7)
     }
 
     @Test
-    fun AcceptableValueLength_allSet_returnsCorrectCount() {
+    fun acceptableValueLength_allSet_returnsCorrectCount() {
         val acceptableValueLength: Int = this.mask().acceptableValueLength()
         Assert.assertEquals(acceptableValueLength, 1)
     }
 
     @Test
-    fun TotalValueLength_allSet_returnsCorrectCount() {
+    fun totalValueLength_allSet_returnsCorrectCount() {
         val totalValueLength: Int = this.mask().totalValueLength()
         Assert.assertEquals(totalValueLength, 4)
     }
 
     @Test
-    fun Apply_1_return_1() {
-        val inputString: String = "1"
+    fun apply_1_return_1() {
+        val inputString = "1"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "1"
+        val expectedString = "1"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "1"
+        val expectedValue = "1"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -96,13 +96,13 @@ class YearACTest : MaskTest() {
     }
 
     @Test
-    fun Apply_11_return_11() {
-        val inputString: String = "11"
+    fun apply_11_return_11() {
+        val inputString = "11"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "11"
+        val expectedString = "11"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "11"
+        val expectedValue = "11"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -114,13 +114,13 @@ class YearACTest : MaskTest() {
     }
 
     @Test
-    fun Apply_111_return_111() {
-        val inputString: String = "111"
+    fun apply_111_return_111() {
+        val inputString = "111"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "111"
+        val expectedString = "111"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "111"
+        val expectedValue = "111"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -132,13 +132,13 @@ class YearACTest : MaskTest() {
     }
 
     @Test
-    fun Apply_1111_return_1111() {
-        val inputString: String = "1111"
+    fun apply_1111_return_1111() {
+        val inputString = "1111"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "1111"
+        val expectedString = "1111"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "1111"
+        val expectedValue = "1111"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -150,13 +150,13 @@ class YearACTest : MaskTest() {
     }
 
     @Test
-    fun Apply_11112_return_1111spaceAC() {
-        val inputString: String = "11112"
+    fun apply_11112_return_1111spaceAC() {
+        val inputString = "11112"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "1111 AC"
+        val expectedString = "1111 AC"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "1111"
+        val expectedValue = "1111"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -168,13 +168,13 @@ class YearACTest : MaskTest() {
     }
 
     @Test
-    fun ApplyAutocomplete_1111_return_1111spaceAC() {
-        val inputString: String = "1111"
+    fun applyAutocomplete_1111_return_1111spaceAC() {
+        val inputString = "1111"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "1111 AC"
+        val expectedString = "1111 AC"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "1111"
+        val expectedValue = "1111"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
 

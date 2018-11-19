@@ -23,7 +23,7 @@ class YearTest : MaskTest() {
     fun init_correctFormat_measureTime() {
         val startTime = System.nanoTime()
 
-        var masks: MutableList<Mask> = ArrayList()
+        val masks: MutableList<Mask> = ArrayList()
         for (i in 1..1000) {
             masks.add(Mask(this.format()))
         }
@@ -37,9 +37,9 @@ class YearTest : MaskTest() {
     fun getOrCreate_correctFormat_measureTime() {
         val startTime = System.nanoTime()
 
-        var masks: MutableList<Mask> = ArrayList()
+        val masks: MutableList<Mask> = ArrayList()
         for (i in 1..1000) {
-            masks.add(Mask.getOrCreate(this.format()))
+            masks.add(Mask.getOrCreate(this.format(), emptyList()))
         }
         val endTime = System.nanoTime()
         val duration = (endTime - startTime) / 1000000
@@ -79,12 +79,12 @@ class YearTest : MaskTest() {
 
     @Test
     fun apply_1_returns_1() {
-        val inputString: String = "1"
+        val inputString = "1"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "1"
+        val expectedString = "1"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "1"
+        val expectedValue = "1"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -98,12 +98,12 @@ class YearTest : MaskTest() {
 
     @Test
     fun apply_11_returns_11() {
-        val inputString: String = "11"
+        val inputString = "11"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "11"
+        val expectedString = "11"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "11"
+        val expectedValue = "11"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -117,12 +117,12 @@ class YearTest : MaskTest() {
 
     @Test
     fun apply_112_returns_112() {
-        val inputString: String = "112"
+        val inputString = "112"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "112"
+        val expectedString = "112"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "112"
+        val expectedValue = "112"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 
@@ -136,12 +136,12 @@ class YearTest : MaskTest() {
 
     @Test
     fun apply_1122_returns_1122() {
-        val inputString: String = "1122"
+        val inputString = "1122"
         val inputCaret: Int = inputString.length
 
-        val expectedString: String = "1122"
+        val expectedString = "1122"
         val expectedCaret: Int = expectedString.length
-        val expectedValue: String = "1122"
+        val expectedValue = "1122"
 
         val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
 

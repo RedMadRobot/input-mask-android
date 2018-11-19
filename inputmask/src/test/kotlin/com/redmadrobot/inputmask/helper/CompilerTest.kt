@@ -26,7 +26,7 @@ class CompilerTest {
 
         while (null != state && state !is EOLState) {
             stateList.add(state)
-            state = state?.child
+            state = state.child
         }
 
         with(correctnessList) {
