@@ -42,9 +42,10 @@ public final class MainActivity extends Activity {
             AffinityCalculationStrategy.PREFIX,
             new MaskedTextChangedListener.ValueListener() {
                 @Override
-                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
+                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
                     Log.d(MainActivity.class.getSimpleName(), extractedValue);
                     Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
+                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(formattedText));
                     checkBox.setChecked(maskFilled);
                 }
             }
@@ -66,9 +67,10 @@ public final class MainActivity extends Activity {
                 AffinityCalculationStrategy.WHOLE_STRING,
                 new MaskedTextChangedListener.ValueListener() {
                     @Override
-                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
+                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
                         Log.d(MainActivity.class.getSimpleName(), extractedValue);
                         Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
+                        Log.d(MainActivity.class.getSimpleName(), String.valueOf(formattedText));
                         checkBox.setChecked(maskFilled);
                     }
                 }
