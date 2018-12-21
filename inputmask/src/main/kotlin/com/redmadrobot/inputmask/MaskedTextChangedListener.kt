@@ -103,6 +103,7 @@ open class MaskedTextChangedListener(
         return this.field.get()?.let {
             val result = setText(text, it)
             this.afterText = result.formattedText.string
+            this.caretPosition = result.formattedText.caretPosition
             this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
             return result
         }
@@ -209,6 +210,7 @@ open class MaskedTextChangedListener(
                 )
 
             this.afterText = result.formattedText.string
+            this.caretPosition = result.formattedText.caretPosition
             this.field.get()?.setText(afterText)
             this.field.get()?.setSelection(result.formattedText.caretPosition)
             this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
