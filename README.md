@@ -101,8 +101,8 @@ For instance, `\[[00]\]` mask will allow user to enter `[12]`. Extracted value w
 
 Note that you've got to escape backslashes in the actual code:
 
-```swift
-let format: String = "\\[[00]\\]"
+```kotlin
+val format = "\\[[00]\\]"
 ```
 
 Escaped square or curly brackets might be included in the extracted value. For instance, `\[[00]{\]}` mask will allow user 
