@@ -310,7 +310,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
             true
         } else if (state is ValueState) {
             return state.isElliptical
-        } else if (state is FixedState || state is FreeState) {
+        } else if (state is FixedState) {
             false
         } else {
             this.noMandatoryCharactersLeftAfterState(state.nextState())

@@ -92,7 +92,7 @@ class YearACTest : MaskTest() {
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
 
-        Assert.assertEquals(false, result.complete)
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
@@ -110,7 +110,7 @@ class YearACTest : MaskTest() {
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
 
-        Assert.assertEquals(false, result.complete)
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
@@ -128,7 +128,7 @@ class YearACTest : MaskTest() {
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
 
-        Assert.assertEquals(false, result.complete)
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
@@ -146,7 +146,7 @@ class YearACTest : MaskTest() {
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
         Assert.assertEquals(expectedValue, result.extractedValue)
 
-        Assert.assertEquals(false, result.complete)
+        Assert.assertEquals(true, result.complete)
     }
 
     @Test
