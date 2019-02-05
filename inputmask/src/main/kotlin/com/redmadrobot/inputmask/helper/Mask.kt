@@ -72,6 +72,24 @@ class Mask(format: String, private val customNotations: List<Notation>) {
             }
             return cachedMask
         }
+
+        /**
+         * Check your mask format is valid.
+         *
+         * @param format mask format.
+         * @param customNotations a list of custom rules to compile square bracket ```[]``` groups of format symbols.
+         *
+         * @returns ```true``` if this format coupled with custom notations will compile into a working ```Mask``` object.
+         * Otherwise ```false```.
+         */
+        fun isValid(format: String, customNotations: List<Notation>): Boolean {
+            return try {
+                Mask(format, customNotations)
+                true
+            } catch (e: Compiler.FormatError) {
+                false
+            }
+        }
     }
 
     private val initialState: State = Compiler(this.customNotations).compile(format)
