@@ -42,9 +42,8 @@ public final class MainActivity extends Activity {
             AffinityCalculationStrategy.PREFIX,
             new MaskedTextChangedListener.ValueListener() {
                 @Override
-                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
-                    Log.d(MainActivity.class.getSimpleName(), extractedValue);
-                    Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
+                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
+                    logValueListener(maskFilled, extractedValue, formattedText);
                     checkBox.setChecked(maskFilled);
                 }
             }
@@ -66,15 +65,21 @@ public final class MainActivity extends Activity {
                 AffinityCalculationStrategy.WHOLE_STRING,
                 new MaskedTextChangedListener.ValueListener() {
                     @Override
-                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue) {
-                        Log.d(MainActivity.class.getSimpleName(), extractedValue);
-                        Log.d(MainActivity.class.getSimpleName(), String.valueOf(maskFilled));
+                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
+                        logValueListener(maskFilled, extractedValue, formattedText);
                         checkBox.setChecked(maskFilled);
                     }
                 }
         );
 
         editText.setHint(listener.placeholder());
+    }
+
+    private void logValueListener(boolean maskFilled, @NonNull String extractedValue, @NonNull String formattedText) {
+        final String className = MainActivity.class.getSimpleName();
+        Log.d(className, extractedValue);
+        Log.d(className, String.valueOf(maskFilled));
+        Log.d(className, String.valueOf(formattedText));
     }
 
 }

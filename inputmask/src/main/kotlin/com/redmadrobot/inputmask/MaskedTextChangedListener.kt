@@ -9,7 +9,7 @@ import com.redmadrobot.inputmask.helper.Mask
 import com.redmadrobot.inputmask.model.CaretString
 import com.redmadrobot.inputmask.model.Notation
 import java.lang.ref.WeakReference
-import java.util.ArrayList
+import java.util.*
 
 /**
  * TextWatcher implementation.
@@ -30,7 +30,7 @@ open class MaskedTextChangedListener(
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
-        fun onTextChanged(maskFilled: Boolean, extractedValue: String)
+        fun onTextChanged(maskFilled: Boolean, extractedValue: String, formattedValue: String)
     }
 
     private val primaryMask: Mask
@@ -102,7 +102,9 @@ open class MaskedTextChangedListener(
     open fun setText(text: String): Mask.Result? {
         return this.field.get()?.let {
             val result = setText(text, it)
-            this.valueListener?.onTextChanged(result.complete, result.extractedValue)
+            this.afterText = result.formattedText.string
+            this.caretPosition = result.formattedText.caretPosition
+            this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
             return result
         }
     }
@@ -190,7 +192,7 @@ open class MaskedTextChangedListener(
             )
         this.afterText = result.formattedText.string
         this.caretPosition = if (isDeletion) cursorPosition else result.formattedText.caretPosition
-        this.valueListener?.onTextChanged(result.complete, result.extractedValue)
+        this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
@@ -206,9 +208,12 @@ open class MaskedTextChangedListener(
                     CaretString(text, text.length),
                     this.autocomplete
                 )
-            this.field.get()?.setText(result.formattedText.string)
+
+            this.afterText = result.formattedText.string
+            this.caretPosition = result.formattedText.caretPosition
+            this.field.get()?.setText(afterText)
             this.field.get()?.setSelection(result.formattedText.caretPosition)
-            this.valueListener?.onTextChanged(result.complete, result.extractedValue)
+            this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
         }
     }
 
