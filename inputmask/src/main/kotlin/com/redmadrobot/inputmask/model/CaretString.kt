@@ -7,4 +7,4 @@ package com.redmadrobot.inputmask.model
  *
  * @author taflanidi
  */
-class CaretString(val string: String, val caretPosition: Int)
+data class CaretString(val string: String, val caretPosition: Int)
