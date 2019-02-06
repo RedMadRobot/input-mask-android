@@ -32,7 +32,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
      *
      * The end result of mask application to the user input string.
      */
-    class Result(
+    data class Result(
         /**
          * Formatted text with updated caret position.
          */
