@@ -137,7 +137,7 @@ Feel free to add yours below.
 
 These folks rock:
 
-* Artem [Fi5t](https://github.com/while366) Kulakov
+* Artem [Fi5t](https://github.com/Fi5t) Kulakov
 * Nikita [nbarishok](https://github.com/nbarishok) Barishok
 * Roman [yatsinar](https://github.com/yatsinar) Iatcyna
 * Alexander [xanderblinov](https://github.com/xanderblinov) Blinov
