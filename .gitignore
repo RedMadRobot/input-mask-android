@@ -30,3 +30,5 @@ proguard/
 #Android Studio
 .idea
 *.iml
+
+gradle/publish.properties
