@@ -129,7 +129,7 @@ class FormatSanitizer {
                          || blockBuffer.contains("_")) {
                             blockBuffer += "]"
                             resultingBlocks.add(blockBuffer)
-                            blockBuffer = "[" + blockCharacter
+                            blockBuffer = "[$blockCharacter"
                             continue
                         }
                     }
@@ -141,7 +141,7 @@ class FormatSanitizer {
                          || blockBuffer.contains("_")) {
                             blockBuffer += "]"
                             resultingBlocks.add(blockBuffer)
-                            blockBuffer = "[" + blockCharacter
+                            blockBuffer = "[$blockCharacter"
                             continue
                         }
                     }
@@ -153,7 +153,7 @@ class FormatSanitizer {
                          || blockBuffer.contains("a")) {
                             blockBuffer += "]"
                             resultingBlocks.add(blockBuffer)
-                            blockBuffer = "[" + blockCharacter
+                            blockBuffer = "[$blockCharacter"
                             continue
                         }
                     }
