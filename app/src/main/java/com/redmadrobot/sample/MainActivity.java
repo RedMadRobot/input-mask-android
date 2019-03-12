@@ -1,8 +1,6 @@
 package com.redmadrobot.sample;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -13,12 +11,15 @@ import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 /**
  * Home screen for the sample app.
  *
  * @author taflanidi
  */
-public final class MainActivity extends Activity {
+public final class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
