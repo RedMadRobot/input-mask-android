@@ -8,6 +8,7 @@ buildscript {
     dependencies {
         classpath deps.gradle.android_plugin
         classpath deps.kotlin.plugin
+        classpath deps.kotlin.dokka
         classpath deps.bintray.android_maven_plugin
         classpath deps.bintray.gradle_bintray_plugin
     }
