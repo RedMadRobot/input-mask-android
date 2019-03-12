@@ -8,12 +8,11 @@ version = "4.1.0"
 
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -78,9 +77,9 @@ install {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api deps.kotlinStdlib
+    api deps.kotlin.stdlib
     
-    testImplementation testDeps.jUnit
+    testImplementation deps.test.junit
 }
 
 task sourcesJar(type: Jar) {
