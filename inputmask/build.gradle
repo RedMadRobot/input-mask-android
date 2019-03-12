@@ -1,147 +1,36 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 apply plugin: 'kotlin-android'
 
-// This is the library version used when deploying the artifact
-version = "4.1.0"
-
-
 android {
-    compileSdkVersion 28
+    compileSdkVersion build_versions.compile_sdk
 
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion build_versions.min_sdk
+        targetSdkVersion build_versions.target_sdk
+
+        versionCode getVersionCodeFromProperties()
+        versionName getVersionNameFromProperties()
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
     }
 }
 
-def siteUrl = 'https://github.com/RedMadRobot/input-mask-android'      // Homepage URL of the library
-def gitUrl = 'https://github.com/RedMadRobot/input-mask-android.git'   // Git repository URL
-group = "com.redmadrobot"
-
-install {
-    repositories.mavenInstaller {
-        // This generates POM.xml with proper parameters
-        pom {
-            project {
-                packaging 'aar'
-
-                // Add your description here
-                name 'InputMask'
-                description 'Android library that helps masking and formatting user input'
-                url siteUrl
-
-                // Set your license
-                licenses {
-                    license {
-                        name 'MIT License'
-                        url 'http://opensource.org/licenses/MIT'
-                    }
-                }
-                developers {
-                    developer {
-                        id 'taflanidi'
-                        name 'Egor Taflanidi'
-                        email 'et@redmadrobot.com'
-                    }
-                    developer {
-                        id 'xanderblinov'
-                        name 'Alexander Blinov'
-                        email 'a.blinov@redmadrobot.com'
-                    }
-                }
-                scm {
-                    connection gitUrl
-                    developerConnection gitUrl
-                    url siteUrl
-                }
-            }
-        }
-    }
-}
-
-
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation deps.kotlin.stdlib
 
-    api deps.kotlin.stdlib
-    
     testImplementation deps.test.junit
 }
 
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
 
-task javadoc(type: Javadoc) {
-    android.libraryVariants.all { variant ->
-        task("generate${variant.name.capitalize()}Javadoc", type: Javadoc) {
-            description "Generates Javadoc for $variant.name."
-            source = variant.javaCompiler.source
-            ext.androidJar = "${android.sdkDirectory}/platforms/${android.compileSdkVersion}/android.jar"
-            options.links("http://docs.oracle.com/javase/7/docs/api/")
-            options.links("http://d.android.com/reference/")
-            doFirst {
-                classpath =
-                    files(
-                        variant.javaCompiler.classpath.files,
-                        project.android.getBootClasspath()
-                    ) + files(ext.androidJar)
-            }
-        }
-    }
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
-
-bintray {
-    def systemEnvUser = System.getenv("bintray.user")
-    def systemEnvKey = System.getenv("bintray.apikey")
-    def systemEnvGpgPassphrase = System.getenv("bintray.gpg")
-
-    user = systemEnvUser == null ? properties.getProperty("bintray.user") : systemEnvUser
-    key = systemEnvKey == null ? properties.getProperty("bintray.apikey") : systemEnvKey
-    def gpgPassphrase = systemEnvGpgPassphrase == null ? properties.getProperty("bintray.gpg") : systemEnvGpgPassphrase
-
-    configurations = ['archives']
-    pkg {
-        repo = "maven"
-        name = "inputmask"
-        desc = 'Android library that helps masking and formatting user input'
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = ["MIT"]
-        publish = true
-        version {
-            gpg {
-                sign = true //Determines whether to GPG sign the files. The default is false
-                passphrase = gpgPassphrase //Optional. The passphrase for GPG signing'
-            }
-        }
-    }
-}
