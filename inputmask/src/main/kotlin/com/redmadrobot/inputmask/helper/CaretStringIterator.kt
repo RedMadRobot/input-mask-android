@@ -59,7 +59,7 @@ class CaretStringIterator(
      */
     fun beforeCaret(): Boolean {
         return this.currentIndex <= this.caretString.caretPosition
-            || (0 == this.currentIndex && 0 == this.caretString.caretPosition)
+                || (0 == this.currentIndex && 0 == this.caretString.caretPosition)
     }
 
     /**

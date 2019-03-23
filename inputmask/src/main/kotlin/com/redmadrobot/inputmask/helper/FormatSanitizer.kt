@@ -124,9 +124,10 @@ class FormatSanitizer {
 
                     if (blockCharacter == '0' || blockCharacter == '9') {
                         if (blockBuffer.contains("A")
-                         || blockBuffer.contains("a")
-                         || blockBuffer.contains("-")
-                         || blockBuffer.contains("_")) {
+                            || blockBuffer.contains("a")
+                            || blockBuffer.contains("-")
+                            || blockBuffer.contains("_")
+                        ) {
                             blockBuffer += "]"
                             resultingBlocks.add(blockBuffer)
                             blockBuffer = "[$blockCharacter"
@@ -136,9 +137,10 @@ class FormatSanitizer {
 
                     if (blockCharacter == 'A' || blockCharacter == 'a') {
                         if (blockBuffer.contains("0")
-                         || blockBuffer.contains("9")
-                         || blockBuffer.contains("-")
-                         || blockBuffer.contains("_")) {
+                            || blockBuffer.contains("9")
+                            || blockBuffer.contains("-")
+                            || blockBuffer.contains("_")
+                        ) {
                             blockBuffer += "]"
                             resultingBlocks.add(blockBuffer)
                             blockBuffer = "[$blockCharacter"
@@ -148,9 +150,10 @@ class FormatSanitizer {
 
                     if (blockCharacter == '-' || blockCharacter == '_') {
                         if (blockBuffer.contains("0")
-                         || blockBuffer.contains("9")
-                         || blockBuffer.contains("A")
-                         || blockBuffer.contains("a")) {
+                            || blockBuffer.contains("9")
+                            || blockBuffer.contains("A")
+                            || blockBuffer.contains("a")
+                        ) {
                             blockBuffer += "]"
                             resultingBlocks.add(blockBuffer)
                             blockBuffer = "[$blockCharacter"
@@ -176,11 +179,16 @@ class FormatSanitizer {
             var sortedBlock: String
             if (block.startsWith("[")) {
                 if (block.contains("0") || block.contains("9")) {
-                    sortedBlock = "[" + block.replace("[", "").replace("]", "").toCharArray().sorted().joinToString("") + "]"
+                    sortedBlock =
+                        "[" + block.replace("[", "").replace("]", "").toCharArray().sorted().joinToString("") + "]"
                 } else if (block.contains("a") || block.contains("A")) {
-                    sortedBlock = "[" + block.replace("[", "").replace("]", "").toCharArray().sorted().joinToString("") + "]"
+                    sortedBlock =
+                        "[" + block.replace("[", "").replace("]", "").toCharArray().sorted().joinToString("") + "]"
                 } else {
-                    sortedBlock = "[" + block.replace("[", "").replace("]", "").replace("_", "A").replace("-", "a").toCharArray().sorted().joinToString("") + "]"
+                    sortedBlock = "[" + block.replace("[", "").replace("]", "").replace("_", "A").replace(
+                        "-",
+                        "a"
+                    ).toCharArray().sorted().joinToString("") + "]"
                     sortedBlock = sortedBlock.replace("A", "_").replace("a", "-")
                 }
             } else {

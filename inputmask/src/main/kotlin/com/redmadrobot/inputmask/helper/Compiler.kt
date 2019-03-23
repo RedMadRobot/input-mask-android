@@ -309,9 +309,12 @@ class Compiler(
 
     private fun determineTypeWithCustomNotations(lastCharacter: Char?): ValueState.StateType {
         customNotations.forEach { notation: Notation ->
-            if (notation.character == lastCharacter) return ValueState.StateType.Custom(lastCharacter, notation.characterSet)
+            if (notation.character == lastCharacter) return ValueState.StateType.Custom(
+                lastCharacter,
+                notation.characterSet
+            )
         }
         throw FormatError()
     }
-    
+
 }

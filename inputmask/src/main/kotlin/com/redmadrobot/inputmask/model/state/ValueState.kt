@@ -40,7 +40,7 @@ class ValueState : State {
     /**
      * Constructor for elliptical ```ValueState```
      */
-    constructor(inheritedType: StateType): super(null) {
+    constructor(inheritedType: StateType) : super(null) {
         this.type = StateType.Ellipsis(inheritedType)
     }
 

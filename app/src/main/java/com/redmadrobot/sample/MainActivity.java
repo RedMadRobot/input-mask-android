@@ -4,15 +4,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.redmadrobot.inputmask.MaskedTextChangedListener;
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Home screen for the sample app.
@@ -37,17 +35,17 @@ public final class MainActivity extends AppCompatActivity {
         affineFormats.add("8 ([000]) [000]-[00]-[00]");
 
         final MaskedTextChangedListener listener = MaskedTextChangedListener.Companion.installOn(
-            editText,
-            "+7 ([000]) [000]-[00]-[00]",
-            affineFormats,
-            AffinityCalculationStrategy.PREFIX,
-            new MaskedTextChangedListener.ValueListener() {
-                @Override
-                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
-                    logValueListener(maskFilled, extractedValue, formattedText);
-                    checkBox.setChecked(maskFilled);
+                editText,
+                "+7 ([000]) [000]-[00]-[00]",
+                affineFormats,
+                AffinityCalculationStrategy.PREFIX,
+                new MaskedTextChangedListener.ValueListener() {
+                    @Override
+                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
+                        logValueListener(maskFilled, extractedValue, formattedText);
+                        checkBox.setChecked(maskFilled);
+                    }
                 }
-            }
         );
 
         editText.setHint(listener.placeholder());
