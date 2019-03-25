@@ -25,7 +25,7 @@ class Mask(format: String, private val customNotations: List<Notation>) {
     /**
      * Convenience constructor.
      */
-    constructor(format: String): this(format, emptyList())
+    constructor(format: String) : this(format, emptyList())
 
     /**
      * ### Result

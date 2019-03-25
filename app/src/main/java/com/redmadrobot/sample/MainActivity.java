@@ -1,12 +1,11 @@
 package com.redmadrobot.sample;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import com.redmadrobot.inputmask.MaskedTextChangedListener;
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy;
 
@@ -18,7 +17,7 @@ import java.util.List;
  *
  * @author taflanidi
  */
-public final class MainActivity extends Activity {
+public final class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -36,17 +35,17 @@ public final class MainActivity extends Activity {
         affineFormats.add("8 ([000]) [000]-[00]-[00]");
 
         final MaskedTextChangedListener listener = MaskedTextChangedListener.Companion.installOn(
-            editText,
-            "+7 ([000]) [000]-[00]-[00]",
-            affineFormats,
-            AffinityCalculationStrategy.PREFIX,
-            new MaskedTextChangedListener.ValueListener() {
-                @Override
-                public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
-                    logValueListener(maskFilled, extractedValue, formattedText);
-                    checkBox.setChecked(maskFilled);
+                editText,
+                "+7 ([000]) [000]-[00]-[00]",
+                affineFormats,
+                AffinityCalculationStrategy.PREFIX,
+                new MaskedTextChangedListener.ValueListener() {
+                    @Override
+                    public void onTextChanged(boolean maskFilled, @NonNull final String extractedValue, @NonNull String formattedText) {
+                        logValueListener(maskFilled, extractedValue, formattedText);
+                        checkBox.setChecked(maskFilled);
+                    }
                 }
-            }
         );
 
         editText.setHint(listener.placeholder());

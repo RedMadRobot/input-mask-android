@@ -1,42 +1,23 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.2.30'
+    apply from: "${rootProject.projectDir}/gradle/dependencies.gradle"
 
-    repositories {
-        jcenter()
-        google()
-    }
+    addRepos(repositories)
+
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.4.1'
-        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath deps.gradle.android_plugin
+        classpath deps.kotlin.plugin
+        classpath deps.kotlin.dokka
+        classpath deps.bintray.android_maven_plugin
+        classpath deps.bintray.gradle_bintray_plugin
     }
 }
 
 allprojects {
-    repositories {
-        jcenter()
-        google()
-    }
+    apply from: "${rootProject.projectDir}/gradle/version.gradle"
+
+    addRepos(repositories)
 }
 
-ext {
-    kotlinVersion = '1.2.30'
 
-    jUnitVersion = '4.12'
-
-    deps = [
-            // Kotlin
-            kotlinStdlib      : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
-            kotlinGradlePlugin: "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-    ]
-
-    testDeps = [
-        jUnit: "junit:junit:$jUnitVersion"
-    ]
-}

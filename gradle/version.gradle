@@ -1,0 +1,21 @@
+def getVersionCodeFromProperties() {
+    Properties versionProperties = loadVersionProperties()
+    return (versionProperties["version_code"] ?: "0").toString().toInteger()
+}
+
+def getVersionNameFromProperties() {
+    Properties versionProperties = loadVersionProperties()
+    return versionProperties["version_name"]
+}
+
+private Properties loadVersionProperties() {
+    Properties versionProperties = new Properties()
+    //noinspection GroovyAssignabilityCheck
+    versionProperties.load(project.rootProject.file('version.properties').newDataInputStream())
+    versionProperties
+}
+
+ext {
+    getVersionCodeFromProperties = this.&getVersionCodeFromProperties
+    getVersionNameFromProperties = this.&getVersionNameFromProperties
+}

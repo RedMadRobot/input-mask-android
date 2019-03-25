@@ -87,8 +87,8 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-                CaretString(inputString, inputCaret),
-                false
+            CaretString(inputString, inputCaret),
+            false
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -108,8 +108,8 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-                CaretString(inputString, inputCaret),
-                false
+            CaretString(inputString, inputCaret),
+            false
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -129,8 +129,8 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-                CaretString(inputString, inputCaret),
-                false
+            CaretString(inputString, inputCaret),
+            false
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -150,8 +150,8 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue = "11.11"
 
         val result: Mask.Result = this.mask().apply(
-                CaretString(inputString, inputCaret),
-                false
+            CaretString(inputString, inputCaret),
+            false
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -171,8 +171,8 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-                CaretString(inputString, inputCaret),
-                false
+            CaretString(inputString, inputCaret),
+            false
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -192,8 +192,8 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-                CaretString(inputString, inputCaret), 
-                false
+            CaretString(inputString, inputCaret),
+            false
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
