@@ -15,7 +15,7 @@ group publishProperties['group_id']
 publishing {
     publications {
         Production(MavenPublication) {
-            artifact("$buildDir/outputs/aar/acronymavatar-release.aar")
+            artifact("$buildDir/outputs/aar/inputmask-release.aar")
             groupId
             artifactId publishProperties['lib_name']
             version this.version
@@ -56,7 +56,7 @@ bintray {
         publicDownloadNumbers = true
 
         // set as true to test uploading
-        dryRun = false
+        dryRun = true
 
         version {
             name = this.version
