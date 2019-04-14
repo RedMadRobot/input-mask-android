@@ -68,7 +68,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:inputmask:4.0.0'
+    implementation 'com.redmadrobot:inputmask:4.1.0'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }
