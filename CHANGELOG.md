@@ -1,5 +1,11 @@
 # Changelog
 
+### `4.2.0`
+
+#### Added:
+
+* `capacity` affinity calculation option allowing to have radically different mask format depending on the input length
+
 ### `4.1.0`
 
 #### Added:
