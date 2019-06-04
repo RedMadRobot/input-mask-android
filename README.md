@@ -25,7 +25,7 @@ Please note, we've moved from
 com.redmadrobot:inputmask:4.1.0
 ```
 to
-```
+```gradle
 com.redmadrobot:input-mask-android:4.2.0
 ```
 Make sure you've updated your dependencies.
