@@ -2,7 +2,7 @@
 
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Input%20Mask-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/4642)
-[![Bintray](https://api.bintray.com/packages/rmr/maven/inputmask/images/download.svg)](https://bintray.com/rmr/maven/inputmask/_latestVersion)
+[![Bintray](https://api.bintray.com/packages/redmadrobot-opensource/android/input-mask-android/images/download.svg)](https://bintray.com/rmr/maven/inputmask/_latestVersion)
 [![codebeat badge](https://codebeat.co/badges/e87a117d-3be1-407b-ad4c-973f90d88cd2)](https://codebeat.co/projects/github-com-redmadrobot-input-mask-android-master)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
@@ -17,6 +17,18 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/complete.gif" alt="Direct input" width="210"/>
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
+
+## Migration to `4.2.0`
+
+Please note, we've moved from 
+```gradle
+com.redmadrobot:inputmask:4.1.0
+```
+to
+```
+com.redmadrobot:input-mask-android:4.2.0
+```
+Make sure you've updated your dependencies.
 
 ## Description
 
@@ -68,7 +80,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:inputmask:4.1.0'
+    implementation 'com.redmadrobot:input-mask-android:4.2.0'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }
