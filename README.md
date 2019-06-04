@@ -2,7 +2,7 @@
 
 [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
 [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Input%20Mask-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/4642)
-[![Bintray](https://api.bintray.com/packages/redmadrobot-opensource/android/input-mask-android/images/download.svg)](https://bintray.com/rmr/maven/inputmask/_latestVersion)
+[![Bintray](https://api.bintray.com/packages/redmadrobot-opensource/android/input-mask-android/images/download.svg)](https://bintray.com/redmadrobot-opensource/android/input-mask-android/_latestVersion)
 [![codebeat badge](https://codebeat.co/badges/e87a117d-3be1-407b-ad4c-973f90d88cd2)](https://codebeat.co/projects/github-com-redmadrobot-input-mask-android-master)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
