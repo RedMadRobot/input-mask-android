@@ -18,18 +18,6 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
 
-## Migration to `4.2.0`
-
-Please note, we've moved from 
-```gradle
-com.redmadrobot:inputmask:4.1.0
-```
-to
-```gradle
-com.redmadrobot:input-mask-android:4.2.0
-```
-Make sure you've updated your dependencies.
-
 ## Description
 
 `Input Mask` is an [Android](https://github.com/RedMadRobot/input-mask-android) & [iOS](https://github.com/RedMadRobot/input-mask-ios) native library allowing to format user input on the fly.
@@ -80,7 +68,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:4.2.0'
+    implementation 'com.redmadrobot:inputmask:4.2.0'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }
