@@ -20,7 +20,7 @@ task androidSourcesJar(type: Jar) {
 publishing {
     publications {
         Production(MavenPublication) {
-            artifact("$buildDir/outputs/aar/inputmask-release.aar")
+            artifact("$buildDir/outputs/aar/input-mask-android-release.aar")
             artifact androidSourcesJar
             groupId
             artifactId publishProperties['lib_name']

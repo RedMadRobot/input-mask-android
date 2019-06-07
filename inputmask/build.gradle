@@ -11,6 +11,8 @@ android {
         minSdkVersion build_versions.min_sdk
         targetSdkVersion build_versions.target_sdk
 
+        archivesBaseName = "input-mask-android"
+
         versionCode getVersionCodeFromProperties()
         versionName getVersionNameFromProperties()
     }
