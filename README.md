@@ -18,7 +18,7 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
 
-## Migration to `4.2.2`
+## Migration to `4.3.0`
 	
 Make sure you've updated your dependencies, as we are moving from the old
 ```gradle
@@ -28,7 +28,6 @@ to
 ```gradle
 com.redmadrobot:input-mask-android:4.3.0
 ```
-JCenter sync might take a while, and there's an open [issue](https://github.com/RedMadRobot/input-mask-android/issues/83) regarding publishing status.
 
 ## Description
 
