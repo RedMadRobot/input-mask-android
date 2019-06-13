@@ -54,17 +54,18 @@ enum class AffinityCalculationStrategy {
      *
      * For example:
      * ```
-     * format1: [000]
-     * format2: [00000]
-     * format3: [0000000]
+     * format1: [00]-[0]
+     * format2: [00]-[000]
+     * format3: [00]-[00000]
      *
-     * input          affinity1    affinity2    affinity3
-     * 1              -2           -4           -6
-     * 12             -1           -3           -5
-     * 123            0            -2           -4
-     * 1234           Int.min      -1           -3
-     * 12345          Int.min      0            -2
-     * 123456         Int.min      Int.min      -1
+     * input          affinity1          affinity2    affinity3
+     * 1              -3                 -5           -7
+     * 12             -2                 -4           -6
+     * 123            -1                 -3           -5
+     * 12-3           0                  -2           -4
+     * 1234           0                  -2           -4
+     * 12345          Int.MIN_VALUE      -1           -3
+     * 123456         Int.MIN_VALUE      0            -2
      * ```
      *
      * This affinity calculation strategy comes in handy when the mask format radically changes depending on the input
@@ -72,17 +73,42 @@ enum class AffinityCalculationStrategy {
      *
      * N.B.: Make sure the widest mask format is the primary mask format.
      */
-    CAPACITY;
+    CAPACITY,
+
+    /**
+     * Affinity is tolerance between the length of the extracted value and the total extracted value length current mask can accommodate.
+     *
+     * If current mask can't accommodate all the text, the affinity equals `Int.min`.
+     *
+     * For example:
+     * ```
+     * format1: [00]-[0]
+     * format2: [00]-[000]
+     * format3: [00]-[00000]
+     *
+     * input          affinity1          affinity2          affinity3
+     * 1              -2                 -4                 -6
+     * 12             -1                 -3                 -5
+     * 123            0                  -2                 -4
+     * 12-3           0                  -2                 -4
+     * 1234           Int.MIN_VALUE      -1                 -3
+     * 12345          Int.MIN_VALUE      0                  -2
+     * 123456         Int.MIN_VALUE      Int.MIN_VALUE      -1
+     * ```
+     *
+     * This affinity calculation strategy comes in handy when the mask format radically changes depending on the value
+     * length.
+     *
+     * N.B.: Make sure the widest mask format is the primary mask format.
+     */
+    EXTRACTED_VALUE_CAPACITY;
 
     fun calculateAffinityOfMask(mask: Mask, text: CaretString, autocomplete: Boolean): Int {
         return when (this) {
-            WHOLE_STRING -> mask.apply(
-                CaretString(text.string, text.caretPosition),
-                autocomplete
-            ).affinity
+            WHOLE_STRING -> mask.apply(text, autocomplete).affinity
 
             PREFIX -> mask.apply(
-                CaretString(text.string, text.caretPosition),
+                text,
                 autocomplete
             ).formattedText.string.prefixIntersection(text.string).length
 
@@ -90,6 +116,15 @@ enum class AffinityCalculationStrategy {
                 Int.MIN_VALUE
             } else {
                 text.string.length - mask.totalTextLength()
+            }
+
+            EXTRACTED_VALUE_CAPACITY -> {
+                val extractedValueLength: Int = mask.apply(text, autocomplete).extractedValue.length
+                if (extractedValueLength > mask.totalValueLength()) {
+                    Int.MIN_VALUE
+                } else {
+                    extractedValueLength - mask.totalValueLength()
+                }
             }
         }
     }

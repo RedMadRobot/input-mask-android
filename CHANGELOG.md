@@ -1,5 +1,9 @@
 # Changelog
 
+### `4.3.0`
+
+* `AffinityCalculationStrategy.EXTRACTED_VALUE_CAPACITY` option allowing to have radically different mask format depending on the extracted value length
+
 ### `4.2.0`
 
 #### Added:

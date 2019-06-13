@@ -26,7 +26,7 @@ com.redmadrobot:inputmask:4.1.0
 ```
 to
 ```gradle
-com.redmadrobot:input-mask-android:4.2.2
+com.redmadrobot:input-mask-android:4.3.0
 ```
 JCenter sync might take a while, and there's an open [issue](https://github.com/RedMadRobot/input-mask-android/issues/83) regarding publishing status.
 
@@ -80,7 +80,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:4.2.2'
+    implementation 'com.redmadrobot:input-mask-android:4.3.0'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }
