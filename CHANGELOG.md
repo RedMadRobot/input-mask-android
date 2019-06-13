@@ -2,13 +2,15 @@
 
 ### `4.3.0`
 
+#### Added:
+
 * `AffinityCalculationStrategy.EXTRACTED_VALUE_CAPACITY` option allowing to have radically different mask format depending on the extracted value length
 
 ### `4.2.0`
 
 #### Added:
 
-* `capacity` affinity calculation option allowing to have radically different mask format depending on the input length
+* `AffinityCalculationStrategy.CAPACITY` affinity calculation option allowing to have radically different mask format depending on the input length
 
 ### `4.1.0`
 
