@@ -78,7 +78,7 @@ public final class MainActivity extends AppCompatActivity {
         final String className = MainActivity.class.getSimpleName();
         Log.d(className, extractedValue);
         Log.d(className, String.valueOf(maskFilled));
-        Log.d(className, String.valueOf(formattedText));
+        Log.d(className, formattedText);
     }
 
 }
