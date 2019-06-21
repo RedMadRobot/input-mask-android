@@ -138,6 +138,22 @@ If so, consider disabling text suggestions by using corresponding input type:
 ```
 Additionally be aware that some of the third-party keyboards ignore `textNoSuggestions` setting; the recommendation is to use an extra workaround by setting the `inputType` to `textVisiblePassword`.
 
+## InputMask vs. `android:textAllCaps`
+> Kudos to [Weiyi Li](https://github.com/li2) for [reporting](https://github.com/RedMadRobot/input-mask-android/issues/85) this issue
+
+Please be advised that `android:textAllCaps` is [not meant](https://developer.android.com/reference/android/widget/TextView.html#setAllCaps(boolean)) to work with `EditText` instances:
+
+> This setting will be ignored if this field is editable or selectable.
+
+Enabling this setting on editable and/or selectable fields leads to weird and unpredictable behaviour and sometimes even [crashes](https://twitter.com/dimsuz/status/731117910337441793). Instead, consider using `android:inputType="textCapCharacters"` or workaround by adding an `InputFilter`:
+
+```java
+final InputFilter[] filters = { new InputFilter.AllCaps() };
+editText.setFilters(filters);
+```
+
+Bare in mind, you might have to befriend this solution with your existing `android:digits` [property](#inputmask-vs-androidinputtype-and-indexoutofboundsexception) in case your text field accepts both digits and letters. 
+
 ## References
 
 The list of projects that are using this library which were kind enough to share that information.
