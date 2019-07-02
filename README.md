@@ -18,7 +18,7 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
 
-## Migration to `4.3.0`
+## Migration to `4.3.x`
 	
 Make sure you've updated your dependencies, as we are moving from the old
 ```gradle
@@ -26,7 +26,7 @@ com.redmadrobot:inputmask:4.1.0
 ```
 to
 ```gradle
-com.redmadrobot:input-mask-android:4.3.0
+com.redmadrobot:input-mask-android:4.3.1
 ```
 
 ## Description
@@ -79,7 +79,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:4.3.0'
+    implementation 'com.redmadrobot:input-mask-android:4.3.1'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }

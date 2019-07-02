@@ -49,18 +49,18 @@ class ValueState : State {
     }
 
     private fun accepts(character: Char): Boolean {
-        val type = this.type
-        return when (type) {
+        return when (this.type) {
             is StateType.Numeric -> character.isDigit()
             is StateType.Literal -> character.isLetter()
             is StateType.AlphaNumeric -> character.isLetterOrDigit()
-            is StateType.Ellipsis -> when (type.inheritedType) {
+            is StateType.Ellipsis -> when (this.type.inheritedType) {
                 is StateType.Numeric -> character.isDigit()
                 is StateType.Literal -> character.isLetter()
                 is StateType.AlphaNumeric -> character.isLetterOrDigit()
+                is StateType.Custom -> this.type.inheritedType.characterSet.contains(character)
                 else -> false
             }
-            is StateType.Custom -> type.characterSet.contains(character)
+            is StateType.Custom -> this.type.characterSet.contains(character)
         }
     }
 
