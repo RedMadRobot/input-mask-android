@@ -13,53 +13,21 @@ import com.redmadrobot.inputmask.model.CaretString
  *
  * @author taflanidi
  */
-class CaretStringIterator(
-    private val caretString: CaretString,
-    private var currentIndex: Int = 0
+open class CaretStringIterator(
+    protected val caretString: CaretString,
+    protected var currentIndex: Int = 0
 ) {
 
-    /**
-     * Inspect, whether ```CaretStringIterator``` has reached ```CaretString.caretPosition``` or
-     * not.
-     *
-     * Each ```CaretString``` object contains cursor position for its ```CaretString.string```.
-     *
-     * For the ```Mask``` instance it is important to know, whether it should adjust the cursor
-     * position or not when inserting new symbols into the formatted line.
-     *
-     * **Example**
-     * Let the ```CaretString``` instance contains two symbols, with the caret at the end of the
-     * line.
-     *
-     * ```
-     * string:    ab
-     * caret:      ^
-     * ```
-     *
-     * In this case ```CaretStringIterator.beforeCaret()``` will always return ```true``` until
-     * there's no more characters left in the line to iterate over.
-     *
-     * **Example 2**
-     *
-     * Let the ```CaretString``` instance contains two symbols, with the caret at the beginning of
-     * the line.
-     *
-     * ```
-     * string:    ab
-     * caret:     ^
-     * ```
-     *
-     * In this case ```CaretStringIterator.beforeCaret()``` will only return ```true``` for the
-     * first iteration. After the
-     *
-     * ```next()``` method is fired, ```beforeCaret()``` will return false.
-     *
-     * @returns ```True```, if current iterator position is less than or equal to
-     * ```CaretString.caretPosition```
-     */
-    fun beforeCaret(): Boolean {
-        return this.currentIndex <= this.caretString.caretPosition
+    open fun insertionAffectsCaret(): Boolean {
+        return when (this.caretString.caretGravity) {
+            CaretString.CaretGravity.BACKWARD -> this.currentIndex < this.caretString.caretPosition
+            CaretString.CaretGravity.FORWARD -> this.currentIndex <= this.caretString.caretPosition
                 || (0 == this.currentIndex && 0 == this.caretString.caretPosition)
+        }
+    }
+
+    open fun deletionAffectsCaret(): Boolean {
+        return this.currentIndex < this.caretString.caretPosition
     }
 
     /**
@@ -67,7 +35,7 @@ class CaretStringIterator(
      * @postcondition: Iterator position is moved to the next symbol.
      * @returns Current symbol. If the iterator reached the end of the line, returns ```nil```.
      */
-    fun next(): Char? {
+    open fun next(): Char? {
         if (this.currentIndex >= this.caretString.string.length) {
             return null
         }

@@ -20,7 +20,7 @@ import java.util.*
  *
  * @author taflanidi
  */
-class Mask(format: String, private val customNotations: List<Notation>) {
+open class Mask(format: String, protected val customNotations: List<Notation>) {
 
     /**
      * Convenience constructor.
@@ -49,7 +49,15 @@ class Mask(format: String, private val customNotations: List<Notation>) {
          * User input is complete.
          */
         val complete: Boolean
-    )
+    ) {
+        fun reversed() =
+            Result(
+                this.formattedText.reversed(),
+                this.extractedValue.reversed(),
+                this.affinity,
+                this.complete
+            )
+    }
 
     companion object Factory {
         private val cache: MutableMap<String, Mask> = HashMap()
@@ -98,11 +106,12 @@ class Mask(format: String, private val customNotations: List<Notation>) {
      * Apply mask to the user input string.
      *
      * @param text user input string with current cursor position
+     * @param autocomplete enable text autocompletion
      *
      * @returns Formatted text with extracted value an adjusted cursor position.
      */
-    fun apply(text: CaretString, autocomplete: Boolean): Result {
-        val iterator = CaretStringIterator(text)
+    open fun apply(text: CaretString, autocomplete: Boolean): Result {
+        val iterator = this.makeIterator(text)
 
         var affinity = 0
         var extractedValue = ""
@@ -110,7 +119,9 @@ class Mask(format: String, private val customNotations: List<Notation>) {
         var modifiedCaretPosition: Int = text.caretPosition
 
         var state: State = this.initialState
-        var beforeCaret: Boolean = iterator.beforeCaret()
+
+        var insertionAffectsCaret: Boolean = iterator.insertionAffectsCaret()
+        var deletionAffectsCaret: Boolean = iterator.deletionAffectsCaret()
         var character: Char? = iterator.next()
 
         while (null != character) {
@@ -120,26 +131,28 @@ class Mask(format: String, private val customNotations: List<Notation>) {
                 modifiedString += next.insert ?: ""
                 extractedValue += next.value ?: ""
                 if (next.pass) {
-                    beforeCaret = iterator.beforeCaret()
+                    insertionAffectsCaret = iterator.insertionAffectsCaret()
+                    deletionAffectsCaret = iterator.deletionAffectsCaret()
                     character = iterator.next()
                     affinity += 1
                 } else {
-                    if (beforeCaret && null != next.insert) {
+                    if (insertionAffectsCaret && null != next.insert) {
                         modifiedCaretPosition += 1
                     }
                     affinity -= 1
                 }
             } else {
-                if (iterator.beforeCaret()) {
+                if (deletionAffectsCaret) {
                     modifiedCaretPosition -= 1
                 }
-                beforeCaret = iterator.beforeCaret()
+                insertionAffectsCaret = iterator.insertionAffectsCaret()
+                deletionAffectsCaret = iterator.deletionAffectsCaret()
                 character = iterator.next()
                 affinity -= 1
             }
         }
 
-        while (autocomplete && beforeCaret) {
+        while (autocomplete && insertionAffectsCaret) {
             val next: Next = state.autocomplete() ?: break
             state = next.state
             modifiedString += next.insert ?: ""
@@ -152,13 +165,16 @@ class Mask(format: String, private val customNotations: List<Notation>) {
         return Result(
             CaretString(
                 modifiedString,
-                modifiedCaretPosition
+                modifiedCaretPosition,
+                text.caretGravity
             ),
             extractedValue,
             affinity,
             this.noMandatoryCharactersLeftAfterState(state)
         )
     }
+
+    open fun makeIterator(text: CaretString) = CaretStringIterator(text)
 
     /**
      * Generate placeholder.

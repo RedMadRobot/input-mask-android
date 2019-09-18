@@ -18,16 +18,11 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
 
-## Migration to `4.3.x`
-	
-Make sure you've updated your dependencies, as we are moving from the old
-```gradle
-com.redmadrobot:inputmask:4.1.0
-```
-to
-```gradle
-com.redmadrobot:input-mask-android:4.3.1
-```
+### Important: Migration Guide: v.5
+
+We've added a new concept of cursor gravity to our library internals. A simple flag had allowed us to get rid of some logic flaws and to finalise the right-to-left functionality at the cost of backward compatibility loss.
+
+Make sure to take a look at our [CHANGELOG](https://github.com/RedMadRobot/input-mask-android/blob/master/CHANGELOG.md) in order to get familiar with the breaking changes.
 
 ## Description
 

@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.EditText
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
 import com.redmadrobot.inputmask.helper.Mask
+import com.redmadrobot.inputmask.helper.RTLMask
 import com.redmadrobot.inputmask.model.CaretString
 import com.redmadrobot.inputmask.model.Notation
 import java.lang.ref.WeakReference
@@ -19,14 +20,15 @@ import java.util.*
  * Might be used as a decorator, which forwards TextWatcher calls to its own listener.
  */
 open class MaskedTextChangedListener(
-    protected var primaryFormat: String,
-    protected var affineFormats: List<String> = emptyList(),
-    protected var customNotations: List<Notation> = emptyList(),
-    protected var affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
-    protected var autocomplete: Boolean = true,
+    var primaryFormat: String,
+    var affineFormats: List<String> = emptyList(),
+    var customNotations: List<Notation> = emptyList(),
+    var affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
+    var autocomplete: Boolean = true,
     field: EditText,
-    protected var listener: TextWatcher? = null,
-    protected var valueListener: ValueListener? = null
+    var listener: TextWatcher? = null,
+    var valueListener: ValueListener? = null,
+    var rightToLeft: Boolean = false
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
@@ -34,7 +36,7 @@ open class MaskedTextChangedListener(
     }
 
     private val primaryMask: Mask
-        get() = Mask.getOrCreate(primaryFormat, customNotations)
+        get() = this.maskGetOrCreate(this.primaryFormat, this.customNotations)
 
     private var afterText: String = ""
     private var caretPosition: Int = 0
@@ -137,11 +139,8 @@ open class MaskedTextChangedListener(
      * @param field - a field where to put formatted text.
      */
     open fun setText(text: String, field: EditText): Mask.Result {
-        val result: Mask.Result =
-            this.pickMask(text, text.length, this.autocomplete).apply(
-                CaretString(text, text.length),
-                this.autocomplete
-            )
+        val text = CaretString(text, text.length, CaretString.CaretGravity.FORWARD)
+        val result: Mask.Result = this.pickMask(text, this.autocomplete).apply(text, this.autocomplete)
 
         with(field) {
             setText(result.formattedText.string)
@@ -201,13 +200,16 @@ open class MaskedTextChangedListener(
     override fun onTextChanged(text: CharSequence, cursorPosition: Int, before: Int, count: Int) {
         val isDeletion: Boolean = before > 0 && count == 0
         val caretPosition = if (isDeletion) cursorPosition else cursorPosition + count
-        val result: Mask.Result =
-            this.pickMask(text.toString(), caretPosition, this.autocomplete && !isDeletion).apply(
-                CaretString(text.toString(), caretPosition),
-                this.autocomplete && !isDeletion
-            )
+        val caretGravity = if (isDeletion) CaretString.CaretGravity.BACKWARD else CaretString.CaretGravity.FORWARD
+        val text = CaretString(text.toString(), caretPosition, caretGravity)
+        val useAutocomplete = if (isDeletion) false else this.autocomplete
+
+        val mask: Mask = this.pickMask(text, useAutocomplete)
+        val result: Mask.Result = mask.apply(text, useAutocomplete)
+
         this.afterText = result.formattedText.string
-        this.caretPosition = if (isDeletion) cursorPosition else result.formattedText.caretPosition
+        this.caretPosition = result.formattedText.caretPosition
+
         this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
     }
 
@@ -219,11 +221,10 @@ open class MaskedTextChangedListener(
                 this.field.get()?.text.toString()
             }
 
+            val textAndCaret = CaretString(text, text.length, CaretString.CaretGravity.FORWARD)
+
             val result: Mask.Result =
-                this.pickMask(text, text.length, this.autocomplete).apply(
-                    CaretString(text, text.length),
-                    this.autocomplete
-                )
+                this.pickMask(textAndCaret, this.autocomplete).apply(textAndCaret, this.autocomplete)
 
             this.afterText = result.formattedText.string
             this.caretPosition = result.formattedText.caretPosition
@@ -234,20 +235,19 @@ open class MaskedTextChangedListener(
     }
 
     private fun pickMask(
-        text: String,
-        caretPosition: Int,
+        text: CaretString,
         autocomplete: Boolean
     ): Mask {
         if (this.affineFormats.isEmpty()) return this.primaryMask
 
         data class MaskAffinity(val mask: Mask, val affinity: Int)
 
-        val primaryAffinity: Int = this.calculateAffinity(this.primaryMask, text, caretPosition, autocomplete)
+        val primaryAffinity: Int = this.calculateAffinity(this.primaryMask, text, autocomplete)
 
         val masksAndAffinities: MutableList<MaskAffinity> = ArrayList()
         for (format in this.affineFormats) {
-            val mask: Mask = Mask.getOrCreate(format, this.customNotations)
-            val affinity: Int = this.calculateAffinity(mask, text, caretPosition, autocomplete)
+            val mask: Mask = this.maskGetOrCreate(format, this.customNotations)
+            val affinity: Int = this.calculateAffinity(mask, text, autocomplete)
             masksAndAffinities.add(MaskAffinity(mask, affinity))
         }
 
@@ -271,15 +271,21 @@ open class MaskedTextChangedListener(
         return masksAndAffinities.first().mask
     }
 
+    private fun maskGetOrCreate(format: String, customNotations: List<Notation>): Mask =
+        if (this.rightToLeft) {
+            RTLMask.getOrCreate(format, customNotations)
+        } else {
+            Mask.getOrCreate(format, customNotations)
+        }
+
     private fun calculateAffinity(
         mask: Mask,
-        text: String,
-        caretPosition: Int,
+        text: CaretString,
         autocomplete: Boolean
     ): Int {
         return this.affinityCalculationStrategy.calculateAffinityOfMask(
             mask,
-            CaretString(text, caretPosition),
+            text,
             autocomplete
         )
     }

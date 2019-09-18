@@ -32,3 +32,4 @@ proguard/
 *.iml
 
 gradle/publish.properties
+.idea 2

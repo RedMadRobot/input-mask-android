@@ -1,5 +1,27 @@
 # Changelog
 
+### `5.0.0`
+
+#### Removed:
+
+* `CaretStringIterator::beforeCaret()`
+
+This method is now replaced with `::insertionAffectsCaret()` and `::deletionAffectsCaret()` calls. 
+
+#### Added:
+
+* `CaretString` instances now contain caret gravity.
+
+Caret gravity affects caret movement when `Mask` adds characters precisely at the caret position during formatting. It is important to retain caret position after text deletion/backspacing.
+
+Default `CaretGravity` is `.FORWARD`. Set caret gravity to `.BACKWARD` only when user hits backspace.
+
+* `CaretStringIterator::insertionAffectsCaret()` and `CaretStringIterator::deletionAffectsCaret()`
+
+These methods allow to incorporate new caret gravity setting.
+
+* Right-to-left masks. 
+
 ### `4.3.0`
 
 #### Added:
