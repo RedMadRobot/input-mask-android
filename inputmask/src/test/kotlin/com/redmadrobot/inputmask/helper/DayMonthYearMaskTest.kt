@@ -87,8 +87,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-            CaretString(inputString, inputCaret),
-            false
+            CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false))
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -108,8 +107,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-            CaretString(inputString, inputCaret),
-            false
+            CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false))
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -129,8 +127,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-            CaretString(inputString, inputCaret),
-            false
+            CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false))
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -150,8 +147,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue = "11.11"
 
         val result: Mask.Result = this.mask().apply(
-            CaretString(inputString, inputCaret),
-            false
+            CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false))
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -171,8 +167,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-            CaretString(inputString, inputCaret),
-            false
+            CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false))
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -192,8 +187,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedValue: String = expectedString
 
         val result: Mask.Result = this.mask().apply(
-            CaretString(inputString, inputCaret),
-            false
+            CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false))
         )
 
         Assert.assertEquals(expectedString, result.formattedText.string)
@@ -212,7 +206,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -230,7 +224,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -248,7 +242,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -266,7 +260,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -284,7 +278,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -302,7 +296,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret = 0
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -320,7 +314,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret = 3
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -338,7 +332,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -356,7 +350,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -374,7 +368,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -392,7 +386,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -410,7 +404,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -428,7 +422,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -446,7 +440,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -464,7 +458,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -482,7 +476,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -500,7 +494,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -518,7 +512,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -536,7 +530,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -554,7 +548,7 @@ class DayMonthYearMaskTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue: String = expectedString
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)

@@ -103,13 +103,12 @@ enum class AffinityCalculationStrategy {
      */
     EXTRACTED_VALUE_CAPACITY;
 
-    fun calculateAffinityOfMask(mask: Mask, text: CaretString, autocomplete: Boolean): Int {
+    fun calculateAffinityOfMask(mask: Mask, text: CaretString): Int {
         return when (this) {
-            WHOLE_STRING -> mask.apply(text, autocomplete).affinity
+            WHOLE_STRING -> mask.apply(text).affinity
 
             PREFIX -> mask.apply(
-                text,
-                autocomplete
+                text
             ).formattedText.string.prefixIntersection(text.string).length
 
             CAPACITY -> if (text.string.length > mask.totalTextLength()) {
@@ -119,7 +118,7 @@ enum class AffinityCalculationStrategy {
             }
 
             EXTRACTED_VALUE_CAPACITY -> {
-                val extractedValueLength: Int = mask.apply(text, autocomplete).extractedValue.length
+                val extractedValueLength: Int = mask.apply(text).extractedValue.length
                 if (extractedValueLength > mask.totalValueLength()) {
                     Int.MIN_VALUE
                 } else {

@@ -86,7 +86,7 @@ class YearTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -105,7 +105,7 @@ class YearTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "11"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -124,7 +124,7 @@ class YearTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "112"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -143,7 +143,7 @@ class YearTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1122"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)

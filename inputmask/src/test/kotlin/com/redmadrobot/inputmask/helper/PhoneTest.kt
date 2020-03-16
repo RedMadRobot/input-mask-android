@@ -86,7 +86,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -104,7 +104,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -122,7 +122,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -140,7 +140,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -158,7 +158,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -176,7 +176,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "12"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -194,7 +194,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "123"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -212,7 +212,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "123"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -230,7 +230,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "123"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -248,7 +248,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1234"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -266,7 +266,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "12345"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -284,7 +284,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "123456"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -302,7 +302,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "123456"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -320,7 +320,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1234567"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -338,7 +338,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "12345678"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -356,7 +356,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "12345678"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -374,7 +374,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "123456789"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -392,7 +392,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1234567890"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -410,7 +410,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -428,7 +428,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "9"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -446,7 +446,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1234567890"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -464,7 +464,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1234567890"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -482,7 +482,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1234567890"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -500,7 +500,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "1234567890"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), false)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(false)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -518,7 +518,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -536,7 +536,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -554,7 +554,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -572,7 +572,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -590,7 +590,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -608,7 +608,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -626,7 +626,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = "7"
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)
@@ -644,7 +644,7 @@ class PhoneTest : MaskTest() {
         val expectedCaret: Int = expectedString.length
         val expectedValue = ""
 
-        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret), true)
+        val result: Mask.Result = this.mask().apply(CaretString(inputString, inputCaret, CaretString.CaretGravity.FORWARD(true)))
 
         Assert.assertEquals(expectedString, result.formattedText.string)
         Assert.assertEquals(expectedCaret, result.formattedText.caretPosition)

@@ -23,8 +23,8 @@ class RTLMask(format: String, customNotations: List<Notation>) : Mask(reversedFo
         }
     }
 
-    override fun apply(text: CaretString, autocomplete: Boolean): Result {
-        return super.apply(text.reversed(), autocomplete).reversed()
+    override fun apply(text: CaretString): Result {
+        return super.apply(text.reversed()).reversed()
     }
 
     override fun makeIterator(text: CaretString): CaretStringIterator {

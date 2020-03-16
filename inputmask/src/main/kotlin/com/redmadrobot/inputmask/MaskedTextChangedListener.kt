@@ -25,6 +25,7 @@ open class MaskedTextChangedListener(
     var customNotations: List<Notation> = emptyList(),
     var affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
     var autocomplete: Boolean = true,
+    var autoskip: Boolean = false,
     field: EditText,
     var listener: TextWatcher? = null,
     var valueListener: ValueListener? = null,
@@ -69,8 +70,8 @@ open class MaskedTextChangedListener(
         valueListener: ValueListener?
     ) :
             this(
-                format, emptyList(), emptyList(), AffinityCalculationStrategy.WHOLE_STRING, autocomplete, field,
-                listener, valueListener
+                format, emptyList(), emptyList(), AffinityCalculationStrategy.WHOLE_STRING,
+                autocomplete, false, field, listener, valueListener
             )
 
     /**
@@ -115,17 +116,17 @@ open class MaskedTextChangedListener(
         listener: TextWatcher?, valueListener: ValueListener?
     ) :
             this(
-                primaryFormat, affineFormats, emptyList(), affinityCalculationStrategy, autocomplete, field, listener,
-                valueListener
+                primaryFormat, affineFormats, emptyList(), affinityCalculationStrategy,
+                autocomplete, false, field, listener, valueListener
             )
 
     /**
      * Set text and apply formatting.
      * @param text - text; might be plain, might already have some formatting.
      */
-    open fun setText(text: String): Mask.Result? {
+    open fun setText(text: String, autocomplete: Boolean? = null): Mask.Result? {
         return this.field.get()?.let {
-            val result = setText(text, it)
+            val result = setText(text, it, autocomplete)
             this.afterText = result.formattedText.string
             this.caretPosition = result.formattedText.caretPosition
             this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
@@ -138,9 +139,10 @@ open class MaskedTextChangedListener(
      * @param text - text; might be plain, might already have some formatting;
      * @param field - a field where to put formatted text.
      */
-    open fun setText(text: String, field: EditText): Mask.Result {
-        val text = CaretString(text, text.length, CaretString.CaretGravity.FORWARD)
-        val result: Mask.Result = this.pickMask(text, this.autocomplete).apply(text, this.autocomplete)
+    open fun setText(text: String, field: EditText, autocomplete: Boolean? = null): Mask.Result {
+        val useAutocomplete: Boolean = autocomplete ?: this.autocomplete
+        val textAndCaret = CaretString(text, text.length, CaretString.CaretGravity.FORWARD(useAutocomplete))
+        val result: Mask.Result = this.pickMask(textAndCaret).apply(textAndCaret)
 
         with(field) {
             setText(result.formattedText.string)
@@ -199,13 +201,16 @@ open class MaskedTextChangedListener(
 
     override fun onTextChanged(text: CharSequence, cursorPosition: Int, before: Int, count: Int) {
         val isDeletion: Boolean = before > 0 && count == 0
-        val caretPosition = if (isDeletion) cursorPosition else cursorPosition + count
-        val caretGravity = if (isDeletion) CaretString.CaretGravity.BACKWARD else CaretString.CaretGravity.FORWARD
-        val text = CaretString(text.toString(), caretPosition, caretGravity)
         val useAutocomplete = if (isDeletion) false else this.autocomplete
+        val useAutoskip = if (isDeletion) this.autoskip else false
+        val caretGravity =
+            if (isDeletion) CaretString.CaretGravity.BACKWARD(useAutoskip) else CaretString.CaretGravity.FORWARD(useAutocomplete)
 
-        val mask: Mask = this.pickMask(text, useAutocomplete)
-        val result: Mask.Result = mask.apply(text, useAutocomplete)
+        val caretPosition = if (isDeletion) cursorPosition else cursorPosition + count
+        val textAndCaret = CaretString(text.toString(), caretPosition, caretGravity)
+
+        val mask: Mask = this.pickMask(textAndCaret)
+        val result: Mask.Result = mask.apply(textAndCaret)
 
         this.afterText = result.formattedText.string
         this.caretPosition = result.formattedText.caretPosition
@@ -221,10 +226,10 @@ open class MaskedTextChangedListener(
                 this.field.get()?.text.toString()
             }
 
-            val textAndCaret = CaretString(text, text.length, CaretString.CaretGravity.FORWARD)
+            val textAndCaret = CaretString(text, text.length, CaretString.CaretGravity.FORWARD(this.autocomplete))
 
             val result: Mask.Result =
-                this.pickMask(textAndCaret, this.autocomplete).apply(textAndCaret, this.autocomplete)
+                this.pickMask(textAndCaret).apply(textAndCaret)
 
             this.afterText = result.formattedText.string
             this.caretPosition = result.formattedText.caretPosition
@@ -235,19 +240,18 @@ open class MaskedTextChangedListener(
     }
 
     private fun pickMask(
-        text: CaretString,
-        autocomplete: Boolean
+        text: CaretString
     ): Mask {
         if (this.affineFormats.isEmpty()) return this.primaryMask
 
         data class MaskAffinity(val mask: Mask, val affinity: Int)
 
-        val primaryAffinity: Int = this.calculateAffinity(this.primaryMask, text, autocomplete)
+        val primaryAffinity: Int = this.calculateAffinity(this.primaryMask, text)
 
         val masksAndAffinities: MutableList<MaskAffinity> = ArrayList()
         for (format in this.affineFormats) {
             val mask: Mask = this.maskGetOrCreate(format, this.customNotations)
-            val affinity: Int = this.calculateAffinity(mask, text, autocomplete)
+            val affinity: Int = this.calculateAffinity(mask, text)
             masksAndAffinities.add(MaskAffinity(mask, affinity))
         }
 
@@ -280,13 +284,11 @@ open class MaskedTextChangedListener(
 
     private fun calculateAffinity(
         mask: Mask,
-        text: CaretString,
-        autocomplete: Boolean
+        text: CaretString
     ): Int {
         return this.affinityCalculationStrategy.calculateAffinityOfMask(
             mask,
-            text,
-            autocomplete
+            text
         )
     }
 
@@ -324,6 +326,7 @@ open class MaskedTextChangedListener(
             emptyList(),
             affinityCalculationStrategy,
             true,
+            false,
             null,
             valueListener
         )
@@ -339,6 +342,7 @@ open class MaskedTextChangedListener(
             customNotations: List<Notation> = emptyList(),
             affinityCalculationStrategy: AffinityCalculationStrategy = AffinityCalculationStrategy.WHOLE_STRING,
             autocomplete: Boolean = true,
+            autoskip: Boolean = false,
             listener: TextWatcher? = null,
             valueListener: ValueListener? = null
         ): MaskedTextChangedListener {
@@ -348,6 +352,7 @@ open class MaskedTextChangedListener(
                 customNotations,
                 affinityCalculationStrategy,
                 autocomplete,
+                autoskip,
                 editText,
                 listener,
                 valueListener

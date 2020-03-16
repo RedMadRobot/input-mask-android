@@ -106,11 +106,10 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
      * Apply mask to the user input string.
      *
      * @param text user input string with current cursor position
-     * @param autocomplete enable text autocompletion
      *
      * @returns Formatted text with extracted value an adjusted cursor position.
      */
-    open fun apply(text: CaretString, autocomplete: Boolean): Result {
+    open fun apply(text: CaretString): Result {
         val iterator = this.makeIterator(text)
 
         var affinity = 0
@@ -119,6 +118,7 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
         var modifiedCaretPosition: Int = text.caretPosition
 
         var state: State = this.initialState
+        val autocompletionStack = AutocompletionStack()
 
         var insertionAffectsCaret: Boolean = iterator.insertionAffectsCaret()
         var deletionAffectsCaret: Boolean = iterator.deletionAffectsCaret()
@@ -127,6 +127,7 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
         while (null != character) {
             val next: Next? = state.accept(character)
             if (null != next) {
+                if (deletionAffectsCaret) autocompletionStack.push(state.autocomplete())
                 state = next.state
                 modifiedString += next.insert ?: ""
                 extractedValue += next.value ?: ""
@@ -152,13 +153,30 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
             }
         }
 
-        while (autocomplete && insertionAffectsCaret) {
+        while (text.caretGravity.autocomplete && insertionAffectsCaret) {
             val next: Next = state.autocomplete() ?: break
             state = next.state
             modifiedString += next.insert ?: ""
             extractedValue += next.value ?: ""
             if (null != next.insert) {
                 modifiedCaretPosition += 1
+            }
+        }
+
+        while (text.caretGravity.autoskip && !autocompletionStack.empty()) {
+            val skip: Next = autocompletionStack.pop()
+            if (modifiedString.length == modifiedCaretPosition) {
+                if (null != skip.insert && skip.insert == modifiedString.last()) {
+                    modifiedString = modifiedString.dropLast(1)
+                    modifiedCaretPosition -= 1
+                }
+                if (null != skip.value && skip.value == extractedValue.last()) {
+                    extractedValue = extractedValue.dropLast(1)
+                }
+            } else {
+                if (null != skip.insert) {
+                    modifiedCaretPosition -= 1
+                }
             }
         }
 
@@ -322,14 +340,31 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
     }
 
     private fun noMandatoryCharactersLeftAfterState(state: State): Boolean {
-        return if (state is EOLState) {
-            true
-        } else if (state is ValueState) {
-            return state.isElliptical
-        } else if (state is FixedState) {
-            false
-        } else {
-            this.noMandatoryCharactersLeftAfterState(state.nextState())
+        return when (state) {
+            is EOLState -> { true }
+            is ValueState -> { return state.isElliptical }
+            is FixedState -> { false }
+            else -> { this.noMandatoryCharactersLeftAfterState(state.nextState()) }
+        }
+    }
+
+    /**
+     * While scanning through the input string in the `.apply(…)` method, the mask builds a graph of
+     * autocompletion steps.
+     *
+     * This graph accumulates the results of `.autocomplete()` calls for each consecutive `State`,
+     * acting as a `stack` of `Next` object instances.
+     *
+     * Each time the `State` returns `null` for its `.autocomplete()`, the graph resets empty.
+     */
+    private class AutocompletionStack : Stack<Next>() {
+        override fun push(item: Next?): Next? {
+            return if (null != item) {
+                super.push(item)
+            } else {
+                this.removeAllElements()
+                null
+            }
         }
     }
 }

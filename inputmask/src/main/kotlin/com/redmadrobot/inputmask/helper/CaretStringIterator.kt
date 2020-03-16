@@ -20,8 +20,8 @@ open class CaretStringIterator(
 
     open fun insertionAffectsCaret(): Boolean {
         return when (this.caretString.caretGravity) {
-            CaretString.CaretGravity.BACKWARD -> this.currentIndex < this.caretString.caretPosition
-            CaretString.CaretGravity.FORWARD -> this.currentIndex <= this.caretString.caretPosition
+            is CaretString.CaretGravity.BACKWARD -> this.currentIndex < this.caretString.caretPosition
+            is CaretString.CaretGravity.FORWARD -> this.currentIndex <= this.caretString.caretPosition
                 || (0 == this.currentIndex && 0 == this.caretString.caretPosition)
         }
     }
