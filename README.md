@@ -18,11 +18,13 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
 
-### Important: Migration Guide: v.5
+### Migration Guide: v.6
+    
+This update brings breaking changes. Namely, the `autocomplete` flag is now a part of the `CaretGravity` enum, thus the `Mask::apply` call is now single-argument, as all the necessary information is included into the `CaretString` structure.
 
-We've added a new concept of cursor gravity to our library internals. A simple flag had allowed us to get rid of some logic flaws and to finalise the right-to-left functionality at the cost of backward compatibility loss.
+`v.6` introduces the «autoskip» feature, which allows the cursor to jump over formatting blocks of symbols in the middle of the text as if they were a single char when hitting `Backspace`, and this feature also allows to trim formatting characters on backspacing at the end of the line.
 
-Make sure to take a look at our [CHANGELOG](https://github.com/RedMadRobot/input-mask-android/blob/master/CHANGELOG.md) in order to get familiar with the breaking changes.
+Make sure to take a look at our [CHANGELOG](https://github.com/RedMadRobot/input-mask-android/blob/master/CHANGELOG.md).
 
 ## Description
 
@@ -75,7 +77,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:5.0.0'
+    implementation 'com.redmadrobot:input-mask-android:6.0.0'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }

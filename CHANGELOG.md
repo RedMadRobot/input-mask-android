@@ -1,5 +1,22 @@
 # Changelog
 
+### `6.0.0`
+
+#### Removed:
+
+* `Mask::apply()`, the `autocomplete` flag
+
+This flag is now a part of the `CaretGravity.FORWARD`.
+
+#### Modified:
+
+* `CaretGravity` is now a sealed class
+
+#### Added:
+
+* `CaretGravity.FORWARD`, the `autocomplete` flag
+* `CaretGravity.BACKWARD`, the [`autoskip`](https://github.com/RedMadRobot/input-mask-android/wiki/0.-Mask#autoskip-flag) flag
+
 ### `5.0.0`
 
 #### Removed:
