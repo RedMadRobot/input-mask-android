@@ -23,7 +23,7 @@ def deps = [:]
 //region Gradle
 def gradle = [:]
 
-versions.android_plugin = "4.1.0"
+versions.android_plugin = "4.2.1"
 
 gradle.android_plugin = "com.android.tools.build:gradle:$versions.android_plugin"
 
@@ -33,7 +33,7 @@ deps.gradle = gradle
 //region Kotlin
 def kotlin = [:]
 
-versions.kotlin = "1.4.10"
+versions.kotlin = "1.5.10"
 versions.dokka = "0.9.17"
 
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
