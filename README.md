@@ -18,13 +18,35 @@
   <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
 </details>
 
-### Migration Guide: v.6
-    
-This update brings breaking changes. Namely, the `autocomplete` flag is now a part of the `CaretGravity` enum, thus the `Mask::apply` call is now single-argument, as all the necessary information is included into the `CaretString` structure.
+## PSA: Migration to Maven Central and overall library development 
 
-`v.6` introduces the «autoskip» feature, which allows the cursor to jump over formatting blocks of symbols in the middle of the text as if they were a single char when hitting `Backspace`, and this feature also allows to trim formatting characters on backspacing at the end of the line.
+Input Mask library development is back on track.
 
-Make sure to take a look at our [CHANGELOG](https://github.com/RedMadRobot/input-mask-android/blob/master/CHANGELOG.md).
+From now on, the official library distribution method is **JitPack**.
+
+<details>
+<summary>My thoughts regarding the library migration to Maven Central</summary>
+The "migration" took me long enough, okay.
+
+It's Saturday, the 25th of September, 2021, and yesterday I had an opportunity to complete the whole Sonatype manual on how mere mortals publish their libs to Maven Central.
+
+And it didn't feel right, so I decided to take a short, *last* break before pushing the changes.  
+The main, Central™, most important Java & Android depo doesn't feel like it's 2021 at all.  
+
+I felt I was casting spells and performing some cargo cult rituals.  
+ALM-based system, the wait for approval, tickets, scripts, credentials, DNS records, artifact security assurance, corporate console library catalogs with Windows™ folder icons…
+
+The. Fuck.
+
+I know some of RedMadRobot libraries already made it to Sonatype.  
+But this is not the case.
+
+**Input Mask is never going to hit Maven Central**, and I'm not going to support this abomination of legacy and bureaucracy.
+</details>
+
+First things first, I'm going to get rid of some annoying library issues from the past, do some project cleanup, and then I'd like to put more real word use case scenarios into the core, so please feel free to share your ideas via feature requests.
+
+Meet `6.1.0`.
 
 ## Description
 
@@ -73,11 +95,11 @@ Make sure you've added Kotlin support to your project.
 
 ```gradle
 repositories {
-    jcenter()
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:6.0.0'
+    implementation 'com.github.RedMadRobot:input-mask-android:6.1.0'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }

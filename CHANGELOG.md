@@ -1,5 +1,21 @@
 # Changelog
 
+### `6.1.0`
+
+#### Removed:
+
+* `IndexOutOfBoundsException`
+
+HUZZAH!
+
+#### Modified:
+
+(none)
+
+#### Added:
+
+* `IndexOutOfBoundsException` with a link to docs
+
 ### `6.0.0`
 
 #### Removed:
