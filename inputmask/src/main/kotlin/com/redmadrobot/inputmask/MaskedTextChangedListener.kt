@@ -2,6 +2,7 @@ package com.redmadrobot.inputmask
 
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
@@ -146,7 +147,22 @@ open class MaskedTextChangedListener(
 
         with(field) {
             setText(result.formattedText.string)
-            setSelection(result.formattedText.caretPosition)
+
+            try {
+                setSelection(result.formattedText.caretPosition)
+            } catch (e: java.lang.IndexOutOfBoundsException) {
+                Log.e(
+                    "input-mask-android",
+                    """
+                    
+                    WARNING! Your text field is not configured for the MaskedTextChangedListener! 
+                    For more information please refer to 
+                    
+                    InputMask vs. android:inputType and IndexOutOfBoundsException
+                    https://github.com/RedMadRobot/input-mask-android#inputmask-vs-androidinputtype-and-indexoutofboundsexception
+                    """
+                )
+            }
         }
 
         return result
@@ -190,7 +206,23 @@ open class MaskedTextChangedListener(
     override fun afterTextChanged(edit: Editable?) {
         this.field.get()?.removeTextChangedListener(this)
         edit?.replace(0, edit.length, this.afterText)
-        this.field.get()?.setSelection(this.caretPosition)
+
+        try {
+            this.field.get()?.setSelection(this.caretPosition)
+        } catch (e: IndexOutOfBoundsException) {
+            Log.e(
+                "input-mask-android",
+                """
+                    
+                    WARNING! Your text field is not configured for the MaskedTextChangedListener! 
+                    For more information please refer to 
+                    
+                    InputMask vs. android:inputType and IndexOutOfBoundsException
+                    https://github.com/RedMadRobot/input-mask-android#inputmask-vs-androidinputtype-and-indexoutofboundsexception
+                    """
+            )
+        }
+
         this.field.get()?.addTextChangedListener(this)
         this.listener?.afterTextChanged(edit)
     }
@@ -234,7 +266,22 @@ open class MaskedTextChangedListener(
             this.afterText = result.formattedText.string
             this.caretPosition = result.formattedText.caretPosition
             this.field.get()?.setText(afterText)
-            this.field.get()?.setSelection(result.formattedText.caretPosition)
+
+            try {
+                this.field.get()?.setSelection(result.formattedText.caretPosition)
+            } catch (e: IndexOutOfBoundsException) {
+                Log.e(
+                    "input-mask-android",
+                    """
+                        
+                    WARNING! Your text field is not configured for the MaskedTextChangedListener! 
+                    For more information please refer to 
+                    
+                    InputMask vs. android:inputType and IndexOutOfBoundsException
+                    https://github.com/RedMadRobot/input-mask-android#inputmask-vs-androidinputtype-and-indexoutofboundsexception
+                    """
+                )
+            }
             this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
         }
     }

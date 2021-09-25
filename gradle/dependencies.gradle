@@ -9,8 +9,8 @@ ext.addRepos = this.&addRepos
 def build_versions = [:]
 
 build_versions.min_sdk = 14
-build_versions.target_sdk = 28
-build_versions.compile_sdk = 28
+build_versions.target_sdk = 30
+build_versions.compile_sdk = 30
 
 ext.build_versions = build_versions
 //endregion
@@ -23,7 +23,7 @@ def deps = [:]
 //region Gradle
 def gradle = [:]
 
-versions.android_plugin = "3.3.2"
+versions.android_plugin = "4.1.3"
 
 gradle.android_plugin = "com.android.tools.build:gradle:$versions.android_plugin"
 
@@ -33,8 +33,8 @@ deps.gradle = gradle
 //region Kotlin
 def kotlin = [:]
 
-versions.kotlin = "1.3.21"
-versions.dokka = "0.9.17"
+versions.kotlin = "1.5.21"
+versions.dokka = "0.9.18"
 
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
 kotlin.test = "org.jetbrains.kotlin:kotlin-test-junit:$versions.kotlin"

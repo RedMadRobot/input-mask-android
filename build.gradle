@@ -2,6 +2,9 @@
 
 buildscript {
     apply from: "${rootProject.projectDir}/gradle/dependencies.gradle"
+    ext {
+        kotlin_version = '1.3.72'
+    }
 
     addRepos(repositories)
 
@@ -11,6 +14,7 @@ buildscript {
         classpath deps.kotlin.dokka
         classpath deps.bintray.android_maven_plugin
         classpath deps.bintray.gradle_bintray_plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
