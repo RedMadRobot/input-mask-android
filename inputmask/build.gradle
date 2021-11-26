@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'org.jetbrains.dokka'
 
-apply from: '../gradle/publish.gradle'
-
 android {
     compileSdkVersion build_versions.compile_sdk
 
