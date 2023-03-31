@@ -1,93 +1,32 @@
-<img src="https://raw.githubusercontent.com/RedMadRobot/input-mask-ios/assets/Assets/input-mask-cursor.gif" alt="Input Mask" height="40" />
+<img src="Documentation/Assets/logo.png" alt="Input Mask" height="102" />
 
-[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome)
-[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Input%20Mask-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/4642)
-[![](https://jitpack.io/v/RedMadRobot/input-mask-android.svg)](https://jitpack.io/#RedMadRobot/input-mask-android)
-[![codebeat badge](https://codebeat.co/badges/e87a117d-3be1-407b-ad4c-973f90d88cd2)](https://codebeat.co/projects/github-com-redmadrobot-input-mask-android-master)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
+[![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-Input%20Mask-brightgreen.svg?style=for-the-badge)](https://android-arsenal.com/details/1/4642) [![](https://img.shields.io/jitpack/version/com.redmadrobot/input-mask-android?style=for-the-badge)](https://jitpack.io/#RedMadRobot/input-mask-android) [![Awesome](https://img.shields.io/badge/-mentioned_in_awesome_android-CCA6C4.svg?colorA=CCA6C4&colorB=261120&logoWidth=20&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMTAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI%2BICAgIDxwYXRoIGZpbGw9IiMyNjExMjAiIGQ9Ik0xOS4xNCA0LjVMMTQuMjMgMGwtLjY5Ljc1IDQuMDkgMy43NUgxLjUxTDUuNi43NSA0LjkxIDAgMCA0LjV2Mi45N0MwIDguODEgMS4yOSA5LjkgMi44OCA5LjloMy4wM2MxLjU5IDAgMi44OC0xLjA5IDIuODgtMi40M1Y1LjUyaDEuNTd2MS45NWMwIDEuMzQgMS4yOSAyLjQzIDIuODggMi40M2gzLjAzYzEuNTkgMCAyLjg4LTEuMDkgMi44OC0yLjQzbC0uMDEtMi45N3oiLz48L3N2Zz4%3D&style=for-the-badge)](https://github.com/JStumpp/awesome-android) [![Telegram](https://img.shields.io/badge/-telegram_author-red?color=blue&logo=telegram&style=for-the-badge)](https://t.me/jeorge_taflanidi) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?style=for-the-badge)](#license)
 
-[![Platform](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/platform.svg)]()[![Android](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/android.svg)](https://github.com/RedMadRobot/input-mask-android)[![iOS](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/ios_rect.svg)](https://github.com/RedMadRobot/input-mask-ios)[![macOS](https://cdn.rawgit.com/RedMadRobot/input-mask-ios/assets/Assets/shields/macos.svg)](https://github.com/RedMadRobot/input-mask-ios)
+Input masks restrict data input and allow you to guide users to enter correct values.  
+Check out our [wiki](https://github.com/RedMadRobot/input-mask-android/wiki) for quick start and further reading.
 
-<img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/direct-input.gif" alt="Direct input" width="210"/>
-<details>
-<summary>More GIFs [~3 MB]</summary>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/making-corrections.gif" alt="Direct input" width="210"/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/cursor-movement.gif" alt="Direct input" width="210"/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/do-it-yourself.gif" alt="Direct input" width="210"/><br/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/complete.gif" alt="Direct input" width="210"/>
-  <img src="https://github.com/RedMadRobot/input-mask-android/blob/assets/assets/gif-animations/extract-value.gif" alt="Direct input" width="210"/>
-</details>
+## ⚙️ Features
 
-## PSA: Migration to Maven Central and overall library development 
+- Apply formatting to your text fields, see [examples](#examples)
+- Filter out nonessential symbols (e.g. extract `0123456` from `+1 (999) 012-34-56`)
+- For international phone numbers 
+    - guess the country from the entered digits
+    - apply corresponding value restrictions (e.g. a 🇺🇸US phone will have a format like `+1 201 456-7890`)
 
-Input Mask library development is back on track.
+<a name="examples" />
 
-From now on, the official library distribution method is **JitPack**.
+## 💳 Examples
 
-<details>
-<summary>My thoughts regarding the library migration to Maven Central</summary>
-The "migration" took me long enough, okay.
-
-It's Saturday, the 25th of September, 2021, and yesterday I had an opportunity to complete the whole Sonatype manual on how mere mortals publish their libs to Maven Central.
-
-And it didn't feel right, so I decided to take a short, *last* break before pushing the changes.  
-The main, Central™, most important Java & Android depo doesn't feel like it's 2021 at all.  
-
-I felt I was casting spells and performing some cargo cult rituals.  
-ALM-based system, the wait for approval, tickets, scripts, credentials, DNS records, artifact security assurance, corporate console library catalogs with Windows™ folder icons…
-
-The. Fuck.
-
-I know some of RedMadRobot libraries already made it to Sonatype.  
-But this is not the case.
-
-**Input Mask is never going to hit Maven Central**, and I'm not going to support this abomination of legacy and bureaucracy.
-</details>
-
-First things first, I'm going to get rid of some annoying library issues from the past, do some project cleanup, and then I'd like to put more real word use case scenarios into the core, so please feel free to share your ideas via feature requests.
-
-Meet `6.1.0`.
-
-## Description
-
-`Input Mask` is an [Android](https://github.com/RedMadRobot/input-mask-android) & [iOS](https://github.com/RedMadRobot/input-mask-ios) native library allowing to format user input on the fly.
-
-The library provides you with a text field listener; when attached, it puts separators into the text while user types it in, and gets rid of unwanted symbols, all according to custom predefined pattern.
-
-This allows to reformat whole strings pasted from the clipboard, e.g. turning pasted `8 800 123-45-67` into  
-`8 (800) 123 45 67`.
-
-Each pattern allows to extract valuable symbols from the entered text, returning you the immediate result with the text field listener's callback when the text changes. Such that, you'll be able to extract `1234567` from `8 (800) 123 45 67` or `19991234567` from `1 (999) 123 45 67` with two different patterns.
-
-All separators and valuable symbol placeholders have their own syntax. We call such patterns "masks".
-
-Mask examples:
-
-1. International phone numbers: `+1 ([000]) [000] [00] [00]`
-2. Local phone numbers: `([000]) [000]-[00]-[00]`
-3. Names: `[A][-----------------------------------------------------]` 
-4. Text: `[A…]`
-5. Dates: `[00]{.}[00]{.}[9900]`
-6. Serial numbers: `[AA]-[00000099]`
-7. IPv4: `[099]{.}[099]{.}[099]{.}[099]`
-8. Visa card numbers: `[0000] [0000] [0000] [0000]`
-9. MM/YY: `[00]{/}[00]`
-10. UK IBAN: `GB[00] [____] [0000] [0000] [0000] [00]`
-
-## Questions & Issues
-
-Check out our [wiki](https://github.com/RedMadRobot/input-mask-android/wiki) for further reading.  
-Please also take a closer look at our [Known issues](#knownissues) section before you incorporate our library into your project.
-
-For your bugreports and feature requests please file new issues as usually.
-
-Should you have any questions, search for closed [issues](https://github.com/RedMadRobot/input-mask-android/issues?q=is%3Aclosed) or open new ones at **[StackOverflow](https://stackoverflow.com/questions/tagged/input-mask)** with the `input-mask` tag.
-
-We also have a community-driven [cookbook](https://github.com/RedMadRobot/input-mask-android/blob/master/Documentation/COOKBOOK.md) of recipes, be sure to check it out, too.
+- Phone numbers: `+1 ([000]) [000] [00] [00]`
+- Dates: `[00]{.}[00]{.}[9900]`
+- Serial numbers: `[AA]-[00000099]`
+- IPv4: `[099]{.}[099]{.}[099]{.}[099]`
+- Visa/MasterCard numbers: `[0000] [0000] [0000] [0000]`
+- UK IBAN: `GB[00] [____] [0000] [0000] [0000] [00]`
 
 <a name="installation" />
 
-## Installation
+## 🛠️ Installation
 
 ### Gradle
 
@@ -105,9 +44,18 @@ dependencies {
 }
 ```
 
+## 📢 Communication, Questions & Issues
+
+Please take a closer look at our [Known issues](#knownissues) section before you incorporate our library into your project.
+
+For your bugreports and feature requests please file new issues [via GitHub](https://github.com/RedMadRobot/input-mask-android/issues/new/choose).
+
+Should you have any questions, please search for closed [issues](https://github.com/RedMadRobot/input-mask-android/issues?q=is%3Aclosed) or ask questions at **[StackOverflow](https://stackoverflow.com/questions/tagged/input-mask)** with the `input-mask` tag.
+
 <a name="knownissues" />
 
-# Known issues
+## ❗Known issues
+
 ## InputMask vs. `NoClassDefFoundError`
 
 ```
@@ -174,13 +122,7 @@ editText.setFilters(filters);
 
 Bare in mind, you might have to befriend this solution with your existing `android:digits` [property](#inputmask-vs-androidinputtype-and-indexoutofboundsexception) in case your text field accepts both digits and letters. 
 
-## References
-
-The list of projects that are using this library which were kind enough to share that information.
-
-Feel free to add yours below.
-
-## Special thanks
+## 🙏 Special thanks
 
 These folks rock:
 
@@ -191,6 +133,6 @@ These folks rock:
 * Vladislav [Shipaaaa](https://github.com/Shipaaaa) Shipugin
 * Vadim [vkotovv](https://github.com/vkotovv) Kotov
 
-# License
+## ♻️ License
 
-The library is distributed under the MIT [LICENSE](https://opensource.org/licenses/MIT).
+The library is distributed under the MIT [LICENSE](https://github.com/RedMadRobot/input-mask-android/blob/master/LICENSE).
