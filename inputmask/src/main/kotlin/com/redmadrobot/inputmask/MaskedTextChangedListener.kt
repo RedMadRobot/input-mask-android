@@ -34,7 +34,12 @@ open class MaskedTextChangedListener(
 ) : TextWatcher, View.OnFocusChangeListener {
 
     interface ValueListener {
-        fun onTextChanged(maskFilled: Boolean, extractedValue: String, formattedValue: String)
+        fun onTextChanged(
+            maskFilled: Boolean,
+            extractedValue: String,
+            formattedValue: String,
+            tailPlaceholder: String
+        )
     }
 
     private val primaryMask: Mask
@@ -130,7 +135,7 @@ open class MaskedTextChangedListener(
             val result = setText(text, it, autocomplete)
             this.afterText = result.formattedText.string
             this.caretPosition = result.formattedText.caretPosition
-            this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
+            this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText, result.tailPlaceholder)
             return result
         }
     }
@@ -247,7 +252,7 @@ open class MaskedTextChangedListener(
         this.afterText = result.formattedText.string
         this.caretPosition = result.formattedText.caretPosition
 
-        this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
+        this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText, result.tailPlaceholder)
     }
 
     override fun onFocusChange(view: View?, hasFocus: Boolean) {
@@ -282,7 +287,7 @@ open class MaskedTextChangedListener(
                     """
                 )
             }
-            this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText)
+            this.valueListener?.onTextChanged(result.complete, result.extractedValue, afterText, result.tailPlaceholder)
         }
     }
 

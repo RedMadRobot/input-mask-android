@@ -48,14 +48,19 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
         /**
          * User input is complete.
          */
-        val complete: Boolean
+        val complete: Boolean,
+        /**
+        Placeholder for remaining text.
+         */
+        val tailPlaceholder: String
     ) {
         fun reversed() =
             Result(
                 this.formattedText.reversed(),
                 this.extractedValue.reversed(),
                 this.affinity,
-                this.complete
+                this.complete,
+                this.tailPlaceholder.reversed()
             )
     }
 
@@ -163,6 +168,9 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
             }
         }
 
+        var tailState = state
+        var tail = ""
+
         while (text.caretGravity.autoskip && !autocompletionStack.empty()) {
             val skip: Next = autocompletionStack.pop()
             if (modifiedString.length == modifiedCaretPosition) {
@@ -178,7 +186,11 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
                     modifiedCaretPosition -= 1
                 }
             }
+            tailState = skip.state
+            tail = if (skip.insert != null) skip.insert.toString() else tail
         }
+
+        val tailPlaceholder = appendPlaceholder(tailState, tail)
 
         return Result(
             CaretString(
@@ -188,7 +200,8 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
             ),
             extractedValue,
             affinity,
-            this.noMandatoryCharactersLeftAfterState(state)
+            this.noMandatoryCharactersLeftAfterState(state),
+            tailPlaceholder
         )
     }
 
