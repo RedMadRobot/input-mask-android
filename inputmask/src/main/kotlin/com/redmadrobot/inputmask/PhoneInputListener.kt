@@ -39,6 +39,46 @@ open class PhoneInputListener(
     rightToLeft
 ) {
     /**
+     * Convenience constructor.
+     */
+    constructor(field: EditText):
+        this(field, null)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(field: EditText, valueListener: ValueListener?):
+        this(field, null, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(field: EditText, listener: TextWatcher?, valueListener: ValueListener?):
+        this(true, false, field, listener, valueListener)
+
+    /**
+     * Convenience constructor.
+     */
+    constructor(
+        autocomplete: Boolean,
+        autoskip: Boolean,
+        field: EditText,
+        listener: TextWatcher?,
+        valueListener: ValueListener?
+    ):
+        this(
+            "",
+            emptyList(),
+            emptyList(),
+            AffinityCalculationStrategy.WHOLE_STRING,
+            autocomplete,
+            autoskip,
+            field,
+            listener,
+            valueListener
+        )
+
+    /**
      * A detected ```Country``` based on the entered digits
      */
     var computedCountry: Country? = null
@@ -97,6 +137,46 @@ open class PhoneInputListener(
             affineFormats = country.affineFormats
 
             super.pickMask(text)
+        }
+    }
+
+    companion object {
+        /**
+         * Create a `PhoneInputListener` instance and assign it as a field's
+         * `TextWatcher` and `onFocusChangeListener`.
+         */
+        fun installOn(
+            editText: EditText,
+            valueListener: ValueListener? = null
+        ): PhoneInputListener = installOn(
+            editText,
+            true,
+            false,
+            null,
+            valueListener
+        )
+
+        /**
+         * Create a `PhoneInputListener` instance and assign it as a field's
+         * `TextWatcher` and `onFocusChangeListener`.
+         */
+        fun installOn(
+            editText: EditText,
+            autocomplete: Boolean = true,
+            autoskip: Boolean = false,
+            listener: TextWatcher? = null,
+            valueListener: ValueListener? = null
+        ): PhoneInputListener {
+            val maskedListener = PhoneInputListener(
+                autocomplete,
+                autoskip,
+                editText,
+                listener,
+                valueListener
+            )
+            editText.addTextChangedListener(maskedListener)
+            editText.onFocusChangeListener = maskedListener
+            return maskedListener
         }
     }
 }

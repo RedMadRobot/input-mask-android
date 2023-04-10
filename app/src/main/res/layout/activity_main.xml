@@ -3,24 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingEnd="16dp"
-    android:paddingStart="16dp">
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/phone_prefix_sample" />
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="@string/currency_label" />
 
     <EditText
-        android:id="@+id/prefix_edit_text"
+        android:id="@+id/currency_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="1234567890+-() "
-        android:inputType="number" />
+        android:digits="1234567890., $€"
+        android:inputType="numberDecimal"
+        android:text="" />
 
     <CheckBox
-        android:id="@+id/prefix_check_box"
+        android:id="@+id/currency_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
@@ -30,19 +33,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/phone_suffix_sample" />
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="@string/date_label" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/date_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/date_placeholder_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@id/date_edit_text"
+            android:text=""
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/date_check_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:clickable="false" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:text="@string/phone_label" />
 
     <EditText
-        android:id="@+id/suffix_edit_text"
+        android:id="@+id/phone_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="phone" />
 
     <CheckBox
-        android:id="@+id/suffix_check_box"
+        android:id="@+id/phone_check_box"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:clickable="false" />
+
+    <TextView
+        android:id="@+id/countries_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
