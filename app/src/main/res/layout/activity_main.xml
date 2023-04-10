@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:digits="1234567890., $€"
         android:inputType="numberDecimal"
+        android:gravity="end"
         android:text="" />
 
     <CheckBox

@@ -178,7 +178,7 @@ open class MaskedTextChangedListener(
      *
      * @return Placeholder string.
      */
-    fun placeholder(): String = this.primaryMask.placeholder()
+    open fun placeholder(): String = this.primaryMask.placeholder()
 
     /**
      * Minimal length of the text inside the field to fill all mandatory characters in the mask.

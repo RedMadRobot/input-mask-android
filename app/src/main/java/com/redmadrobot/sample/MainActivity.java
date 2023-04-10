@@ -2,6 +2,8 @@ package com.redmadrobot.sample;
 
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.icu.number.NumberFormatter;
+import android.icu.util.Currency;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.redmadrobot.inputmask.MaskedTextChangedListener;
+import com.redmadrobot.inputmask.NumberInputListener;
 import com.redmadrobot.inputmask.PhoneInputListener;
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy;
 import com.redmadrobot.inputmask.model.Country;
@@ -40,7 +43,25 @@ public final class MainActivity extends AppCompatActivity {
     }
 
     private void setupCurrencySample() {
-        // TODO
+        final EditText editText = findViewById(R.id.currency_edit_text);
+        final CheckBox checkBox = findViewById(R.id.currency_check_box);
+
+        final NumberInputListener listener = NumberInputListener.Companion.installOn(
+                editText,
+                new MaskedTextChangedListener.ValueListener() {
+                    @Override
+                    public void onTextChanged(boolean maskFilled, @NonNull String extractedValue, @NonNull String formattedValue, @NonNull String tailPlaceholder) {
+                        logValueListener(maskFilled, extractedValue, formattedValue);
+                        checkBox.setChecked(maskFilled);
+                    }
+                }
+        );
+
+        listener.setFormatter(
+            listener.getFormatter().unit(Currency.getInstance("USD"))
+        );
+
+        editText.setHint(listener.placeholder());
     }
 
     private void setupDateSample() {

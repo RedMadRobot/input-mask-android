@@ -8,9 +8,9 @@ ext.addRepos = this.&addRepos
 //region Build versions
 def build_versions = [:]
 
-build_versions.min_sdk = 14
-build_versions.target_sdk = 30
-build_versions.compile_sdk = 30
+build_versions.min_sdk = 30
+build_versions.target_sdk = 33
+build_versions.compile_sdk = 33
 
 ext.build_versions = build_versions
 //endregion
