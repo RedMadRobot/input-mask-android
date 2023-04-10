@@ -208,7 +208,7 @@ open class NumberInputListener(
         val decimalSeparator = "."
 
         /**
-         * Create a `NumberInputListener` instance and assign it as a field's
+         * Create a ``NumberInputListener`` instance and assign it as a field's
          * `TextWatcher` and `onFocusChangeListener`.
          */
         fun installOn(
@@ -223,7 +223,7 @@ open class NumberInputListener(
         )
 
         /**
-         * Create a `NumberInputListener` instance and assign it as a field's
+         * Create a ``NumberInputListener`` instance and assign it as a field's
          * `TextWatcher` and `onFocusChangeListener`.
          */
         fun installOn(

@@ -7,7 +7,7 @@ import java.util.HashMap
 /**
  * ### RTLMask
  *
- * A right-to-left ```Mask``` subclass. Applies format from the string end.
+ * A right-to-left ``Mask`` subclass. Applies format from the string end.
  */
 class RTLMask(format: String, customNotations: List<Notation>) : Mask(reversedFormat(format), customNotations) {
     companion object Factory {

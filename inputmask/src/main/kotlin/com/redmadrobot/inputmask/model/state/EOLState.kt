@@ -8,7 +8,7 @@ import com.redmadrobot.inputmask.model.State
  *
  * End-of-line state. Serves as mask format terminator character.
  *
- * Does not accept any character. Always returns ```self``` as the next state, ignoring the child
+ * Does not accept any character. Always returns `self` as the next state, ignoring the child
  * state given during initialization.
  *
  * @author taflanidi

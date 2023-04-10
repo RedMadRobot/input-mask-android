@@ -18,7 +18,7 @@ abstract class State(val child: State?) {
      *
      * @param character character from the user input string.
      *
-     * @returns ```Next``` object instance with a set of actions that should take place when the user
+     * @returns ``Next`` object instance with a set of actions that should take place when the user
      * input character is accepted.
      *
      * @throws Fatal error, if the method is not implemented.
@@ -28,8 +28,8 @@ abstract class State(val child: State?) {
     /**
      * Automatically complete user input.
      *
-     * @returns ```Next``` object instance with a set of actions to complete user input. If no
-     * autocomplete available, returns ```nil```.
+     * @returns ``Next`` object instance with a set of actions to complete user input. If no
+     * autocomplete available, returns `null`.
      */
     open fun autocomplete(): Next? {
         return null
@@ -38,10 +38,10 @@ abstract class State(val child: State?) {
     /**
      * Obtain the next state.
      *
-     * Sometimes it is necessary to override this behavior. For instance, ```State``` may want to
-     * return ```self``` as the next state under certain conditions.
+     * Sometimes it is necessary to override this behavior. For instance, ``State`` may want to
+     * return ``self`` as the next state under certain conditions.
      *
-     * @returns ```State``` object.
+     * @returns ``State`` object.
      */
     open fun nextState(): State {
         return this.child!!

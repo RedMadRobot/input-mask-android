@@ -6,14 +6,14 @@ import com.redmadrobot.inputmask.model.State
 /**
  * ### ValueState
  *
- * Represents mandatory characters in square brackets [].
+ * Represents mandatory characters in square brackets `[]`.
  *
- * Accepts only characters of own type (see ```StateType```). Puts accepted characters into the
+ * Accepts only characters of own type (see ``StateType``). Puts accepted characters into the
  * result string.
  *
  * Returns accepted characters as an extracted value.
  *
- * @see ```ValueState.StateType```
+ * @see ``ValueState.StateType``
  *
  * @author taflanidi
  */
@@ -22,10 +22,10 @@ class ValueState : State {
     /**
      * ### StateType
      *
-     * ```Numeric``` stands for [9] characters
-     * ```Literal``` stands for [a] characters
-     * ```AlphaNumeric``` stands for [-] characters
-     * ```Ellipsis``` stands for […] characters
+     * `Numeric` stands for `[9]` characters
+     * `Literal` stands for `[a]` characters
+     * `AlphaNumeric` stands for `[-]` characters
+     * `Ellipsis` stands for `[…]` characters
      */
     sealed class StateType {
         class Numeric : StateType()
@@ -38,7 +38,7 @@ class ValueState : State {
     val type: StateType
 
     /**
-     * Constructor for elliptical ```ValueState```
+     * Constructor for elliptical ``ValueState``
      */
     constructor(inheritedType: StateType) : super(null) {
         this.type = StateType.Ellipsis(inheritedType)

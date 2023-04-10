@@ -6,14 +6,14 @@ import com.redmadrobot.inputmask.model.State
 /**
  * ### OptionalValueState
  *
- * Represents optional characters in square brackets [].
+ * Represents optional characters in square brackets `[]`.
  *
  * Accepts any characters, but puts into the result string only the characters of own type
- * (see ```StateType```).
+ * (see ``StateType``).
  *
  * Returns accepted characters of own type as an extracted value.
  *
- * @see ```OptionalValueState.StateType```
+ * @see ``OptionalValueState.StateType``
  *
  * @author taflanidi
  */

@@ -6,7 +6,7 @@ import com.redmadrobot.inputmask.model.State
 /**
  * ### FixedState
  *
- * Represents characters in curly braces {}.
+ * Represents characters in curly braces `{}`.
  *
  * Accepts every character but does not put it into the result string, unless the character equals
  * the one from the mask format. If it's not, inserts the symbol from the mask format into the

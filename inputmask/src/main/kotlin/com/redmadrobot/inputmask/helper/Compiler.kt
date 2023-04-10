@@ -8,27 +8,27 @@ import com.redmadrobot.inputmask.model.state.*
  * ### Compiler
  *
  * Creates a sequence of states from the mask format string.
- * @see ```State``` class.
+ * @see ``State`` class.
  *
- * @complexity ```O(formatString.characters.count)``` plus ```FormatSanitizer``` complexity.
+ * @complexity `O(formatString.characters.count)` plus ``FormatSanitizer`` complexity.
  *
- * @requires Format string to contain only flat groups of symbols in ```[]``` and ```{}``` brackets
- * without nested brackets, like ```[[000]99]```. Also, ```[…]``` groups may contain only the
- * specified characters ("0", "9", "A", "a", "…", "_" and "-"). Square bracket ```[]``` groups cannot
+ * @requires Format string to contain only flat groups of symbols in `[]` and `{}` brackets
+ * without nested brackets, like `[[000]99]`. Also, `[…]` groups may contain only the
+ * specified characters ("0", "9", "A", "a", "…", "_" and "-"). Square bracket `[]` groups cannot
  * contain mixed types of symbols ("0" and "9" with "A" and "a" or "_" and "-").
  *
- * ```Compiler``` object is initialized and ```Compiler.compile(formatString:)``` is called during
- * the ```Mask``` instance initialization.
+ * ``Compiler`` object is initialized and ``Compiler.compile(formatString:)`` is called during
+ * the ``Mask`` instance initialization.
  *
- * ```Compiler``` uses ```FormatSanitizer``` to prepare ```formatString``` for the compilation.
+ * ``Compiler`` uses ``FormatSanitizer`` to prepare `formatString` for the compilation.
  *
  * @author taflanidi
  */
 class Compiler(
     /**
-     * A list of custom rules to compile square bracket ```[]``` groups of format symbols.
+     * A list of custom rules to compile square bracket `[]` groups of format symbols.
      *
-     * @see ```Notation``` class.
+     * @see ``Notation`` class.
      */
     private val customNotations: List<Notation>
 ) {
@@ -36,20 +36,20 @@ class Compiler(
     /**
      * ### FormatError
      *
-     * Compiler error exception type, thrown when ```formatString``` contains inappropriate
+     * Compiler error exception type, thrown when `formatString` contains inappropriate
      * character sequences.
      *
-     * ```FormatError``` is used by the ```Compiler``` and ```FormatSanitizer``` classes.
+     * ``FormatError`` is used by the ``Compiler`` and ``FormatSanitizer`` classes.
      */
     class FormatError : Exception()
 
     /**
-     * Compile ```formatString``` into the sequence of states.
+     * Compile `formatString` into the sequence of states.
      *
-     * * "Free" characters from ```formatString``` are converted to ```FreeState```-s.
-     * * Characters in square brackets are converted to ```ValueState```-s and ```OptionalValueState```-s.
-     * * Characters in curly brackets are converted to ```FixedState```-s.
-     * * End of the formatString line makes ```EOLState```.
+     * * "Free" characters from `formatString` are converted to ``FreeState``-s.
+     * * Characters in square brackets are converted to ``ValueState``-s and ``OptionalValueState``-s.
+     * * Characters in curly brackets are converted to ``FixedState``-s.
+     * * End of the formatString line makes ``EOLState``.
      *
      * For instance,
      *
@@ -74,17 +74,17 @@ class Compiler(
      *
      * @param formatString string with a mask format.
      *
-     * @see ```State``` class.
+     * @see ``State`` class.
      *
-     * @complexity ```O(formatString.characters.count)``` plus ```FormatSanitizer``` complexity.
+     * @complexity `O(formatString.characters.count)` plus ``FormatSanitizer`` complexity.
      *
-     * @requires: Format string to contain only flat groups of symbols in ```[]``` and ```{}``` brackets
-     * without nested brackets, like ```[[000]99]```. Also, ```[…]``` groups may contain only the
+     * @requires: Format string to contain only flat groups of symbols in `[]` and `{}` brackets
+     * without nested brackets, like `[[000]99]`. Also, `[…]` groups may contain only the
      * specified characters ("0", "9", "A", "a", "…", "_" and "-").
      *
-     * @returns Initialized ```State``` object with assigned ```State.child``` chain.
+     * @returns Initialized ``State`` object with assigned ``State.child`` chain.
      *
-     * @throws ```FormatError``` if ```formatString``` does not conform to the method requirements.
+     * @throws ``FormatError`` if `formatString` does not conform to the method requirements.
      */
     @Throws(FormatError::class)
     fun compile(formatString: String): State {

@@ -3,7 +3,7 @@ package com.redmadrobot.inputmask.model
 /**
  * ### Country
  *
- * Model object representing a **Country** record operated by the ```PhoneInputListener```.
+ * Model object representing a **Country** record operated by the ``PhoneInputListener``.
  */
 data class Country(
     /**
@@ -37,12 +37,12 @@ data class Country(
     val countryCode: String,
 
     /**
-     * Primary ```Mask``` format for the country phone numbers.
+     * Primary ``Mask`` format for the country phone numbers.
      */
     val primaryFormat: String,
 
     /**
-     * Affine ```Mask``` formats for the country phone numbers.
+     * Affine ``Mask`` formats for the country phone numbers.
      */
     val affineFormats: List<String>,
 
@@ -93,7 +93,7 @@ data class Country(
         }
 
         /**
-        A ```Country``` dictionary.
+        A ``Country`` dictionary.
 
         Feel free to append/correct & file PRs, see https://countrycode.org
          */

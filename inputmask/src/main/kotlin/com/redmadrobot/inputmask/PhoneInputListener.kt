@@ -11,7 +11,7 @@ import com.redmadrobot.inputmask.model.Notation
 /**
  * ### PhoneInputListener
  *
- * A ```MaskedTextInputListener``` subclass for guessing a country based on the entered digit sequence
+ * A ``MaskedTextInputListener`` subclass for guessing a country based on the entered digit sequence
  *
  * Computed country dictates the phone formatting
  */
@@ -79,17 +79,17 @@ open class PhoneInputListener(
         )
 
     /**
-     * A detected ```Country``` based on the entered digits
+     * A detected ``Country`` based on the entered digits
      */
     var computedCountry: Country? = null
 
     /**
-     * A list of possible ```Country``` candidates based on the entered digits
+     * A list of possible ``Country`` candidates based on the entered digits
      */
     var computedCountries: List<Country> = listOf()
 
     /**
-     * Allowed ```Country``` list. Pre-filters the ```Country::all``` dictionary.
+     * Allowed ``Country`` list. Pre-filters the ``Country::all`` dictionary.
      *
      * May contain country names, native country names, ISO-3166 codes, country emojis, or their mix.
      *
@@ -105,7 +105,7 @@ open class PhoneInputListener(
     var enableCountries: List<String>? = null
 
     /**
-     * Blocked ```Country``` list. Pre-filters the ```Country::all``` dictionary.
+     * Blocked ``Country`` list. Pre-filters the ``Country::all`` dictionary.
      *
      * May contain country names, native country names, ISO-3166 codes, country emojis, or their mix.
      *
@@ -121,7 +121,7 @@ open class PhoneInputListener(
     var disableCountries: List<String>? = null
 
     /**
-    A custom ```Country``` list to be used instead of ```Country::all``` dictionary.
+    A custom ``Country`` list to be used instead of ``Country::all`` dictionary.
      */
     var customCountries: List<Country>? = null
 
@@ -142,7 +142,7 @@ open class PhoneInputListener(
 
     companion object {
         /**
-         * Create a `PhoneInputListener` instance and assign it as a field's
+         * Create a ``PhoneInputListener`` instance and assign it as a field's
          * `TextWatcher` and `onFocusChangeListener`.
          */
         fun installOn(
@@ -157,7 +157,7 @@ open class PhoneInputListener(
         )
 
         /**
-         * Create a `PhoneInputListener` instance and assign it as a field's
+         * Create a ``PhoneInputListener`` instance and assign it as a field's
          * `TextWatcher` and `onFocusChangeListener`.
          */
         fun installOn(

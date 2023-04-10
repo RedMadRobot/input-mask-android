@@ -12,7 +12,7 @@ import com.redmadrobot.inputmask.model.State
  * the one from the mask format. If it's not, inserts the symbol from the mask format into the
  * result.
  *
- * Always returns ```nil``` as an extracted value, does not affect the resulting value.
+ * Always returns `null` as an extracted value, does not affect the resulting value.
  *
  * @author taflanidi
  */

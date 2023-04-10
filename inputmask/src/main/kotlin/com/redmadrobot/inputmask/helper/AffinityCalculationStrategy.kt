@@ -11,7 +11,7 @@ enum class AffinityCalculationStrategy {
     /**
      * Default strategy.
      *
-     * Uses ```Mask``` built-in mechanism to calculate total affinity between the text and the mask format.
+     * Uses ``Mask`` built-in mechanism to calculate total affinity between the text and the mask format.
      *
      * For example:
      * ```

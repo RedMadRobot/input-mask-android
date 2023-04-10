@@ -5,10 +5,10 @@ import com.redmadrobot.inputmask.model.CaretString
 /**
  * ### CaretStringIterator
  *
- * Iterates over CaretString.string characters. Each ```next()``` call returns current character and
+ * Iterates over CaretString.string characters. Each `next()` call returns current character and
  * adjusts iterator position.
  *
- * ```CaretStringIterator``` is used by the ```Mask``` instance to iterate over the string that
+ * ``CaretStringIterator`` is used by the ``Mask`` instance to iterate over the string that
  * should be formatted.
  *
  * @author taflanidi

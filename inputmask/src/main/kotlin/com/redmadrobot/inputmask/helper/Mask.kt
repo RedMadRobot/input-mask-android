@@ -13,10 +13,10 @@ import java.util.*
  * Iterates over user input. Creates formatted strings from it. Extracts value specified by mask
  * format.
  *
- * Provided mask format string is translated by the ```Compiler``` class into a set of states, which
+ * Provided mask format string is translated by the ``Compiler`` class into a set of states, which
  * define the formatting and value extraction.
  *
- * @see ```Compiler```, ```State``` and ```CaretString``` classes.
+ * @see ``Compiler``, ``State`` and ``CaretString`` classes.
  *
  * @author taflanidi
  */
@@ -70,11 +70,11 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
         /**
          * Factory constructor.
          *
-         * Operates over own ```Mask``` cache where initialized ```Mask``` objects are stored under
+         * Operates over own ``Mask`` cache where initialized ``Mask`` objects are stored under
          * corresponding format key:
-         * ```[format : mask]```
+         * `[format : mask]`
          *
-         * @returns Previously cached ```Mask``` object for requested format string. If such it
+         * @returns Previously cached ``Mask`` object for requested format string. If such it
          * doesn't exist in cache, the object is constructed, cached and returned.
          */
         fun getOrCreate(format: String, customNotations: List<Notation>): Mask {
@@ -90,10 +90,10 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
          * Check your mask format is valid.
          *
          * @param format mask format.
-         * @param customNotations a list of custom rules to compile square bracket ```[]``` groups of format symbols.
+         * @param customNotations a list of custom rules to compile square bracket `[]` groups of format symbols.
          *
-         * @returns ```true``` if this format coupled with custom notations will compile into a working ```Mask``` object.
-         * Otherwise ```false```.
+         * @returns `true` if this format coupled with custom notations will compile into a working ``Mask`` object.
+         * Otherwise `false`.
          */
         fun isValid(format: String, customNotations: List<Notation>): Boolean {
             return try {
@@ -365,10 +365,10 @@ open class Mask(format: String, protected val customNotations: List<Notation>) {
      * While scanning through the input string in the `.apply(…)` method, the mask builds a graph of
      * autocompletion steps.
      *
-     * This graph accumulates the results of `.autocomplete()` calls for each consecutive `State`,
-     * acting as a `stack` of `Next` object instances.
+     * This graph accumulates the results of `.autocomplete()` calls for each consecutive ``State``,
+     * acting as a `stack` of ``Next`` object instances.
      *
-     * Each time the `State` returns `null` for its `.autocomplete()`, the graph resets empty.
+     * Each time the ``State`` returns `null` for its `.autocomplete()`, the graph resets empty.
      */
     private class AutocompletionStack : Stack<Next>() {
         override fun push(item: Next?): Next? {
