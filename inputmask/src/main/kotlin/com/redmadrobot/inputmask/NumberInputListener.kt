@@ -2,6 +2,7 @@ package com.redmadrobot.inputmask
 
 import android.icu.number.LocalizedNumberFormatter
 import android.icu.number.NumberFormatter
+import android.icu.number.Precision
 import android.text.TextWatcher
 import android.widget.EditText
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
@@ -11,6 +12,22 @@ import com.redmadrobot.inputmask.model.Notation
 import java.math.RoundingMode
 import java.util.*
 
+/**
+ * — Mom, can we have a neural network?
+ * — No, we have a neural network at home.
+ *
+ * Neural network at home:
+ */
+
+/**
+ * ### NumberInputListener
+ *
+ * A ``MaskedTextInputListener`` subclass for numbers.
+ *
+ * Use with caution, this module is still in development.
+ *
+ * - seealso: the ``NumberInputListener/formatter`` field
+ */
 open class NumberInputListener(
     primaryFormat: String,
     affineFormats: List<String> = emptyList(),
@@ -78,6 +95,7 @@ open class NumberInputListener(
         NumberFormatter
             .withLocale(Locale("en_us"))
             .roundingMode(RoundingMode.FLOOR)
+            .precision(Precision.unlimited())
 
     override fun placeholder(): String {
         val text = "0"
@@ -92,11 +110,6 @@ open class NumberInputListener(
 
         val intNum = sanitisedNumberString.intPart.toLong()
         val intMaskFormat = formatter.format(intNum)
-
-//        guard let intNum = NumberFormatter().number(from: sanitisedNumberString.intPart), let intMaskFormat = formatter.string(from: intNum)
-//        else {
-//            return try! Mask.getOrCreate(withFormat: "[…]")
-//            }
 
         val intZero = intNum == 0.toLong()
         val notationChar = assignNonZeroNumberNotation()
@@ -139,33 +152,20 @@ open class NumberInputListener(
         formatter: LocalizedNumberFormatter,
         text: String
     ): SanitisedNumberString {
-//        val appliedDecimalSeparator = formatter.decimalSeparator ?? NumberInputListener.decimalSeparator
-//        val appliedCurrencyDecimalSeparator = formatter.currencyDecimalSeparator ?? NumberInputListener.decimalSeparator
-
         val expectedDecimalSeparator: String = decimalSeparator
-//        if (text.contains(appliedCurrencyDecimalSeparator)) {
-//            expectedDecimalSeparator = appliedCurrencyDecimalSeparator
-//        }
-
-//        var digitsAndDecimalSeparators = text.replace(ep)
-//            .replacingOccurrences(of: appliedDecimalSeparator, with: NumberInputListener.decimalSeparator)
-//        .replacingOccurrences(of: appliedCurrencyDecimalSeparator, with: NumberInputListener.decimalSeparator)
-//        .filter { c in
-//                return CharacterSet.decimalDigits.isMember(character: c) || String(c) == NumberInputListener.decimalSeparator
-//        }
-
 
         var digitsAndDecimalSeparators = text.filter { c: Char -> c.isDigit() || c.toString() == decimalSeparator }
 
-//        val numberOfOccurencesOfDecimalSeparator = digitsAndDecimalSeparators.numberOfOccurencesOf(NumberInputListener.decimalSeparator)
         val numberOfOccurencesOfDecimalSeparator = digitsAndDecimalSeparators.count { c: Char -> c.toString() == decimalSeparator }
         if (numberOfOccurencesOfDecimalSeparator > 1) {
-//            digitsAndDecimalSeparators =
-//                digitsAndDecimalSeparators
-//                    .reversed()
-//                    .replace()
-//                    .repl(decimalSeparator, with: "", maxReplacements: numberOfOccurencesOfDecimalSeparator - 1)
-//            .reversed
+            var numberOfReplacements = numberOfOccurencesOfDecimalSeparator - 1
+            digitsAndDecimalSeparators = digitsAndDecimalSeparators.reversed().filter { c: Char ->
+                if (!c.isDigit() && numberOfReplacements > 0) {
+                    numberOfReplacements -= 1
+                    return@filter false
+                }
+                true
+            }.reversed()
         }
 
         val components = digitsAndDecimalSeparators.split(decimalSeparator)
@@ -181,8 +181,8 @@ open class NumberInputListener(
         }
 
         intStr = if (intStr.isEmpty()) "0" else intStr
-//        intStr = String(intStr.prefix(formatter.maximumIntegerDigits))
-//        decStr = String(decStr.prefix(formatter.maximumFractionDigits))
+//        intStr = String(intStr.prefix(formatter.maximumIntegerDigits)) TODO
+//        decStr = String(decStr.prefix(formatter.maximumFractionDigits)) TODO
 
         return SanitisedNumberString(
             intStr,
