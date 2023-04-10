@@ -12,6 +12,7 @@ Check out our [wiki](https://github.com/RedMadRobot/input-mask-android/wiki) for
 - For international phone numbers 
     - guess the country from the entered digits
     - apply corresponding value restrictions (e.g. a 🇺🇸US phone will have a format like `+1 201 456-7890`)
+- Apply number/currency formatting
 
 <a name="examples" />
 
@@ -38,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:6.1.0'
+    implementation 'com.redmadrobot:input-mask-android:7.1.0'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }
