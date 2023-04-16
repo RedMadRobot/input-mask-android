@@ -3,8 +3,10 @@ package com.redmadrobot.inputmask
 import android.icu.number.LocalizedNumberFormatter
 import android.icu.number.NumberFormatter
 import android.icu.number.Precision
+import android.os.Build
 import android.text.TextWatcher
 import android.widget.EditText
+import androidx.annotation.RequiresApi
 import com.redmadrobot.inputmask.helper.AffinityCalculationStrategy
 import com.redmadrobot.inputmask.helper.Mask
 import com.redmadrobot.inputmask.model.CaretString
@@ -28,6 +30,7 @@ import java.util.*
  *
  * - seealso: the ``NumberInputListener/formatter`` field
  */
+@RequiresApi(Build.VERSION_CODES.R)
 open class NumberInputListener(
     primaryFormat: String,
     affineFormats: List<String> = emptyList(),

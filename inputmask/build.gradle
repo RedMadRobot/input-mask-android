@@ -48,6 +48,7 @@ android {
 
 dependencies {
     implementation deps.kotlin.stdlib
+    implementation 'androidx.annotation:annotation:1.6.0'
 
     testImplementation deps.test.junit
 }

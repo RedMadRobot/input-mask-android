@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.1.1
+
+**🔄 Modified:**
+
+* `minSdkVersion` → `23`
+
 ## 7.1.0
 
 **⤵️ Added:**
