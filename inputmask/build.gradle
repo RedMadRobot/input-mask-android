@@ -3,9 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 
-group = 'com.redmadrobot'
-version = '7.2.3'
-
 android {
     namespace 'com.redmadrobot.inputmask'
     compileSdk 33
@@ -51,7 +48,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.redmadrobot'
                 artifactId = 'inputmask'
-                version = '7.2.3'
+                version = '7.2.4'
             }
         }
     }
