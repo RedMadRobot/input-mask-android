@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.redmadrobot:input-mask-android:7.2.0'
+    implementation 'com.redmadrobot:input-mask-android:7.2.4'
     
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:$latest_version'
 }
