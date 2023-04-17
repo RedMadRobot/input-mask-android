@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.2.0
+
+**🔄 Modified:**
+
+* Re-write the sample project
+
 ## 7.1.1
 
 **🔄 Modified:**
