@@ -109,7 +109,10 @@ open class NumberInputListener(
     }
 
     override fun pickMask(text: CaretString): Mask {
-        val sanitisedNumberString = extractNumberAndDecimalSeparator(formatter, text.string)
+        val sanitisedNumberString = extractNumberAndDecimalSeparator(
+//            formatter,
+            text.string
+        )
 
         val intNum = sanitisedNumberString.intPart.toLong()
         val intMaskFormat = formatter.format(intNum)
@@ -136,8 +139,8 @@ open class NumberInputListener(
             maskFormat += "{${sanitisedNumberString.expectedDecimalSeparator}}"
         }
 
-        sanitisedNumberString.decPart.forEach { c: Char ->
-                maskFormat += "[0]"
+        sanitisedNumberString.decPart.forEach {
+            maskFormat += "[0]"
         }
 
         primaryFormat = maskFormat
@@ -152,7 +155,7 @@ open class NumberInputListener(
     )
 
     private fun extractNumberAndDecimalSeparator(
-        formatter: LocalizedNumberFormatter,
+//        formatter: LocalizedNumberFormatter,
         text: String
     ): SanitisedNumberString {
         val expectedDecimalSeparator: String = decimalSeparator
@@ -173,7 +176,7 @@ open class NumberInputListener(
 
         val components = digitsAndDecimalSeparators.split(decimalSeparator)
 
-        var intStr = ""
+        var intStr: String
         var decStr = ""
 
         if (components.size > 1) {

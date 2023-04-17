@@ -1,65 +1,56 @@
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
-apply plugin: 'org.jetbrains.dokka'
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'maven-publish'
+}
 
 android {
-    compileSdkVersion build_versions.compile_sdk
+    namespace 'com.redmadrobot.inputmask'
+    compileSdk 33
 
     defaultConfig {
-        minSdkVersion build_versions.min_sdk
-        targetSdkVersion build_versions.target_sdk
+        minSdk 23
+        targetSdk 33
 
-        archivesBaseName = "input-mask-android"
-
-        versionCode getVersionCodeFromProperties()
-        versionName getVersionNameFromProperties()
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-
-        androidTest.java.srcDirs += 'src/androidTest/kotlin'
-        test.java.srcDirs += 'src/test/kotlin'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    dokka {
-        outputFormat = 'html'
-        outputDirectory = "$buildDir/documentation"
-
-        reportUndocumented = false
-        includeNonPublic = true
-        skipEmptyPackages = false
-
-        includes = ['module-info.md']
-
-        sourceDirs = files('src/main/kotlin')
-        kotlinTasks {
-            // Workaround to avoid generating unnecessary documentation
-        }
+    kotlinOptions {
+        jvmTarget = '1.8'
     }
 }
 
 dependencies {
-    implementation deps.kotlin.stdlib
-    implementation 'androidx.annotation:annotation:1.6.0'
-
-    testImplementation deps.test.junit
+    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.8.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
 
-task dokkaMarkdown(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'markdown'
-    outputDirectory = "$buildDir/markdowndoc"
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+                groupId = 'com.redmadrobot'
+                artifactId = 'inputmask'
+                version = '7.2.0'
+            }
+        }
+    }
 }
-
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
-}
-

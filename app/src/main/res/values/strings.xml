@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">InputMask</string>
+    <string name="app_name">Sample</string>
     <string name="currency_label">Currency:</string>
     <string name="date_label">Date:</string>
     <string name="phone_label">Phone:</string>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,7 +23,7 @@
         android:digits="1234567890., $€"
         android:inputType="numberDecimal"
         android:gravity="end"
-        android:text="" />
+        tools:ignore="Autofill,LabelFor" />
 
     <CheckBox
         android:id="@+id/currency_check_box"
@@ -48,14 +49,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="date"
-            android:text=""/>
+            tools:ignore="Autofill,LabelFor" />
 
         <TextView
             android:id="@+id/date_placeholder_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@id/date_edit_text"
-            android:text=""
             android:textSize="18sp" />
 
     </RelativeLayout>
@@ -79,7 +79,8 @@
         android:id="@+id/phone_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="phone" />
+        android:inputType="phone"
+        tools:ignore="Autofill,LabelFor" />
 
     <CheckBox
         android:id="@+id/phone_check_box"
