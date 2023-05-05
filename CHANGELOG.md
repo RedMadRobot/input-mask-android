@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.2.4
+
+**🔄 Modified:**
+
+* `Country::findCountries` → fix bloomer
+
 ## 7.2.0
 
 **🔄 Modified:**

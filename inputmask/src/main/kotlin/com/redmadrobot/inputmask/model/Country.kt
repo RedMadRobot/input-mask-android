@@ -59,7 +59,7 @@ data class Country(
             val excludingTermsLowercased = excludingTerms?.map { it.lowercase() } ?: listOf()
             val phoneDigits = phone.filter(Char::isDigit)
 
-            return customCountries ?: all.filter {
+            return (customCountries ?: all).filter {
                 var include: Boolean = false
 
                 if (includingTerms != null) {
