@@ -271,9 +271,7 @@ class Compiler(
         return when (lastCharacter) {
             '0', '9' -> ValueState.StateType.Numeric()
             'A', 'a' -> ValueState.StateType.Literal()
-            '_', '-' -> ValueState.StateType.AlphaNumeric()
-            '…' -> ValueState.StateType.AlphaNumeric()
-            '[' -> ValueState.StateType.AlphaNumeric()
+            '_', '-', '…', '[' -> ValueState.StateType.AlphaNumeric()
             else -> determineTypeWithCustomNotations(lastCharacter)
         }
     }
