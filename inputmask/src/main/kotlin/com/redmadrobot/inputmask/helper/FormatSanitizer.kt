@@ -68,37 +68,37 @@ class FormatSanitizer {
 
     private fun getFormatBlocks(formatString: String): List<String> {
         val blocks: MutableList<String> = ArrayList()
-        var currentBlock = ""
+        val currentBlock = StringBuilder()
         var escape = false
 
         for (char in formatString.toCharArray()) {
             if ('\\' == char) {
                 if (!escape) {
                     escape = true
-                    currentBlock += char
+                    currentBlock.append(char)
                     continue
                 }
             }
 
             if (('[' == char || '{' == char) && !escape) {
                 if (currentBlock.isNotEmpty()) {
-                    blocks.add(currentBlock)
+                    blocks.add(currentBlock.toString())
                 }
-                currentBlock = ""
+                currentBlock.clear()
             }
 
-            currentBlock += char
+            currentBlock.append(char)
 
             if ((']' == char || '}' == char) && !escape) {
-                blocks.add(currentBlock)
-                currentBlock = ""
+                blocks.add(currentBlock.toString())
+                currentBlock.clear()
             }
 
             escape = false
         }
 
-        if (!currentBlock.isEmpty()) {
-            blocks.add(currentBlock)
+        if (currentBlock.isNotEmpty()) {
+            blocks.add(currentBlock.toString())
         }
 
         return blocks
